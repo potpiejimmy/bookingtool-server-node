@@ -1,0 +1,14 @@
+<h1>Angular 2 Demo Page</h1>
+<h3>{{label}}</h3>
+{{ data }}
+<h3>List</h3>
+<ul>  
+  <li *ngFor="let user of users">
+    {{ user.mail }}
+  </li>
+</ul>
+<h3>Datatable example:</h3>
+<p-dataTable [value]="users">
+    <p-column field="name" header="Name"></p-column>
+    <p-column field="mail" header="Mail"></p-column>
+</p-dataTable>

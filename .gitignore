@@ -1,0 +1,8 @@
+node_modules
+typings
+server/**/*.js
+server/**/*.js.map
+client/**/*.js
+client/**/*.js.map
+**/.DS_store
+/npm-debug.log
