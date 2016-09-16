@@ -1,29 +1,27 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { PrincipalService } from './principal.service';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app',
-  templateUrl: 'app/app.html',
-  providers: [ HTTP_PROVIDERS, PrincipalService ]
+  templateUrl: 'client/app.html'
 })
 export class AppComponent {
     label = 'Loading data...';
     data = null;
     users = [];
 
-    constructor(private principalService : PrincipalService) { }
+    constructor(private loginService : LoginService) { }
 
     ngOnInit() {
         this.loadDetails();
     }
 
     loadDetails() {
-        this.principalService.getUsers(
+        this.loginService.getHeroes().then(
             res => {
-                this.data = res;
-                this.users = JSON.parse(res);
+                this.data = JSON.stringify(res);
+                this.users = res;
                 this.label = 'Received:';
             });
     }
