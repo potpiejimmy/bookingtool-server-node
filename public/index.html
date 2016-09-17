@@ -22,9 +22,32 @@
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+
+    <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+
   </head>
   <!-- 3. Display the application -->
   <body>
-    <app>Loading...</app>
+    <app>
+      <div class="pg-loading-screen pg-loading" style="background-color: rgb(0, 76, 137);"><div class="pg-loading-inner">
+        <div class="pg-loading-center-outer">
+          <div class="pg-loading-center-middle">
+            <h1 class="pg-loading-logo-header">
+              <img class="pg-loading-logo" src="icon.png">
+            </h1>
+            <div class="pg-loading-html pg-loaded">
+              <p class="loading-message"></p>
+              <div class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <!--div class="sk-rect5"></div-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </app>
   </body>
 </html>
