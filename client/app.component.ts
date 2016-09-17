@@ -1,28 +1,20 @@
 import { Component } from '@angular/core';
-import 'rxjs/Rx';
-import { LoginService } from './services/login.service';
+
+import { MenuItem }  from 'primeng/primeng';
 
 @Component({
   selector: 'app',
   templateUrl: 'client/app.html'
 })
 export class AppComponent {
-    label = 'Loading data...';
-    data = null;
-    users = [];
+  title = 'Angular 2 With Express and PrimeNG';
 
-    constructor(private loginService : LoginService) { }
+    private menuitems: MenuItem[];
 
     ngOnInit() {
-        this.loadDetails();
-    }
-
-    loadDetails() {
-        this.loginService.getHeroes().then(
-            res => {
-                this.data = JSON.stringify(res);
-                this.users = res;
-                this.label = 'Received:';
-            });
+        this.menuitems = [
+            {label: 'Main', icon: 'fa-bar-chart', routerLink: ['/main']},
+            {label: 'Export', icon: 'fa-calendar', routerLink: ['/export']}
+        ];
     }
 }
