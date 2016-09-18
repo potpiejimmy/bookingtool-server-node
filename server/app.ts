@@ -2,8 +2,14 @@ import * as express from "express";
 import { join } from "path";
 import * as favicon from "serve-favicon";
 import { json, urlencoded } from "body-parser";
+import { exec } from "child_process"
 
 import { loginRouter } from "./routes/login";
+
+import * as db from "./util/db";
+
+/* connect MySQL */
+db.connect();
 
 const app: express.Application = express();
 app.disable("x-powered-by");
@@ -33,6 +39,15 @@ app.use("/pt/client", express.static(join(__dirname, "../client")));
             message: err.message
         });
     });
+
+    // update route:
+    app.get('/pt/update', function(req: express.Request, res: express.Response) {
+        exec('git pull', function(err, stdout, stderr) {
+            if (err) res.send(err);
+            else res.send(stdout);
+        });
+    });
+
 //}
 
 // catch 404 and forward to error handler

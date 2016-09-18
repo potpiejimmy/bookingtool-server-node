@@ -26,6 +26,7 @@
     "font-awesome": "^4.6.3",
     "forever": "^0.15.2",
     "jsonwebtoken": "^5.7.0",
+    "node-mysql-wrapper": "^2.9.3",
     "please-wait": "0.0.5",
     "serve-favicon": "~2.3.0",
     "typescript": "^2.0.2",
