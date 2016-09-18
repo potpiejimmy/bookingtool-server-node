@@ -4,7 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LoginService {
-  private heroesUrl = '/login';  // URL to web api
+  private heroesUrl = '/pt/login';  // URL to web api
 
   constructor(private http: Http) { }
 

@@ -4,7 +4,7 @@ import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'maininput',
-  templateUrl: 'client/pages/maininput/maininput.html'
+  templateUrl: 'pt/client/pages/maininput/maininput.html'
 })
 export class MainInputComponent {
     label = 'Loading data...';

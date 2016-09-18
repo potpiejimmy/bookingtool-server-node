@@ -8,22 +8,22 @@ import { loginRouter } from "./routes/login";
 const app: express.Application = express();
 app.disable("x-powered-by");
 
-app.use(favicon(join(__dirname, "../public", "favicon.ico")));
-app.use(express.static(join(__dirname, '../public')));
+app.use("/pt", favicon(join(__dirname, "../public", "favicon.ico")));
+app.use("/pt", express.static(join(__dirname, '../public')));
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
 // api routes
-app.use("/login", loginRouter);
-app.use("/client", express.static(join(__dirname, "../client")));
+app.use("/pt/login", loginRouter);
+app.use("/pt/client", express.static(join(__dirname, "../client")));
 
 // error handlers
 // development error handler
 // will print stacktrace
 //if (app.get("env") === "development") {
 
-    app.use("/node_modules", express.static(join(__dirname, "../node_modules")));
+    app.use("/pt/node_modules", express.static(join(__dirname, "../node_modules")));
     app.use(express.static(join(__dirname, "../tools")));
 
     app.use(function(err, req: express.Request, res: express.Response, next: express.NextFunction) {

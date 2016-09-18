@@ -4,7 +4,7 @@ import { MenuItem }  from 'primeng/primeng';
 
 @Component({
   selector: 'app',
-  templateUrl: 'client/app.html'
+  templateUrl: 'pt/client/app.html'
 })
 export class AppComponent {
   title = 'Angular 2 With Express and PrimeNG';
