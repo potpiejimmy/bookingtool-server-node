@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { MenuItem }  from 'primeng/primeng';
 
+import { LoginService } from './services/login.service';
+
 @Component({
   selector: 'app',
   templateUrl: 'pt/client/app.html'
@@ -9,6 +11,8 @@ import { MenuItem }  from 'primeng/primeng';
 export class AppComponent {
 
     private menuitems: MenuItem[];
+
+    constructor(public loginService: LoginService ) {}
 
     ngOnInit() {
         this.menuitems = [

@@ -1,0 +1,20 @@
+<form id="loginform">
+
+    <p-panel *ngIf="!loginService.isLoggedIn">
+        <div class="ui-g">
+            <div class="ui-g-2">User name:</div>
+            <div class="ui-g-2"><input type="text" pInputText /></div>
+            <div class="ui-g-8"></div>
+
+            <div class="ui-g-2">Password:</div>
+            <div class="ui-g-2"><input type="text" pInputText /></div>
+            <div class="ui-g-8"></div>
+        </div>
+    
+        <p></p>
+        <button pButton type="button" label="Sign In" (click)="login()" icon="fa-sign-in"></button>
+    </p-panel>
+
+    <p>{{message}}</p>
+
+</form>

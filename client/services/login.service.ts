@@ -1,20 +1,35 @@
 import { Injectable }    from '@angular/core';
+
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LoginService {
-  private heroesUrl = '/pt/login';  // URL to web api
+  
+  isLoggedIn: boolean = false;
 
+  // store the URL so we can redirect after logging in
+  redirectUrl: string;
+
+  private loginServiceUrl = '/pt/login';  // URL to web api
+  
   constructor(private http: Http) { }
 
   getHeroes(): Promise<any> {
-    return this.http.get(this.heroesUrl)
+    return this.http.get(this.loginServiceUrl)
                .toPromise()
                .then(response => response.json())
                .catch(this.handleError);
   }
 
+  login(): Promise<boolean> {
+    return this.getHeroes().then(result => this.isLoggedIn = true);
+  }
+
+  logout(): void {
+    this.isLoggedIn = false;
+  }
+  
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

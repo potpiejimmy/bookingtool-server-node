@@ -7,6 +7,6 @@
 </div>
 
 <div id="root_body">
-  <p-tabMenu [model]="menuitems"></p-tabMenu>
+  <p-tabMenu *ngIf="loginService.isLoggedIn" [model]="menuitems"></p-tabMenu>
   <router-outlet></router-outlet>
 </div>
