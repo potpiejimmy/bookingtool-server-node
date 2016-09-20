@@ -18,22 +18,22 @@
     <!-- own styles -->
     <link rel="stylesheet" href="pt/assets/css/styles.css">
 
-    <!-- 1. Load libraries -->
-     <!-- Polyfill(s) for older browsers -->
+    <!--  Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
     <script src="pt/node_modules/core-js/client/shim.min.js"></script>
     <script src="pt/node_modules/zone.js/dist/zone.js"></script>
     <script src="pt/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="pt/node_modules/systemjs/dist/system.src.js"></script>
 
-    <!-- 2. Configure SystemJS -->
+    <!-- Wait Animation -->
+    <link href="pt/node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+    <link href="pt/assets/css/spinner.css" rel="stylesheet">
+
+    <!-- Configure SystemJS -->
     <script src="pt/assets/js/systemjs.config.js"></script>
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
-
-    <!-- 3. Wait Animation -->
-    <link href="pt/node_modules/please-wait/build/please-wait.css" rel="stylesheet">
-    <link href="pt/assets/css/spinner.css" rel="stylesheet">
 
   </head>
   <!-- 3. Display the application -->
@@ -55,5 +55,8 @@
         </div>
       </div></div>
     </app>
+
+    <!--  Production mod  -->
+    <!--script src="pt/assets/js/bundle.min.js"></script-->
   </body>
 </html>
