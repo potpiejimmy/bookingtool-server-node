@@ -1,9 +1,37 @@
-<h2>Main Input Panel</h2>
-<h3>Datatable example:</h3>
+<p></p>
+
+<table class="panel-grid-table">
+  <tr>
+    <td>Date:</td>
+    <td>
+      <i class="fa fa-arrow-circle-left"></i>
+      <p-calendar [(ngModel)]="current.day" dateFormat="dd M yy                        :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar>
+      <i class="fa fa-arrow-circle-right"></i>
+    </td>
+  </tr>
+  <tr>
+    <td>Template Search:</td>
+    <td><input type="text" pInputText size="100"/></td>
+  </tr>
+</table>
+
+<p></p>
+
 <p-dataTable [value]="users">
+    <p-column field="id" header="ID"></p-column>
     <p-column field="psp" header="PSP"></p-column>
     <p-column field="name" header="Name"></p-column>
+    <p-column field="description" header="Description"></p-column>
+    <p-column field="salesRepresentative" header="Sales Contact"></p-column>
+    <p-column field="subproject" header="Subproject"></p-column>
+    <p-column>
+        <template pTemplate type="header">Actions</template>
+        <template let-row="rowData" pTemplate type="body">
+            <i class="fa fa-edit linkcursor" (click)="edit(row)"></i>
+        </template>
+    </p-column>
 </p-dataTable>
+<!--
 <h3>List</h3>
 <ul>  
   <li *ngFor="let user of users">
@@ -12,3 +40,4 @@
 </ul>
 <h3>{{label}}</h3>
 {{ data }}
+-->

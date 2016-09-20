@@ -5,6 +5,10 @@ html, body {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
+.ui-widget, .ui-widget button {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 .floatleft {
     float: left;
 }
@@ -38,4 +42,15 @@ html, body {
 #body_footer {
     font-size: 10pt;
     padding: 1em;
+}
+
+.panel-grid-table {     
+    border: solid 1px #e0e0e0;
+}
+.panel-grid-table td {     
+    padding: 4px 10px;
+}
+
+.linkcursor {
+    cursor: pointer;
 }

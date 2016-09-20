@@ -11,6 +11,8 @@ export class MainInputComponent {
     data = null;
     users = [];
 
+    current = {"day": "01 Sep 2016"};
+
     constructor(private loginService : LoginService) { }
 
     ngOnInit() {
@@ -24,5 +26,13 @@ export class MainInputComponent {
                 this.users = res;
                 this.label = 'Received:';
             });
+    }
+
+    edit(row) {
+        console.info(JSON.stringify(row));
+    }
+
+    dateChanged(newValue) {
+        console.info("Date changed to: "+newValue);
     }
 }
