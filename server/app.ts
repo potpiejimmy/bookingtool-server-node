@@ -14,15 +14,22 @@ db.connect();
 const app: express.Application = express();
 app.disable("x-powered-by");
 
-app.use("/pt", favicon(join(__dirname, "../public", "favicon.ico")));
+// favicon
+app.use("/", favicon(join(__dirname, "../public", "favicon.ico")));
+
+// all user app routes:
 app.use("/pt", express.static(join(__dirname, '../public')));
+app.use("/pt/main", express.static(join(__dirname, '../public')));
+app.use("/pt/export", express.static(join(__dirname, '../public')));
+
+// main app files route
+app.use("/pt/client", express.static(join(__dirname, "../client")));
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
 // api routes
-app.use("/pt/login", loginRouter);
-app.use("/pt/client", express.static(join(__dirname, "../client")));
+app.use("/pt/api/login", loginRouter);
 
 // error handlers
 // development error handler

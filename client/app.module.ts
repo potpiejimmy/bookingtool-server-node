@@ -1,5 +1,4 @@
 import { NgModule }      from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { routing } from './app.routing';
 
@@ -11,10 +10,10 @@ import { LoginService }  from './services/login.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule } from 'primeng/primeng';
 
-import { AppComponent }         from './app.component';
-import { LoginComponent }   from './pages/login/login.component';
-import { MainInputComponent }   from './pages/maininput/maininput.component';
-import { ExportComponent }      from './pages/export/export.component';
+import { AppComponent }       from './app.component';
+import { LoginComponent }     from './pages/login/login.component';
+import { MainInputComponent } from './pages/maininput/maininput.component';
+import { ExportComponent }    from './pages/export/export.component';
 
 @NgModule({
   imports:      [
@@ -25,7 +24,6 @@ import { ExportComponent }      from './pages/export/export.component';
   ],
   declarations: [ AppComponent, LoginComponent, MainInputComponent, ExportComponent ],
   providers: [
-     {provide: LocationStrategy, useClass: HashLocationStrategy},
      AuthGuard,
      LoginService
   ],

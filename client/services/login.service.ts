@@ -11,7 +11,7 @@ export class LoginService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  private loginServiceUrl = '/pt/login';  // URL to web api
+  private loginServiceUrl = '/pt/api/login';  // URL to web api
   
   constructor(private http: Http) { }
 
