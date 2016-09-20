@@ -8,6 +8,8 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent {
     message: string;
+    user: string;
+    password: string;
 
     constructor(private loginService: LoginService, private router: Router) {
         this.setMessage();
@@ -19,7 +21,7 @@ export class LoginComponent {
 
     login() {
         this.message = 'Trying to log in ...';
-        this.loginService.login().then(() => {
+        this.loginService.login(this.user, this.password).then(() => {
             this.setMessage();
 
             if (this.loginService.isLoggedIn) {

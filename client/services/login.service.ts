@@ -22,8 +22,13 @@ export class LoginService {
                .catch(this.handleError);
   }
 
-  login(): Promise<boolean> {
-    return this.getHeroes().then(result => this.isLoggedIn = true);
+  login(user, password): Promise<boolean> {
+    return this.http.post(this.loginServiceUrl, {"user":user, "password":password})
+        .toPromise()
+        .then(result => {
+          console.info(JSON.stringify(result.json()));
+          return this.isLoggedIn = true;
+        });
   }
 
   logout(): void {
