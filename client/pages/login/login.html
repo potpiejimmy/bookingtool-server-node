@@ -13,9 +13,9 @@
         </table>
     
         <p></p>
-        <button pButton type="button" label="Sign In" (click)="login()" icon="fa-sign-in"></button>
+        <button pButton type="submit" label="Sign In" (click)="login()" icon="fa-sign-in"></button>
     </p-panel>
 
-    <p>{{message}}</p>
+    <p-messages [value]="messages"></p-messages>
 
 </form>

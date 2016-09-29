@@ -1,19 +1,13 @@
 var wrapper = require('node-mysql-wrapper'); 
-var mysql   = require('mysql');
 
-var c;
-
-export function connect() {
-    var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'bookingtool',
-    password : 'bookingtool',
-    database : 'bookingtool'
-    });
-
-    c =  wrapper.wrap(connection);
+export function getConnection() {
+    return wrapper.wrap("mysql://bookingtool:bookingtool@localhost/bookingtool?debug=false&charset=utf8");
 }
 
-export function connection() {
-    return c;
+export function perform(action) {
+    var connection = getConnection();
+    connection.ready(function() {
+        action(connection);
+        connection.end(function(err) {});
+    });
 }

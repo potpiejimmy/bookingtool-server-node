@@ -26,8 +26,9 @@ export class LoginService {
     return this.http.post(this.loginServiceUrl, {"user":user, "password":password})
         .toPromise()
         .then(result => {
-          console.info(JSON.stringify(result.json()));
-          return this.isLoggedIn = true;
+          var token = result.json();
+          console.info(JSON.stringify(token));
+          return this.isLoggedIn = token.pwStatus != null;
         });
   }
 

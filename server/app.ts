@@ -6,11 +6,6 @@ import { exec } from "child_process"
 
 import { loginRouter } from "./routes/login";
 
-import * as db from "./util/db";
-
-/* connect MySQL */
-db.connect();
-
 const app: express.Application = express();
 app.disable("x-powered-by");
 

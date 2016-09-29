@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { Message }  from 'primeng/primeng';
 
 @Component({
     selector: 'login',
     templateUrl: 'pt/client/pages/login/login.html'
 })
 export class LoginComponent {
-    message: string;
+    messages: Message[];
     user: string;
     password: string;
 
     constructor(private loginService: LoginService, private router: Router) {
-        this.setMessage();
     }
 
     setMessage() {
-        this.message = 'Your are logged ' + (this.loginService.isLoggedIn ? 'in' : 'out');
+        this.messages = [];
+        this.messages.push({severity:'error', summary:'Login failed', detail:'Unknown user or wrong password.'});
     }
 
     login() {
-        this.message = 'Trying to log in ...';
-        this.loginService.login(this.user, this.password).then(() => {
-            this.setMessage();
-
-            if (this.loginService.isLoggedIn) {
+        this.loginService.login(this.user, this.password).then(result => {
+            if (result) {
                 // Get the redirect URL from our auth service
                 // If no redirect has been set, use the default
                 let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/pt';
                 // Redirect the user
                 this.router.navigate([redirect]);
+            } else {
+                this.setMessage();
             }
         });
     }
