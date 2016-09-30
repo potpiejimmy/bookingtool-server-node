@@ -54,3 +54,7 @@ html, body {
 .linkcursor {
     cursor: pointer;
 }
+
+.underlined {
+    text-decoration: underline;
+}

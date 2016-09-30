@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthGuard } from './services/authguard.service';
 
 import { MenuItem }  from 'primeng/primeng';
 
@@ -12,7 +13,7 @@ export class AppComponent {
 
     private menuitems: MenuItem[];
 
-    constructor(public loginService: LoginService ) {}
+    constructor(public loginService: LoginService, private authGuard: AuthGuard) {}
 
     ngOnInit() {
         this.menuitems = [
@@ -27,5 +28,10 @@ export class AppComponent {
             {label: 'Budget Plans', routerLink: ['/budgetplans']},
             {label: 'Forecasts', routerLink: ['/forecasts']}
         ];
+    }
+
+    logout() {
+        this.loginService.logout();
+        this.authGuard.checkLogin("/main");
     }
 }

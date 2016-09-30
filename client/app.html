@@ -3,7 +3,9 @@
     <img src="/pt/icon.png" style="border-style: solid; border-width: 1px; border-color: black; padding: 4px; background-color: white;"></a>
   </div>
   <div id="root_title">Welcome to the BCON Budget Planning Tool</div>
-  <div style="text-align:right;float:right;"></div>
+  <div style="text-align:right;float:right;">
+    <a *ngIf="loginService.isLoggedIn" class="linkcursor underlined" (click)="logout()">Logout</a>
+  </div>
 </div>
 
 <div id="root_body">
