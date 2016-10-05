@@ -1,20 +1,24 @@
 <form id="loginform">
 
-    <p-panel *ngIf="!loginService.isLoggedIn">
+    <div class="card" *ngIf="!loginService.isLoggedIn">
         <table>
             <tr>
-                <td>User name:</td>
-                <td><input type="text" name="user" pInputText [(ngModel)]="user"/></td>
+                <span class="md-inputfield">
+                    <td><input type="text" name="user" pInputText [(ngModel)]="user"/></td>
+                    <label>User name</label>
+                </span>
             </tr>
             <tr>
-                <td>Password:</td>
-                <td><input type="password" name="password" pPassword [(ngModel)]="password"/></td>
+                <span class="md-inputfield">
+                    <td><input type="password" name="password" pInputText [(ngModel)]="password"/></td>
+                    <label>Password</label>
+                </span>
             </tr>
         </table>
     
         <p></p>
-        <button pButton type="submit" label="Sign In" (click)="login()" icon="fa-sign-in"></button>
-    </p-panel>
+        <button pButton type="submit" label="Sign In" (click)="login()" icon="ui-icon-person"></button>
+    </div>
 
     <p-messages [value]="messages"></p-messages>
 

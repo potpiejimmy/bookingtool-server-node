@@ -17,8 +17,8 @@ export class AppComponent {
 
     ngOnInit() {
         this.menuitems = [
-            {label: 'Main', routerLink: ['/main']},
-            {label: 'Export', routerLink: ['/export']},
+            {label: 'Main', routerLink: ['/main'], icon: 'ui-icon-input'},
+            {label: 'Export', routerLink: ['/export'], icon: 'ui-icon-import-export'},
             {label: 'Domains', routerLink: ['/domains']},
             {label: 'Projects', routerLink: ['/projects']},
             {label: 'Budgets', routerLink: ['/budgets']},
