@@ -28,7 +28,7 @@ export class LoginService {
         .then(result => {
           var token = result.json();
           console.info(JSON.stringify(token));
-          return this.isLoggedIn = token.pwStatus != null;
+          return this.isLoggedIn = token.pw_status != null;
         });
   }
 

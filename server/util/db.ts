@@ -1,13 +1,23 @@
-var wrapper = require('node-mysql-wrapper'); 
+var mysql = require('mysql');
 
-export function getConnection() {
-    return wrapper.wrap("mysql://bookingtool:bookingtool@localhost/bookingtool?debug=false&charset=utf8");
+var pool;
+
+function getPool() {
+    if (!pool) {
+        pool = mysql.createPool({
+            connectionLimit : 10,
+            host            : 'localhost',
+            user            : 'bookingtool',
+            password        : 'bookingtool',
+            database        : 'bookingtool'
+        });
+    }
+    return pool;
 }
 
 export function perform(action) {
-    var connection = getConnection();
-    connection.ready(function() {
+    getPool().getConnection((err,connection) => {
+        if (err) { console.info(err); return; }
         action(connection);
-        connection.end(function(err) {});
     });
 }
