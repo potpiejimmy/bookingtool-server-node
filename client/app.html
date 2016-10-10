@@ -2,9 +2,11 @@
   <div class="floatleft"><a href="/pt/">
     <img src="/pt/icon.png" style="border-style: solid; border-width: 1px; border-color: black; padding: 4px; background-color: white;"></a>
   </div>
-  <div id="root_title">Welcome to the BCON Budget Planning Tool</div>
+  <div id="root_title">{{typeWriterMessage}}</div>
   <div style="text-align:right;float:right;">
-    <a *ngIf="loginService.isLoggedIn" class="linkcursor underlined" (click)="logout()">Logout</a>
+    <a *ngIf="loginService.isLoggedIn" class="linkcursor" (click)="logout()">
+      <i class="fa ui-icon-exit-to-app"></i>
+    </a>
   </div>
 </div>
 

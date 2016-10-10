@@ -28,7 +28,7 @@
     "mysql": "^2.11.1",
     "please-wait": "0.0.5",
     "serve-favicon": "~2.3.0",
-    "typescript": "^2.0.2"
+    "typescript": "^2.0.3"
   },
   "devDependencies": {
     "@angular/common": "2.0.0",

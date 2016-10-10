@@ -4,6 +4,7 @@ import { AuthGuard } from './services/authguard.service';
 import { MenuItem }  from 'primeng/primeng';
 
 import { LoginService } from './services/login.service';
+import { TypeWriter } from './util/typewriter';
 
 @Component({
   selector: 'app',
@@ -12,6 +13,7 @@ import { LoginService } from './services/login.service';
 export class AppComponent {
 
     private menuitems: MenuItem[];
+    private typeWriterMessage: string = '\u007C';
 
     constructor(public loginService: LoginService, private authGuard: AuthGuard) {}
 
@@ -28,6 +30,20 @@ export class AppComponent {
             {label: 'Budget Plans', routerLink: ['/budgetplans']},
             {label: 'Forecasts', routerLink: ['/forecasts']}
         ];
+
+        this.startTypeWriter();
+    }
+
+    startTypeWriter() {
+        let tw = new TypeWriter([
+            'Welcome to the BCON Budget Planning Tool.',
+            'Built with the power of Angular 2.',
+            'Next generation web technology at work.'
+        ]);
+        tw.start().subscribe(msg => {
+            this.typeWriterMessage = msg;
+            if (this.loginService.isLoggedIn) tw.stopAt(0);
+        });
     }
 
     logout() {
