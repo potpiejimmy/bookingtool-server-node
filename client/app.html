@@ -7,6 +7,8 @@
     <a *ngIf="loginService.isLoggedIn" class="linkcursor" (click)="logout()">
       <i class="fa ui-icon-exit-to-app"></i>
     </a>
+    <br/>
+    <span *ngIf="loginService.isLoggedIn">{{loginService.loginToken.name}}</span>    
   </div>
 </div>
 

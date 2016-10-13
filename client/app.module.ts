@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
+import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+
 import { AuthGuard } from './services/authguard.service';
 import { LoginService }  from './services/login.service';
 
@@ -25,7 +27,8 @@ import { ExportComponent }    from './pages/export/export.component';
   declarations: [ AppComponent, LoginComponent, MainInputComponent, ExportComponent ],
   providers: [
      AuthGuard,
-     LoginService
+     LoginService,
+     LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }
   ],
   bootstrap:    [ AppComponent ]
 })

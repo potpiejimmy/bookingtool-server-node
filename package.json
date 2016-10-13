@@ -41,7 +41,7 @@
     "@angular/router": "3.0.0",
     "@angular/upgrade": "2.0.0",
     "@types/core-js": "^0.9.32",
-    "angular2-in-memory-web-api": "0.0.20",
+    "angular-2-local-storage": "0.0.20",
     "angular2-jwt": "^0.1.23",
     "bootstrap": "^3.3.6",
     "concurrently": "^2.2.0",

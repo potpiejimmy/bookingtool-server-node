@@ -24,7 +24,11 @@
       // other libraries
       'rxjs':                       'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
-      'primeng':                    'npm:primeng'
+      'primeng':                    'npm:primeng',
+      'angular2-jwt':               'npm:angular2-jwt/angular2-jwt.js',
+      'js-base64':                  'npm:js-base64/base64.js',
+      'buffer':                     '@empty',
+      'angular-2-local-storage':    'npm:angular-2-local-storage'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -38,10 +42,10 @@
       primeng: {
         defaultExtension: 'js'
       },
-      'angular2-in-memory-web-api': {
-        main: './index.js',
+      'angular-2-local-storage': {
+        main: 'dist/angular-2-local-storage.js',
         defaultExtension: 'js'
-      }
+      },
     }
   });
 })(this);
