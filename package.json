@@ -8,7 +8,7 @@
     "forever": "tsc -p ./server && forever start ./server/bin/www --watch",
     "twc:client:w": "tsc -w -p ./client",
     "twc:server:w": "tsc -w -p ./server",
-    "bundle:prod": "node tools/builder.js --prod",
+    "bundle:prod": "tsc -p ./client && node tools/builder.js --prod",
     "postinstall": "tsc -p ./server"
   },
   "license": "ISC",

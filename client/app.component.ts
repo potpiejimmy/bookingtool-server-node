@@ -36,9 +36,9 @@ export class AppComponent {
 
     startTypeWriter() {
         let tw = new TypeWriter([
-            'Welcome to the BCON Budget Planning Tool.',
-            'Built with the power of Angular 2.',
-            'Next generation web technology at work.'
+            'Welcome to the BCON Budget Planning Tool',
+            'Built with the power of Angular 2 and PrimeNG',
+            'Next generation web technology at work'
         ]);
         tw.start().subscribe(msg => {
             this.typeWriterMessage = msg;
