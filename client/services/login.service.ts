@@ -38,6 +38,7 @@ export class LoginService {
           let resJson = result.json();
           console.info(JSON.stringify(resJson));
           let token = resJson.token;
+          if (!token) return false;
           this.loginToken = this.jwtHelper.decodeToken(token);  
           this.localStorageService.set('token', this.loginToken);        
           return this.isLoggedIn = this.loginToken != null;
