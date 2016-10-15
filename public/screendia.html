@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Fullscreen Dialog</title>
+        <style>
+body {
+    font-family: Arial;
+    padding: 0;
+    margin: 0;
+}
+.centerdiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+table {
+    font-size: 4em;
+    text-align: center;
+}
+        </style>
+        <script type="text/javascript">
+
+var TypeWriter = (function () {
+    function TypeWriter(phrases, callback) {
+        this.phrases = phrases;
+        this.currentIndex = 0;
+        this.currentLength = 0;
+        this.currentDir = false;
+        this.callback = callback;
+    }
+    TypeWriter.prototype.start = function () {
+        this.next(500);
+    };
+    TypeWriter.prototype.next = function (waitTime) {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.currentDir)
+                _this.currentLength--;
+            else
+                _this.currentLength++;
+            var waitMs = 10;
+            var doContinue = true;
+            if (!_this.currentDir && _this.currentLength == _this.phrases[_this.currentIndex].length) {
+                _this.currentDir = true;
+                waitMs = 3000;
+                if (_this.currentIndex == _this.phrases.length-1)
+                    doContinue = false;
+            }
+            else if (_this.currentDir && _this.currentLength == 0) {
+                _this.currentDir = false;
+                _this.currentIndex++;
+            }
+            var isWhole = _this.currentLength == _this.phrases[_this.currentIndex].length;
+            _this.callback(
+                _this.phrases[_this.currentIndex].substr(0, _this.currentLength) + ((isWhole || _this.currentLength==0) ? '' : '\u007C'));
+            if (doContinue)
+                _this.next(waitMs);
+        }, waitTime);
+    };
+    return TypeWriter;
+}());
+
+var typeWriter = new TypeWriter([
+    "Sie wurden aus Sicherheitsgründen abgemeldet",
+    "Ihre Eingaben wurden gelöscht",
+    "Einen Moment bitte..."
+], function(msg) {
+    var e = document.getElementById('screen-message'); 
+    e.textContent = msg;
+});
+typeWriter.start();
+
+        </script>
+    </head>
+    <body>
+        <div class="centerdiv" style="background-color: #fc3;">
+            <table>
+                <tr><td><img src="padlock.png"/></td></tr>
+                <tr><td style="height: 1em;"></td></tr>
+                <tr><td style="font-size: 1.5em;">Automatische Abmeldung</td></tr>
+                <tr><td style="height: 1em;"></td></tr>
+                <tr><td><p id="screen-message" style="color:black; height:1.5em;"></p></div></td></tr>
+            </table>
+        </div>
+    </body>
+</html>
