@@ -14,25 +14,11 @@ declare var Ultima: any;
 })
 export class AppComponent implements AfterViewInit {
 
-    private menuitems: MenuItem[];
     private typeWriterMessage: string = '\u007C';
 
     constructor(private el: ElementRef, public loginService: LoginService, private authGuard: AuthGuard) {}
 
     ngOnInit() {
-        this.menuitems = [
-            {label: 'Main', routerLink: ['/main'], icon: 'ui-icon-input'},
-            {label: 'Export', routerLink: ['/export'], icon: 'ui-icon-import-export'},
-            {label: 'Domains', routerLink: ['/domains']},
-            {label: 'Projects', routerLink: ['/projects']},
-            {label: 'Budgets', routerLink: ['/budgets']},
-            {label: 'Booking Templates', routerLink: ['/templates']},
-            {label: 'FI', routerLink: ['/adminfi']},
-            {label: 'Budget Control', routerLink: ['/budgetcontrol']},
-            {label: 'Budget Plans', routerLink: ['/budgetplans']},
-            {label: 'Forecasts', routerLink: ['/forecasts']}
-        ];
-
         this.startTypeWriter();
     }
 

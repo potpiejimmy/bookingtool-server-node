@@ -1,16 +1,18 @@
+<div style="width:100%; height:50%;display:flex;justify-content:top;align-items:left;padding-left:1em;">
+
 <form id="loginform">
 
     <div class="card" *ngIf="!loginService.isLoggedIn">
         <table style="border-spacing:0.5em 1.5em;">
             <tr>
                 <span class="md-inputfield">
-                    <input type="text" name="user" pInputText [(ngModel)]="user" autofocus/>
+                    <input type="text" name="user" pInputText [(ngModel)]="user" size="48" autofocus/>
                     <label>User name</label>
                 </span>
             </tr>
             <tr>
                 <span class="md-inputfield">
-                    <input type="password" name="password" pInputText [(ngModel)]="password"/>
+                    <input type="password" name="password" pInputText [(ngModel)]="password" size="48"/>
                     <label>Password</label>
                 </span>
             </tr>
@@ -24,3 +26,5 @@
     <p-messages [value]="messages"></p-messages>
 
 </form>
+
+</div>
