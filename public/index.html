@@ -2,8 +2,10 @@
   <head>
     <base href="/pt">
     <title>BCON Budget Planning Tool</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 
@@ -33,10 +35,10 @@
     <link href="pt/assets/css/spinner.css" rel="stylesheet">
 
     <!-- Configure SystemJS -->
-    <!--script src="pt/assets/js/systemjs.config.js"></script>
+    <script src="pt/assets/js/systemjs.config.js"></script>
     <script>
       System.import('app').catch(function(err){ console.error(err); });
-    </script-->
+    </script>
 
   </head>
   <!-- 3. Display the application -->
@@ -60,6 +62,6 @@
     </app>
 
     <!--  Production mod  -->
-    <script src="pt/assets/js/bundle.min.js"></script>
+    <!--script src="pt/assets/js/bundle.min.js"></script-->
   </body>
 </html>

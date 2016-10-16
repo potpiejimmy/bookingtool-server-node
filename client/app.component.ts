@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit } from '@angular/core';
 import { AuthGuard } from './services/authguard.service';
 
 import { MenuItem }  from 'primeng/primeng';
@@ -6,16 +6,18 @@ import { MenuItem }  from 'primeng/primeng';
 import { LoginService } from './services/login.service';
 import { TypeWriter } from './util/typewriter';
 
+declare var Ultima: any;
+
 @Component({
   selector: 'app',
   templateUrl: 'pt/client/app.html'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
     private menuitems: MenuItem[];
     private typeWriterMessage: string = '\u007C';
 
-    constructor(public loginService: LoginService, private authGuard: AuthGuard) {}
+    constructor(private el: ElementRef, public loginService: LoginService, private authGuard: AuthGuard) {}
 
     ngOnInit() {
         this.menuitems = [
@@ -32,6 +34,10 @@ export class AppComponent {
         ];
 
         this.startTypeWriter();
+    }
+
+    ngAfterViewInit() {
+        Ultima.init(this.el.nativeElement);
     }
 
     startTypeWriter() {

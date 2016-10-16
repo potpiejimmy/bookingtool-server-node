@@ -1,3 +1,6 @@
+<div class="layout-wrapper layout-compact">
+    <div class="layout-container menu-layout-static menu-layout-horizontal">
+
 <div id="root_header">
   <div class="floatleft"><a href="/pt/">
     <img src="/pt/icon.png" style="border-style: solid; border-width: 1px; border-color: black; padding: 4px; background-color: white;"></a>
@@ -12,7 +15,26 @@
   </div>
 </div>
 
+        <!-- Menu -->
+        <div class="layout-menu" *ngIf="loginService.isLoggedIn">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <ul id="main-menu" class="ultima-menu clearfix">
+                        <li role="menuitem">
+                            <a [routerLink]="['/main']"><i class="material-icons">dashboard</i><span>Main</span></a>
+                        </li>
+                        <li role="menuitem">
+                            <a [routerLink]="['/export']"><i class="material-icons">dashboard</i><span>Export</span></a>
+                        </li>
+                    </ul>
+              </div>
+           </div>
+        </div>
+
 <div id="root_body">
   <p-tabMenu *ngIf="loginService.isLoggedIn" [model]="menuitems"></p-tabMenu>
   <router-outlet></router-outlet>
+</div>
+
+    </div>
 </div>
