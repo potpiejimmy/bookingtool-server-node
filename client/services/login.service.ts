@@ -36,10 +36,10 @@ export class LoginService {
         .toPromise()
         .then(result => {
           let resJson = result.json();
-          console.info(JSON.stringify(resJson));
           let token = resJson.token;
           if (!token) return false;
-          this.loginToken = this.jwtHelper.decodeToken(token);  
+          this.loginToken = this.jwtHelper.decodeToken(token);
+          console.info(this.loginToken.roles);
           this.localStorageService.set('token', this.loginToken);        
           return this.isLoggedIn = this.loginToken != null;
         });
@@ -48,6 +48,15 @@ export class LoginService {
   logout(): void {
     this.isLoggedIn = false;
     this.localStorageService.remove('token');
+  }
+
+  isUserInRole(role:string):boolean {
+    if (!this.loginToken) return false;
+    let found = null;
+    this.loginToken.roles.forEach(element => {
+      if (element.role == role) found = element;
+    });
+    return found!=null;
   }
   
   private handleError(error: any): Promise<any> {
