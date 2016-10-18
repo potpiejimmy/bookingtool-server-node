@@ -31,7 +31,6 @@
     <script src="pt/node_modules/systemjs/dist/system.src.js"></script>
 
     <!-- Wait Animation -->
-    <link href="pt/node_modules/please-wait/build/please-wait.css" rel="stylesheet">
     <link href="pt/assets/css/spinner.css" rel="stylesheet">
 
     <!-- Configure SystemJS -->
@@ -44,21 +43,14 @@
   <!-- 3. Display the application -->
   <body>
     <app>
-      <div class="pg-loading-screen pg-loading" style="background-color: rgb(0, 76, 137);"><div class="pg-loading-inner">
-        <div class="pg-loading-center-outer">
-          <div class="pg-loading-center-middle">
-            <!--h1 class="pg-loading-logo-header">
-              <img class="pg-loading-logo" src="icon.png">
-            </h1-->
-            <!--div class="pg-loading-html pg-loaded"-->
-              <div class="sk-spinner sk-spinner-wave">
-                <div class="sk-rect1"></div><div class="sk-rect2"></div><div class="sk-rect3"></div><div class="sk-rect4"></div><div class="sk-rect5"></div>
-              </div>
-              <p class="loading-message" style="color:white;">Starting Application</p>
-            <!--/div-->
+      <div style="background-color:rgb(0, 76, 137);width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
+        <div>
+          <div class="sk-spinner sk-spinner-wave">
+            <div class="sk-rect1"></div><div class="sk-rect2"></div><div class="sk-rect3"></div><div class="sk-rect4"></div><div class="sk-rect5"></div>
           </div>
+          <p style="color:white;">beaming you up...</p>
         </div>
-      </div></div>
+      </div>
     </app>
 
     <!--  Production mod  -->
