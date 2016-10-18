@@ -10,6 +10,8 @@ import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-loc
 
 import { AuthGuard } from './services/authguard.service';
 import { LoginService }  from './services/login.service';
+import { AuthHttp }  from './services/authhttp.service';
+import { BookingsService }  from './services/bookings.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule } from 'primeng/primeng';
 
@@ -28,6 +30,8 @@ import { ExportComponent }    from './pages/export/export.component';
   providers: [
      AuthGuard,
      LoginService,
+     AuthHttp,
+     BookingsService,
      LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }
   ],
   bootstrap:    [ AppComponent ]

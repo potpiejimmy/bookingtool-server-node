@@ -5,6 +5,7 @@ import { json, urlencoded } from "body-parser";
 import { exec } from "child_process"
 
 import { loginRouter } from "./routes/login";
+import { bookingsRouter } from "./routes/bookings";
 
 const app: express.Application = express();
 app.disable("x-powered-by");
@@ -25,6 +26,7 @@ app.use(urlencoded({ extended: true }));
 
 // api routes
 app.use("/pt/api/login", loginRouter);
+app.use("/pt/api/bookings", bookingsRouter);
 
 // error handlers
 // development error handler

@@ -4,9 +4,9 @@
   <tr>
     <td>Date:</td>
     <td>
-      <i class="fa fa-arrow-circle-left"></i>
+      <i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i>
       <p-calendar [(ngModel)]="currentDay" dateFormat="dd M yy                        :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar>
-      <i class="fa fa-arrow-circle-right"></i>
+      <i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i>
     </td>
   </tr>
   <tr>
@@ -17,13 +17,14 @@
 
 <p></p>
 
-<p-dataTable [value]="users">
+<p-dataTable [value]="bookings">
     <p-column field="id" header="ID"></p-column>
     <p-column field="psp" header="PSP"></p-column>
     <p-column field="name" header="Name"></p-column>
     <p-column field="description" header="Description"></p-column>
     <p-column field="salesRepresentative" header="Sales Contact"></p-column>
     <p-column field="subproject" header="Subproject"></p-column>
+    <p-column field="minutes" header="Minutes"></p-column>
     <p-column>
         <template pTemplate type="header">Actions</template>
         <template let-row="rowData" pTemplate type="body">

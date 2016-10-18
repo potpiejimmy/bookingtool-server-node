@@ -11,6 +11,7 @@ export class LoginService {
   
   isLoggedIn: boolean = false;
   loginToken: any;
+  loginTokenEncoded: any;
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
@@ -20,15 +21,14 @@ export class LoginService {
   private jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(private http: Http, private localStorageService: LocalStorageService) {
-    this.loginToken = localStorageService.get('token');
-    this.isLoggedIn = this.loginToken != null;
+    this.readToken();
   }
 
-  getHeroes(): Promise<any> {
-    return this.http.get(this.loginServiceUrl)
-               .toPromise()
-               .then(response => response.json())
-               .catch(this.handleError);
+  readToken() {
+    this.loginTokenEncoded = this.localStorageService.get('token');
+    if (!this.loginTokenEncoded) return false;
+    this.loginToken = this.jwtHelper.decodeToken(this.loginTokenEncoded);
+    return this.isLoggedIn = this.loginToken != null;
   }
 
   login(user, password): Promise<boolean> {
@@ -38,10 +38,8 @@ export class LoginService {
           let resJson = result.json();
           let token = resJson.token;
           if (!token) return false;
-          this.loginToken = this.jwtHelper.decodeToken(token);
-          console.info(this.loginToken.roles);
-          this.localStorageService.set('token', this.loginToken);        
-          return this.isLoggedIn = this.loginToken != null;
+          this.localStorageService.set('token', token);
+          return this.readToken();
         });
   }
 

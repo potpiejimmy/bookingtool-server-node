@@ -5,15 +5,6 @@ import * as db from "../util/db";
 
 const loginRouter: Router = Router();
 
-loginRouter.get("/", function (request: Request, response: Response, next: NextFunction) {
-    db.perform(connection => {
-        connection.query("select * from booking_template", (err,res) => {
-            connection.release();
-            response.json(res);
-        });
-    })
-});
-
 loginRouter.post("/", function (request: Request, response: Response, next: NextFunction) {
     db.perform(connection => {
         connection.query("select * from user where name=?",[request.body.user], (err,res)  => {

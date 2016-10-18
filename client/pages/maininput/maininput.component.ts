@@ -1,31 +1,43 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
-import { LoginService } from '../../services/login.service';
+import { BookingsService } from '../../services/bookings.service';
 
 @Component({
   selector: 'maininput',
   templateUrl: 'pt/client/pages/maininput/maininput.html'
 })
 export class MainInputComponent {
-    label = 'Loading data...';
-    data = null;
-    users = [];
 
+    bookings = [];
     current = {"day": Date.now()};
 
-    constructor(private loginService : LoginService) { }
+    constructor(private bookingsService : BookingsService) { }
 
     ngOnInit() {
-        this.loadDetails();
+        this.loadBookings();
     }
 
-    loadDetails() {
-        this.loginService.getHeroes().then(
+    loadBookings() {
+        this.bookingsService.getBookings(this.current.day).then(
             res => {
-                this.data = JSON.stringify(res);
-                this.users = res;
-                this.label = 'Received:';
+                this.bookings = res;
             });
+    }
+
+    nextDay() {
+        this.updateCurrentDay(1);
+        this.loadBookings();
+    }
+
+    previousDay() {
+        this.updateCurrentDay(-1);
+        this.loadBookings();
+    }
+
+    updateCurrentDay(offset: number) {
+        let d = new Date(this.current.day);
+        d.setDate(d.getDate() + offset);
+        this.current.day = d.getTime();
     }
 
     edit(row) {
@@ -34,6 +46,7 @@ export class MainInputComponent {
 
     dateChanged(newValue) {
         console.info("Date changed to: "+newValue);
+        this.loadBookings();
     }
 
     formatDate():string {
