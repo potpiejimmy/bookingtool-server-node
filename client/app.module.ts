@@ -13,7 +13,7 @@ import { LoginService }  from './services/login.service';
 import { AuthHttp }  from './services/authhttp.service';
 import { BookingsService }  from './services/bookings.service';
 
-import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule } from 'primeng/primeng';
+import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule } from 'primeng/primeng';
 
 import { AppComponent }       from './app.component';
 import { LoginComponent }     from './pages/login/login.component';
@@ -24,7 +24,7 @@ import { ExportComponent }    from './pages/export/export.component';
   imports:      [
     routing,
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
-    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule
+    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule
   ],
   declarations: [ AppComponent, LoginComponent, MainInputComponent, ExportComponent ],
   providers: [

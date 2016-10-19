@@ -18,7 +18,6 @@ bookingsRouter.post("/", function (request: Request, response: Response, next: N
                 })
             }, err => { // completed loop
                 connection.release();
-                console.info(JSON.stringify(res));
                 response.json(res);
             });
         });

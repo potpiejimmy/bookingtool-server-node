@@ -63,4 +63,50 @@ export class MainInputComponent {
         this.current.day = parseInt(d.substr(d.indexOf(":")+1));
         console.info("set date " + this.current.day);
     }
+
+
+    // ----------- DUMMY PROPERTIES FOR TESTING
+
+    pieChartDataProjects = {
+        data: {
+                labels: ['Project A','Project B','Project C','Project D','Project E','Project F'],
+                datasets: [ {
+                        data: [300, 50, 100, 10, 50, 80],
+                        backgroundColor: ["#FF6384","#36A2EB","#FFCE56","#886384","#36A288","#66CE56"]
+                    }]    
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'By Project',
+                fontSize: 16
+            },
+            legend: {
+                position: 'right'
+            }
+        }
+    }
+
+    pieChartDataWorkTime = {
+        data: {
+                labels: ['NP','0W'],
+                datasets: [ {
+                        data: [300, 10],
+                        backgroundColor: ["#FF6384","#FFCE56"]
+                    }]    
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'By Work Time',
+                fontSize: 16
+            },
+            legend: {
+                position: 'right'
+            }
+        }
+    }
+
+    footerRows = [{columns:[{footer:'Total:',colspan:6},{footer:'0h'},{footer:''}]}];
+
 }

@@ -58,11 +58,8 @@ html, body {
     padding: 1em;
 }
 
-.panel-grid-table {     
-    border: solid 1px #e0e0e0;
-}
-.panel-grid-table td {     
-    padding: 4px 10px;
+.panel-grid-table td {
+    padding: 5px;
 }
 
 .linkcursor {
@@ -71,4 +68,12 @@ html, body {
 
 .underlined {
     text-decoration: underline;
+}
+
+.ui-datatable .ui-datatable-header {
+    text-align: left;
+}
+
+body .ui-widget-header {
+    background-color: #0277bd; 
 }

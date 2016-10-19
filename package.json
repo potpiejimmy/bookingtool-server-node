@@ -44,6 +44,7 @@
     "angular-2-local-storage": "0.0.20",
     "angular2-jwt": "^0.1.23",
     "bootstrap": "^3.3.6",
+    "chart.js": "^2.3.0",
     "concurrently": "^2.2.0",
     "core-js": "^2.4.1",
     "js-base64": "^2.1.9",

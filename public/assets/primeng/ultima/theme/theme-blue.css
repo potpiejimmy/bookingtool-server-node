@@ -4108,7 +4108,6 @@ body {
         body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
           background-color: #81D4FA; }
     body .ui-panel .ui-panel-content {
-      height: 100%;
       box-sizing: border-box;
       padding: 10px 16px; }
     body .ui-panel .ui-panel-footer {

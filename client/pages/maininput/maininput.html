@@ -1,5 +1,6 @@
 <p></p>
 
+<div class="card">
 <table class="panel-grid-table">
   <tr>
     <td>Date:</td>
@@ -14,10 +15,13 @@
     <td><input type="text" pInputText size="100" placeholder="Search with any keyword or click to select from recently used templates"/></td>
   </tr>
 </table>
+</div>
 
 <p></p>
 
-<p-dataTable [value]="bookings">
+<div class="card">
+<p-dataTable [value]="bookings" [footerRows]="footerRows">
+    <header>Bookings</header>
     <p-column field="id" header="ID"></p-column>
     <p-column field="booking_template.psp" header="PSP"></p-column>
     <p-column field="booking_template.name" header="Name"></p-column>
@@ -32,13 +36,19 @@
         </template>
     </p-column>
 </p-dataTable>
-<!--
-<h3>List</h3>
-<ul>  
-  <li *ngFor="let user of users">
-    {{ user.name }}
-  </li>
-</ul>
-<h3>{{label}}</h3>
-{{ data }}
--->
+</div>
+
+<div class="card">
+    <p-panel header="Your bookings in March">
+      <table>
+        <tr>
+          <td>
+        <div class="card"><p-chart type="pie" [data]="pieChartDataProjects.data" [options]="pieChartDataProjects.options" width="400" height="200"></p-chart></div>
+          </td>
+          <td>
+        <div class="card"><p-chart type="pie" [data]="pieChartDataWorkTime.data" [options]="pieChartDataWorkTime.options" width="400" height="200"></p-chart></div>
+          </td>
+        </tr>
+      </table>
+    </p-panel>
+</div>
