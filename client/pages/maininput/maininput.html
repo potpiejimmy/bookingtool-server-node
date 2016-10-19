@@ -19,11 +19,11 @@
 
 <p-dataTable [value]="bookings">
     <p-column field="id" header="ID"></p-column>
-    <p-column field="psp" header="PSP"></p-column>
-    <p-column field="name" header="Name"></p-column>
+    <p-column field="booking_template.psp" header="PSP"></p-column>
+    <p-column field="booking_template.name" header="Name"></p-column>
     <p-column field="description" header="Description"></p-column>
-    <p-column field="salesRepresentative" header="Sales Contact"></p-column>
-    <p-column field="subproject" header="Subproject"></p-column>
+    <p-column field="sales_representative" header="Sales Contact"></p-column>
+    <p-column field="booking_template.subproject" header="Subproject"></p-column>
     <p-column field="minutes" header="Minutes"></p-column>
     <p-column>
         <template pTemplate type="header">Actions</template>

@@ -21,9 +21,11 @@ loginRouter.post("/", function (request: Request, response: Response, next: Next
 });
 
 function authenticate(connection, user, response: Response) {
-    connection.query("select * from user_role where user_name=?", [user.name], (err,res) => {
+    connection.query("select role from user_role where user_name=?", [user.name], (err,res) => {
         connection.release();
-        user.roles = res;
+        let roles = [];
+        res.forEach(e => roles.push(e.role));
+        user.roles = roles;
         let token = jwt.sign(user, 'supersecret', {
             expiresIn: 10
         });

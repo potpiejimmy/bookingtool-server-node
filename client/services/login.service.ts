@@ -50,11 +50,7 @@ export class LoginService {
 
   isUserInRole(role:string):boolean {
     if (!this.loginToken) return false;
-    let found = null;
-    this.loginToken.roles.forEach(element => {
-      if (element.role == role) found = element;
-    });
-    return found!=null;
+    return this.loginToken.roles.indexOf(role)>=0;
   }
   
   private handleError(error: any): Promise<any> {

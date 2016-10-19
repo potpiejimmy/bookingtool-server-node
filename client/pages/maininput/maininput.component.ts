@@ -49,14 +49,14 @@ export class MainInputComponent {
         this.loadBookings();
     }
 
-    formatDate():string {
-        let d = new Date(this.current.day);
+    formatDate(date):string {
+        let d = new Date(date);
         let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return ("0"+d.getDate()).substr(-2) + " " + months[d.getMonth()] + " " + d.getFullYear(); 
     }
 
     get currentDay():string {
-        return this.formatDate() + "                        :" + this.current.day;
+        return this.formatDate(this.current.day) + "                        :" + this.current.day;
     }
 
     set currentDay(d:string) {
