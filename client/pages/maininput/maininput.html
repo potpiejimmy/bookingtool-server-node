@@ -5,9 +5,13 @@
   <tr>
     <td>Date:</td>
     <td>
-      <i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i>
-      <p-calendar [(ngModel)]="currentDay" dateFormat="dd M yy                        :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar>
-      <i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i>
+      <table>
+        <tr>
+          <td><i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i></td>
+          <td><p-calendar [(ngModel)]="currentDay" dateFormat="dd M yy                        :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar></td>
+          <td><i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i></td>
+        </tr>
+      </table>
     </td>
   </tr>
   <tr>

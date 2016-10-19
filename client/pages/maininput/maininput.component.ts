@@ -10,6 +10,7 @@ export class MainInputComponent {
 
     bookings = [];
     current = {"day": Date.now()};
+    currentYearMonth = -1;
 
     constructor(private bookingsService : BookingsService) { }
 
@@ -18,10 +19,42 @@ export class MainInputComponent {
     }
 
     loadBookings() {
-        this.bookingsService.getBookings(this.current.day).then(
-            res => {
-                this.bookings = res;
-            });
+        this.bookingsService.getBookings(this.current.day).then(res => {
+            this.bookings = res;
+        });
+        this.checkUpdateCharts();
+    }
+
+    checkUpdateCharts() {
+        // only update if month changed:
+        let d = new Date(this.current.day);
+        let yearMonth = d.getFullYear()*100+d.getMonth();
+        if (this.currentYearMonth != yearMonth) {
+            this.currentYearMonth = yearMonth;
+            this.updateCharts(d.getFullYear(), d.getMonth());
+        }
+    }
+
+    updateCharts(year:number, month:number) {
+        this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
+        this.updateChart(year, month, 1, this.pieChartDataProjects.data);
+    }
+
+    updateChart(year:number, month:number, chartType:number, pieChartData) {
+        this.bookingsService.getBookingSumsForMonth(year, month, chartType).then(res=> {
+            pieChartData.labels = [];
+            pieChartData.datasets[0] = {data:[],backgroundColor:this.chartBackgroundColors};
+            if (res.length==0) {
+                pieChartData.labels.push('No bookings');
+                pieChartData.datasets[0].data.push(1);
+                pieChartData.datasets[0].backgroundColor = ["lightGray"];
+            } else {
+                res.forEach(e => {
+                    pieChartData.labels.push(e.label);
+                    pieChartData.datasets[0].data.push(e.minutes);
+                });
+            }
+        });
     }
 
     nextDay() {
@@ -45,7 +78,6 @@ export class MainInputComponent {
     }
 
     dateChanged(newValue) {
-        console.info("Date changed to: "+newValue);
         this.loadBookings();
     }
 
@@ -61,50 +93,21 @@ export class MainInputComponent {
 
     set currentDay(d:string) {
         this.current.day = parseInt(d.substr(d.indexOf(":")+1));
-        console.info("set date " + this.current.day);
     }
 
 
-    // ----------- DUMMY PROPERTIES FOR TESTING
+    // ----------- CHART PROPERTIES
+
+    chartBackgroundColors = ["#FF6384","#36A2EB","#FFCE56","#886384","#36A288","#66CE56"];
 
     pieChartDataProjects = {
-        data: {
-                labels: ['Project A','Project B','Project C','Project D','Project E','Project F'],
-                datasets: [ {
-                        data: [300, 50, 100, 10, 50, 80],
-                        backgroundColor: ["#FF6384","#36A2EB","#FFCE56","#886384","#36A288","#66CE56"]
-                    }]    
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'By Project',
-                fontSize: 16
-            },
-            legend: {
-                position: 'right'
-            }
-        }
+        data: { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] },
+        options: { title: { display: true, text: 'By Project', fontSize: 14 }, legend: { position: 'right' }}
     }
 
     pieChartDataWorkTime = {
-        data: {
-                labels: ['NP','0W'],
-                datasets: [ {
-                        data: [300, 10],
-                        backgroundColor: ["#FF6384","#FFCE56"]
-                    }]    
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'By Work Time',
-                fontSize: 16
-            },
-            legend: {
-                position: 'right'
-            }
-        }
+        data: { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] },
+        options: { title: { display: true, text: 'By Work Time', fontSize: 14 }, legend: { position: 'right' }}
     }
 
     footerRows = [{columns:[{footer:'Total:',colspan:6},{footer:'0h'},{footer:''}]}];

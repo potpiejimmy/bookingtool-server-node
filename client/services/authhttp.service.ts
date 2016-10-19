@@ -15,10 +15,21 @@ export class AuthHttp {
     }
 
     get(url) {
-        return this.http.get(url, this.requestOptions());
+        return this.http.get(url, this.requestOptions())
+                .toPromise()
+                .then(res => res.json())
+                .catch(this.handleError);
     }
 
     post(url, data) {
-        return this.http.post(url, data, this.requestOptions());
+        return this.http.post(url, data, this.requestOptions())
+                .toPromise()
+                .then(res => res.json())
+                .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     }
 }
