@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td>Template Search:</td>
-    <td><input #searchTemplateField type="text" pInputText size="100" placeholder="Search with any keyword or click to select from recently used templates" autofocus/></td>
+    <td><p-autoComplete #searchTemplateField [(ngModel)]="currentTemplateString" [suggestions]="autoCompleteResults" (completeMethod)="search($event)" size="100" placeholder="Search with any keyword or click to select from recently used templates"></p-autoComplete></td>
   </tr>
 </table>
 </div>

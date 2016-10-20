@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import 'rxjs/Rx';
-import { BookingsService } from '../../services/bookings.service';
+import { BookingsService } from '../../services/api/bookings.service';
+import { TemplatesService } from '../../services/api/templates.service';
 
 const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];    
 const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -15,17 +16,20 @@ export class MainInputComponent implements AfterViewInit {
 
     bookings = [];
     current = {"day": Date.now()};
+    currentTemplate;
     currentYearMonth:number = -1;
     chartsTitle:string;
+    autoCompleteResults;
+    autoCompleteResultsTemplates;
 
-    constructor(private bookingsService : BookingsService) { }
+    constructor(private bookingsService: BookingsService, private templatesService: TemplatesService) { }
 
     ngOnInit() {
         this.loadBookings();
     }
 
     ngAfterViewInit() {
-        this.searchTemplateField.nativeElement.focus();
+        //this.searchTemplateField.nativeElement.focus(); // XXX does not work with p-autocomplete
     }
 
     loadBookings() {
@@ -103,6 +107,27 @@ export class MainInputComponent implements AfterViewInit {
 
     set currentDay(d:string) {
         this.current.day = parseInt(d.substr(d.indexOf(":")+1));
+    }
+
+    search(event) {
+        this.templatesService.findBookingTemplates(event.query).then(data => {
+            this.autoCompleteResultsTemplates = data;
+            this.autoCompleteResults = [];
+            data.forEach(i => this.autoCompleteResults.push(i.search_string));
+        });
+    }
+
+    get currentTemplateString():string {
+        return this.currentTemplate ? this.currentTemplate.search_string : null;
+    }
+
+    set currentTemplateString(t:string) {
+        if (this.autoCompleteResultsTemplates) {
+            this.autoCompleteResultsTemplates.forEach(i => {
+                if (i.search_string == t) this.currentTemplate = i;
+            })
+        }
+        console.info("SET TEMPLATE", this.currentTemplate);
     }
 
     // ----------- CHART PROPERTIES

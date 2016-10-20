@@ -11,9 +11,10 @@ import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-loc
 import { AuthGuard } from './services/authguard.service';
 import { LoginService }  from './services/login.service';
 import { AuthHttp }  from './services/authhttp.service';
-import { BookingsService }  from './services/bookings.service';
+import { BookingsService }  from './services/api/bookings.service';
+import { TemplatesService }  from './services/api/templates.service';
 
-import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule } from 'primeng/primeng';
+import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule } from 'primeng/primeng';
 
 import { AppComponent }       from './app.component';
 import { LoginComponent }     from './pages/login/login.component';
@@ -24,14 +25,14 @@ import { ExportComponent }    from './pages/export/export.component';
   imports:      [
     routing,
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
-    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule
+    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule
   ],
   declarations: [ AppComponent, LoginComponent, MainInputComponent, ExportComponent ],
   providers: [
      AuthGuard,
      LoginService,
      AuthHttp,
-     BookingsService,
+     BookingsService,TemplatesService,
      LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }
   ],
   bootstrap:    [ AppComponent ]

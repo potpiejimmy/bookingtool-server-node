@@ -1,6 +1,6 @@
 import { Injectable }    from '@angular/core';
-import { AuthHttp } from './authhttp.service';
-import { LoginService } from './login.service';
+import { AuthHttp } from '../authhttp.service';
+import { LoginService } from '../login.service';
 
 @Injectable()
 export class BookingsService {
