@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import 'rxjs/Rx';
 import { BookingsService } from '../../services/bookings.service';
+
+const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];    
+const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 @Component({
   selector: 'maininput',
   templateUrl: 'pt/client/pages/maininput/maininput.html'
 })
-export class MainInputComponent {
+export class MainInputComponent implements AfterViewInit {
+
+    @ViewChild('searchTemplateField') searchTemplateField;
 
     bookings = [];
     current = {"day": Date.now()};
-    currentYearMonth = -1;
+    currentYearMonth:number = -1;
+    chartsTitle:string;
 
     constructor(private bookingsService : BookingsService) { }
 
     ngOnInit() {
         this.loadBookings();
+    }
+
+    ngAfterViewInit() {
+        this.searchTemplateField.nativeElement.focus();
     }
 
     loadBookings() {
@@ -36,6 +46,7 @@ export class MainInputComponent {
     }
 
     updateCharts(year:number, month:number) {
+        this.chartsTitle = "Your bookings in " + MONTHS[month] + " " + year;
         this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
         this.updateChart(year, month, 1, this.pieChartDataProjects.data);
     }
@@ -47,7 +58,7 @@ export class MainInputComponent {
             if (res.length==0) {
                 pieChartData.labels.push('No bookings');
                 pieChartData.datasets[0].data.push(1);
-                pieChartData.datasets[0].backgroundColor = ["lightGray"];
+                pieChartData.datasets[0].backgroundColor = ["#D3D3D3"];
             } else {
                 res.forEach(e => {
                     pieChartData.labels.push(e.label);
@@ -83,18 +94,16 @@ export class MainInputComponent {
 
     formatDate(date):string {
         let d = new Date(date);
-        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        return ("0"+d.getDate()).substr(-2) + " " + months[d.getMonth()] + " " + d.getFullYear(); 
+        return WEEKDAYS[d.getDay()] + ", " + ("0"+d.getDate()).substr(-2) + " " + MONTHS[d.getMonth()].substr(0,3) + " " + d.getFullYear(); 
     }
 
     get currentDay():string {
-        return this.formatDate(this.current.day) + "                        :" + this.current.day;
+        return this.formatDate(this.current.day) + "                            :" + this.current.day;
     }
 
     set currentDay(d:string) {
         this.current.day = parseInt(d.substr(d.indexOf(":")+1));
     }
-
 
     // ----------- CHART PROPERTIES
 
@@ -110,6 +119,6 @@ export class MainInputComponent {
         options: { title: { display: true, text: 'By Work Time', fontSize: 14 }, legend: { position: 'right' }}
     }
 
-    footerRows = [{columns:[{footer:'Total:',colspan:6},{footer:'0h'},{footer:''}]}];
+    footerRows = [{columns:[{footer:'Total:',colspan:6},{footer:'0 h'},{footer:''}]}];
 
 }

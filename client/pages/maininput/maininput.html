@@ -8,7 +8,7 @@
       <table>
         <tr>
           <td><i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i></td>
-          <td><p-calendar [(ngModel)]="currentDay" dateFormat="dd M yy                        :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar></td>
+          <td><p-calendar [(ngModel)]="currentDay" dateFormat="DD, dd M yy                            :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar></td>
           <td><i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i></td>
         </tr>
       </table>
@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td>Template Search:</td>
-    <td><input type="text" pInputText size="100" placeholder="Search with any keyword or click to select from recently used templates"/></td>
+    <td><input #searchTemplateField type="text" pInputText size="100" placeholder="Search with any keyword or click to select from recently used templates" autofocus/></td>
   </tr>
 </table>
 </div>
@@ -43,11 +43,11 @@
 </div>
 
 <div class="card">
-    <p-panel header="Your bookings in March">
+    <p-panel [header]="chartsTitle">
       <table>
         <tr>
           <td>
-        <div class="card"><p-chart type="pie" [data]="pieChartDataProjects.data" [options]="pieChartDataProjects.options" width="400" height="200"></p-chart></div>
+        <div class="card"><p-chart type="doughnut" [data]="pieChartDataProjects.data" [options]="pieChartDataProjects.options" width="400" height="200"></p-chart></div>
           </td>
           <td>
         <div class="card"><p-chart type="pie" [data]="pieChartDataWorkTime.data" [options]="pieChartDataWorkTime.options" width="400" height="200"></p-chart></div>

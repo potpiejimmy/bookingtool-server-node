@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ViewChild, Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Message }  from 'primeng/primeng';
@@ -7,12 +7,19 @@ import { Message }  from 'primeng/primeng';
     selector: 'login',
     templateUrl: 'pt/client/pages/login/login.html'
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
+
+    @ViewChild('nameInputField') nameInputField;
+
     messages: Message[];
     user: string;
     password: string;
 
     constructor(private loginService: LoginService, private router: Router) {
+    }
+
+    ngAfterViewInit() {
+        this.nameInputField.nativeElement.focus();
     }
 
     setMessage() {
