@@ -7,26 +7,33 @@ import { exec } from "child_process"
 import { loginRouter } from "./routes/login";
 import { bookingsRouter } from "./routes/bookings";
 
+import * as auth from "./util/auth";
+
 const app: express.Application = express();
+
+// configure express:
 app.disable("x-powered-by");
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // favicon
 app.use("/", favicon(join(__dirname, "../public", "favicon.ico")));
 
-// all user app routes:
-app.use("/pt", express.static(join(__dirname, '../public')));
-app.use("/pt/main", express.static(join(__dirname, '../public')));
-app.use("/pt/export", express.static(join(__dirname, '../public')));
+// all public user app routes:
+let publicRoute = express.static(join(__dirname, '../public'));
+app.use("/pt", publicRoute);
+app.use("/pt/main", publicRoute);
+app.use("/pt/export", publicRoute);
 
 // main app files route
 app.use("/pt/client", express.static(join(__dirname, "../client")));
 
-app.use(json());
-app.use(urlencoded({ extended: true }));
+// verifies the jwt for protected API routes
+let verifyTokenMiddleware = auth.verifyToken();
 
 // api routes
 app.use("/pt/api/login", loginRouter);
-app.use("/pt/api/bookings", bookingsRouter);
+app.use("/pt/api/bookings", verifyTokenMiddleware, bookingsRouter);
 
 // error handlers
 // development error handler

@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import * as crypto from "crypto";
-import * as jwt from "jsonwebtoken";
+import * as auth from "../util/auth";
 import * as db from "../util/db";
 
 const loginRouter: Router = Router();
@@ -26,9 +26,7 @@ function authenticate(connection, user, response: Response) {
         let roles = [];
         res.forEach(e => roles.push(e.role));
         user.roles = roles;
-        let token = jwt.sign(user, 'supersecret', {
-            expiresIn: 10
-        });
+        let token = auth.createToken(user);
         response.json({token:token});
     });
 }

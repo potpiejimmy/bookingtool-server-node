@@ -1,5 +1,4 @@
 import { Router, Request, Response, NextFunction } from "express";
-import * as jwt from "jsonwebtoken";
 import * as db from "../util/db";
 import * as utils from "../util/utils";
 
@@ -15,10 +14,9 @@ const bookingsRouter: Router = Router();
  * @param day a date specifying a day of the year
  * @return list of bookings
  */
-bookingsRouter.post("/", function (request: Request, response: Response, next: NextFunction) {
-    let token = jwt.decode(request.header('Authorization'));
+bookingsRouter.post("/", function (request: any, response: Response, next: NextFunction) {
     db.perform(connection => {
-        connection.query("select * from booking where person=? and day=?", [token.name, new Date(request.body.day)], (err,res) => {
+        connection.query("select * from booking where person=? and day=?", [request.user.name, new Date(request.body.day)], (err,res) => {
             asyncLoop(res, (i,next) => {
                 if (!i) {next(); return;} // stupid asyncLoop loops over empty array
                 connection.query("select * from booking_template where id=?", [i.booking_template_id], (err,res) => {
@@ -43,8 +41,7 @@ bookingsRouter.post("/", function (request: Request, response: Response, next: N
  * @param chartType chart type
  * @return Map of booked minutes per booking type
  */
-bookingsRouter.post("/sumsForMonth", function (request: Request, response: Response, next: NextFunction) {
-    let token = jwt.decode(request.header('Authorization'));
+bookingsRouter.post("/sumsForMonth", function (request: any, response: Response, next: NextFunction) {
     let timePeriod = utils.timePeriodForMonth(request.body.year, request.body.month);
     let chartStmt = null;
     switch (request.body.chartType) {
@@ -53,7 +50,7 @@ bookingsRouter.post("/sumsForMonth", function (request: Request, response: Respo
         case 2: chartStmt = "SELECT SUM(b.minutes),COUNT(DISTINCT day) FROM Booking b WHERE b.person=:person AND b.day>=:from AND b.day<:to"; break;
     }
     db.perform(connection => {
-        connection.query(chartStmt, [token.name, timePeriod.from, timePeriod.to], (err,res) => {
+        connection.query(chartStmt, [request.user.name, timePeriod.from, timePeriod.to], (err,res) => {
             connection.release();
             response.json(res);
         });

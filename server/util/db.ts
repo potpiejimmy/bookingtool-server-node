@@ -1,10 +1,10 @@
-var mysql = require('mysql');
+import { IPool, IConnection, IError, createPool } from 'mysql';
 
-var pool;
+var pool : IPool;
 
-function getPool() {
+function getPool():IPool {
     if (!pool) {
-        pool = mysql.createPool({
+        pool = createPool({
             connectionLimit : 10,
             host            : 'localhost',
             user            : 'bookingtool',
@@ -15,8 +15,8 @@ function getPool() {
     return pool;
 }
 
-export function perform(action) {
-    getPool().getConnection((err,connection) => {
+export function perform(action:(connection: IConnection)=>void) {
+    getPool().getConnection((err: IError, connection: IConnection) => {
         if (err) { console.info(err); return; }
         action(connection);
     });
