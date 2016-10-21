@@ -75,6 +75,10 @@ a.subLineLink {
     text-decoration: underline;
 }
 
+.maxWidth150 {
+    max-width: 150px;
+}
+
 .ui-datatable .ui-datatable-header {
     text-align: left;
 }
