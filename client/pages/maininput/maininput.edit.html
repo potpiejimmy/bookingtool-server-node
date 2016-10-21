@@ -1,0 +1,17 @@
+<form id="editform" (ngSubmit)="cancel()">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">PSP:</div>
+            <div class="ui-grid-col-10">{{template.psp}}</div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">Description:</div>
+            <div class="ui-grid-col-10"><input pInputText type="text" name="description" [(ngModel)]="booking.description" size="100"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">Minutes:</div>
+            <div class="ui-grid-col-10"><input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5"></div>
+        </div>
+        <button pButton type="submit" label="Cancel"></button>
+    </div>
+</form>

@@ -129,6 +129,10 @@ export class MainInputComponent implements AfterViewInit {
         }
     }
 
+    cancelEdit() {
+        this.currentTemplate = null;
+    }
+
     // ----------- CHART PROPERTIES
 
     chartBackgroundColors = ["#FF6384","#36A2EB","#FFCE56","#886384","#36A288","#66CE56"];

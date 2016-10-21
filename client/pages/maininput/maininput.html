@@ -24,20 +24,7 @@
 </div>
 
 <div class="card" *ngIf="currentTemplate">
-  <div class="ui-grid ui-grid-responsive ui-grid-pad">
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-2 maxWidth150">PSP:</div>
-      <div class="ui-grid-col-10">{{currentTemplate.psp}}</div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-2 maxWidth150">Description:</div>
-      <div class="ui-grid-col-10"><input pInputText type="text" [(ngModel)]="current.description" size="100"/></div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-2 maxWidth150">Minutes:</div>
-      <div class="ui-grid-col-10"><input type="text" name="minutes" pInputText [(ngModel)]="current.minutes" size="5"/></div>
-    </div>
-  </div>
+  <maininput-edit [template]="currentTemplate" [booking]="current" (onCancel)="cancelEdit()"></maininput-edit>
 </div>
 
 <div class="card">

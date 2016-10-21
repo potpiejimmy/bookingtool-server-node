@@ -19,6 +19,7 @@ import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelMod
 import { AppComponent }       from './app.component';
 import { LoginComponent }     from './pages/login/login.component';
 import { MainInputComponent } from './pages/maininput/maininput.component';
+import { MainInputEditComponent } from './pages/maininput/maininput.edit.component';
 import { ExportComponent }    from './pages/export/export.component';
 
 @NgModule({
@@ -27,7 +28,12 @@ import { ExportComponent }    from './pages/export/export.component';
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
     /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule
   ],
-  declarations: [ AppComponent, LoginComponent, MainInputComponent, ExportComponent ],
+  declarations: [
+     AppComponent,
+     LoginComponent,
+     MainInputComponent, MainInputEditComponent,
+     ExportComponent
+  ],
   providers: [
      AuthGuard,
      LoginService,
