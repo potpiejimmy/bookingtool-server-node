@@ -127,7 +127,6 @@ export class MainInputComponent implements AfterViewInit {
                 if (i.search_string == t) this.currentTemplate = i;
             })
         }
-        console.info("SET TEMPLATE", this.currentTemplate);
     }
 
     // ----------- CHART PROPERTIES
