@@ -12,7 +12,11 @@ export class BookingsService {
     }    
     
     getBookings(day:number): Promise<any> {
-        return this.http.post(this.url, {day:day});
+        return this.http.get(this.url+"?day="+day);
+    }
+
+    saveBooking(booking: any): Promise<any> {
+        return this.http.post(this.url, booking);
     }
 
     getBookingSumsForMonth(year:number, month:number, chartType:number) {

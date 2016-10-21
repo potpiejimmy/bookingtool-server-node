@@ -4,10 +4,17 @@ import * as Bookings from "../business/bookings";
 const bookingsRouter: Router = Router();
 
 /**
- * getBookings({day:number})
+ * getBookings(day?)
+ */
+bookingsRouter.get("/", function (request: any, response: Response, next: NextFunction) {
+    Bookings.getBookings(request.user, request.query.day ? request.query.day : Date.now()).then(res => response.json(res));
+});
+
+/**
+ * saveBooking(booking)
  */
 bookingsRouter.post("/", function (request: any, response: Response, next: NextFunction) {
-    Bookings.getBookings(request.user, request.body.day).then(res => response.json(res));
+    Bookings.saveBooking(request.user, request.body).then(() => response.json('ok'));
 });
 
 /**

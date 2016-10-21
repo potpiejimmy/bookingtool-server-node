@@ -15,7 +15,7 @@ export class MainInputComponent implements AfterViewInit {
     @ViewChild('searchTemplateField') searchTemplateField;
 
     bookings = [];
-    current = {"day": Date.now()};
+    current: any = {day: Date.now()};
     currentTemplate;
     currentYearMonth:number = -1;
     chartsTitle:string;
@@ -45,11 +45,14 @@ export class MainInputComponent implements AfterViewInit {
         let yearMonth = d.getFullYear()*100+d.getMonth();
         if (this.currentYearMonth != yearMonth) {
             this.currentYearMonth = yearMonth;
-            this.updateCharts(d.getFullYear(), d.getMonth());
+            this.updateCharts();
         }
     }
 
-    updateCharts(year:number, month:number) {
+    updateCharts() {
+        let d = new Date(this.current.day);
+        let month = d.getMonth();
+        let year = d.getFullYear();
         this.chartsTitle = "Your bookings in " + MONTHS[month] + " " + year;
         this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
         this.updateChart(year, month, 1, this.pieChartDataProjects.data);
@@ -124,13 +127,31 @@ export class MainInputComponent implements AfterViewInit {
     set currentTemplateString(t:string) {
         if (this.autoCompleteResultsTemplates) {
             this.autoCompleteResultsTemplates.forEach(i => {
-                if (i.search_string == t) this.currentTemplate = i;
+                if (i.search_string == t) this.setCurrentTemplate(i);
             })
         }
     }
 
-    cancelEdit() {
+    setCurrentTemplate(t: any) {
+        this.currentTemplate = t; // this starts the editing form
+        this.current.booking_template_id = t.id;
+        this.current.sales_representative = t.sales_representative;
+        if (!this.current.id)
+            this.current.description = t.description; // adapt description, but only for new bookings
+    }
+
+    cancel() {
         this.currentTemplate = null;
+        this.current = {day: this.current.day};
+    }
+
+    save() {
+        this.currentTemplate = null;
+        console.info("SAVE", this.current);
+        this.bookingsService.saveBooking(this.current).then(()=>{
+            this.cancel();
+            this.updateCharts();
+        });
     }
 
     // ----------- CHART PROPERTIES

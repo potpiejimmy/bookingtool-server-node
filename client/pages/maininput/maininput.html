@@ -24,7 +24,7 @@
 </div>
 
 <div class="card" *ngIf="currentTemplate">
-  <maininput-edit [template]="currentTemplate" [booking]="current" (onCancel)="cancelEdit()"></maininput-edit>
+  <maininput-edit [template]="currentTemplate" [booking]="current" (onCancel)="cancel()" (onSave)="save()"></maininput-edit>
 </div>
 
 <div class="card">

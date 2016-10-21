@@ -54,3 +54,35 @@ export function getBookingSumsForMonth(user: any, year: number, month: number, c
         });
     });
 }
+
+/**
+ * Inserts or updates the given booking in the database.
+ * @param user the current user (jwt)
+ * @param booking a booking
+ */
+export function saveBooking(user: any, booking: any) {
+    return new Promise((resolve,reject) => {
+        //assertNoOverrun(booking);
+        booking.person = user.name;
+        booking.modified_date = new Date();
+        booking.day = new Date(booking.day);
+        if (booking.id) {
+            if (booking.export_state == 1) booking.export_state == 2;
+            db.perform(connection => {
+                connection.query("UPDATE booking SET ? WHERE id=?",[booking, booking.id], err => {
+                    connection.release();
+                    console.info("UPDATE RETURNED", err);
+                    resolve();
+                });
+            });
+        } else {
+            db.perform(connection => {
+                connection.query("INSERT INTO booking SET ?", [booking], err => {
+                    connection.release();
+                    console.info("INSERT RETURNED", err);
+                    resolve();
+                })
+            });
+        }
+    });
+}

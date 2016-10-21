@@ -1,4 +1,4 @@
-<form id="editform" (ngSubmit)="cancel()">
+<form id="editform" (ngSubmit)="save()">
     <div class="ui-grid ui-grid-responsive ui-grid-pad">
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">PSP:</div>
@@ -9,9 +9,18 @@
             <div class="ui-grid-col-10"><input pInputText type="text" name="description" [(ngModel)]="booking.description" size="100"/></div>
         </div>
         <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">Sales Representative:</div>
+            <div class="ui-grid-col-10"><input type="text" name="sale_rep" pInputText [(ngModel)]="booking.sales_representative" size="10" [disabled]="template.sales_representative"></div>
+        </div>
+        <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Minutes:</div>
             <div class="ui-grid-col-10"><input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5"></div>
         </div>
-        <button pButton type="submit" label="Cancel"></button>
+        <div class="ui-grid-row">
+            <div>
+                <button pButton type="submit" label="Save"></button>
+                <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+            </div>
+        </div>
     </div>
 </form>

@@ -11,13 +11,20 @@ export class MainInputEditComponent {
 
     @Input() template: any;
     @Input() booking: any;
+
     @Output() onCancel = new EventEmitter<any>();
+    @Output() onSave = new EventEmitter<any>();
 
     ngOnInit() {
         this.minutesInputField.nativeElement.focus();
+        console.info("TEMPLATE", JSON.stringify(this.template));
     }
 
     cancel() {
         this.onCancel.emit();
+    }
+
+    save() {
+        this.onSave.emit();
     }
 }
