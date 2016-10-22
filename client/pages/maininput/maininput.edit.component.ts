@@ -9,16 +9,18 @@ export class MainInputEditComponent {
 
     @ViewChild('minutesInputField') minutesInputField;
 
-    @Input() template: any;
+    _template: any;
+    @Input() set template(template:any) {
+        this._template = template;
+        // set focus whenever the template is set
+        this.minutesInputField.nativeElement.focus();
+    };
+    get template() { return this._template; }
+
     @Input() booking: any;
 
     @Output() onCancel = new EventEmitter<any>();
     @Output() onSave = new EventEmitter<any>();
-
-    ngOnInit() {
-        this.minutesInputField.nativeElement.focus();
-        console.info("TEMPLATE", JSON.stringify(this.template));
-    }
 
     cancel() {
         this.onCancel.emit();

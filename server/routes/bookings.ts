@@ -7,7 +7,7 @@ const bookingsRouter: Router = Router();
  * getBookings(day?)
  */
 bookingsRouter.get("/", function (request: any, response: Response, next: NextFunction) {
-    Bookings.getBookings(request.user, request.query.day ? request.query.day : Date.now()).then(res => response.json(res));
+    Bookings.getBookings(request.user, request.query.day ? parseInt(request.query.day) : Date.now()).then(res => response.json(res));
 });
 
 /**

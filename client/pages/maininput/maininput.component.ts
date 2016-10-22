@@ -42,17 +42,16 @@ export class MainInputComponent implements AfterViewInit {
     checkUpdateCharts() {
         // only update if month changed:
         let d = new Date(this.current.day);
-        let yearMonth = d.getFullYear()*100+d.getMonth();
+        let month = d.getMonth();
+        let year = d.getFullYear();
+        let yearMonth = year * 100 + month;
         if (this.currentYearMonth != yearMonth) {
             this.currentYearMonth = yearMonth;
-            this.updateCharts();
+            this.updateCharts(year, month);
         }
     }
 
-    updateCharts() {
-        let d = new Date(this.current.day);
-        let month = d.getMonth();
-        let year = d.getFullYear();
+    updateCharts(year: number, month: number) {
         this.chartsTitle = "Your bookings in " + MONTHS[month] + " " + year;
         this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
         this.updateChart(year, month, 1, this.pieChartDataProjects.data);
@@ -147,10 +146,10 @@ export class MainInputComponent implements AfterViewInit {
 
     save() {
         this.currentTemplate = null;
-        console.info("SAVE", this.current);
         this.bookingsService.saveBooking(this.current).then(()=>{
             this.cancel();
-            this.updateCharts();
+            this.currentYearMonth = -1; // force updating of charts
+            this.loadBookings();
         });
     }
 

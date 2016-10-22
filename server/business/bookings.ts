@@ -12,7 +12,7 @@ var asyncLoop = require('node-async-loop');
 export function getBookings(user: any, day: number): Promise<any> {
     return new Promise((resolve,reject) => {
         db.perform(connection => {
-            connection.query("select * from booking where person=? and day=?", [user.name, new Date(day)], (err,res) => {
+            connection.query("select * from booking where person=? and day=?", [user.name, utils.removeTimeFromDate(new Date(day))], (err,res) => {
                 asyncLoop(res, (i,next) => {
                     if (!i) {next(); return;} // stupid asyncLoop loops over empty array
                     connection.query("select * from booking_template where id=?", [i.booking_template_id], (err,res) => {
@@ -71,7 +71,6 @@ export function saveBooking(user: any, booking: any) {
             db.perform(connection => {
                 connection.query("UPDATE booking SET ? WHERE id=?",[booking, booking.id], err => {
                     connection.release();
-                    console.info("UPDATE RETURNED", err);
                     resolve();
                 });
             });
@@ -79,7 +78,6 @@ export function saveBooking(user: any, booking: any) {
             db.perform(connection => {
                 connection.query("INSERT INTO booking SET ?", [booking], err => {
                     connection.release();
-                    console.info("INSERT RETURNED", err);
                     resolve();
                 })
             });

@@ -12,21 +12,16 @@ var asyncLoop = require('node-async-loop');
  */
 export function findBookingTemplates(user: any, searchString: string): Promise<any> {
     return new Promise((resolve,reject) => {
-        db.perform(connection => {
-            Domains.getDomains(user).then(domains => {
-                    let templates = [];
-                    asyncLoop(domains, (i,next) => {
-                        if (!i) {next(); return;} // stupid asyncLoop loops over empty array
-                        connection.query("SELECT * FROM booking_template bt,budget b,project p WHERE bt.budget_id=b.id AND b.project_id=p.id AND p.domain_id=? AND bt.search_string LIKE ? AND bt.active = ? AND p.status=0", [
-                            i.id, "%"+searchString.replace("*", "%").replace(" ", "%") +"%", 1
-                        ], (err, res) => {
-                            res.forEach(e => templates.push(e));
-                            next();
-                        })
-                    }, err => { // completed loop
-                        connection.release();
-                        resolve(templates);
-                    });
+        Domains.getDomains(user).then(domains => {
+            let domainIds = []
+            domains.forEach(i=>domainIds.push(i.id));
+            db.perform(connection => {
+                connection.query("SELECT bt.* FROM booking_template bt,budget b,project p WHERE bt.budget_id=b.id AND b.project_id=p.id AND p.domain_id IN (?) AND bt.search_string LIKE ? AND bt.active = ? AND p.status=0", [
+                    domainIds, "%"+searchString.replace("*", "%").replace(" ", "%") +"%", 1
+                ], (err, res) => {
+                    connection.release();
+                    resolve(res);
+                })
             })
         });
     });
