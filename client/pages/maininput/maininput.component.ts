@@ -90,6 +90,10 @@ export class MainInputComponent implements AfterViewInit {
         this.current.day = d;
     }
 
+    dateChanged(newValue) {
+        this.loadBookings();
+    }
+
     edit(row) {
         console.info(JSON.stringify(row));
     }
