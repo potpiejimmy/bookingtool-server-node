@@ -15,12 +15,13 @@ export class MainInputComponent implements AfterViewInit {
     @ViewChild('searchTemplateField') searchTemplateField;
 
     bookings = [];
-    current: any = {day: Date.now()};
+    current: any = {day: new Date()};
     currentTemplate;
     currentYearMonth:number = -1;
     chartsTitle:string;
     autoCompleteResults;
     autoCompleteResultsTemplates;
+    testDay: Date;
 
     constructor(private bookingsService: BookingsService, private templatesService: TemplatesService) { }
 
@@ -33,7 +34,7 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     loadBookings() {
-        this.bookingsService.getBookings(this.current.day).then(res => {
+        this.bookingsService.getBookings(this.current.day.getTime()).then(res => {
             this.bookings = res;
         });
         this.checkUpdateCharts();
@@ -41,9 +42,8 @@ export class MainInputComponent implements AfterViewInit {
 
     checkUpdateCharts() {
         // only update if month changed:
-        let d = new Date(this.current.day);
-        let month = d.getMonth();
-        let year = d.getFullYear();
+        let month = this.current.day.getMonth();
+        let year = this.current.day.getFullYear();
         let yearMonth = year * 100 + month;
         if (this.currentYearMonth != yearMonth) {
             this.currentYearMonth = yearMonth;
@@ -85,30 +85,18 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     updateCurrentDay(offset: number) {
-        let d = new Date(this.current.day);
+        let d = new Date(this.current.day.getTime());
         d.setDate(d.getDate() + offset);
-        this.current.day = d.getTime();
+        this.current.day = d;
     }
 
     edit(row) {
         console.info(JSON.stringify(row));
     }
 
-    dateChanged(newValue) {
-        this.loadBookings();
-    }
-
     formatDate(date):string {
         let d = new Date(date);
         return WEEKDAYS[d.getDay()] + ", " + ("0"+d.getDate()).substr(-2) + " " + MONTHS[d.getMonth()].substr(0,3) + " " + d.getFullYear(); 
-    }
-
-    get currentDay():string {
-        return this.formatDate(this.current.day) + "                            :" + this.current.day;
-    }
-
-    set currentDay(d:string) {
-        this.current.day = parseInt(d.substr(d.indexOf(":")+1));
     }
 
     search(event) {

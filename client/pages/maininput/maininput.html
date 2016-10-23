@@ -8,8 +8,9 @@
         <table>
           <tr>
             <td><i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i></td>
-            <td><p-calendar [(ngModel)]="currentDay" dateFormat="DD, dd M yy                            :@" (ngModelChange)="dateChanged($event)" [readonlyInput]="true"></p-calendar></td>
+            <td><p-calendar [(ngModel)]="current.day" dateFormat="DD, dd M yy" [readonlyInput]="true"></p-calendar></td>
             <td><i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i></td>
+            <td>{{formatDate(current.day)}}</td>
           </tr>
         </table>
       </div>
