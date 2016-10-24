@@ -66,6 +66,7 @@ export function saveBooking(user: any, booking: any) {
         booking.person = user.name;
         booking.modified_date = new Date();
         booking.day = new Date(booking.day);
+        delete booking.booking_template;
         if (booking.id) {
             if (booking.export_state == 1) booking.export_state == 2;
             db.perform(connection => {
@@ -82,5 +83,21 @@ export function saveBooking(user: any, booking: any) {
                 })
             });
         }
+    });
+}
+
+/**
+ * Removes the booking with the given ID
+ * @param user the current user (jwt)
+ * @param bookingId a booking ID
+ */
+export function deleteBooking(user: any, bookingId: number) {
+    return new Promise((resolve,reject) => {
+        db.perform(connection => {
+            connection.query("DELETE FROM booking WHERE id=? AND person=?",[bookingId, user.name], err => {
+                connection.release();
+                resolve();
+            })
+        });
     });
 }

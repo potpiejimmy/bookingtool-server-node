@@ -1,5 +1,6 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
+import * as Utils from '../../util/utils';
 
 @Component({
   selector: 'maininput-edit',
@@ -21,6 +22,10 @@ export class MainInputEditComponent {
 
     @Output() onCancel = new EventEmitter<any>();
     @Output() onSave = new EventEmitter<any>();
+
+    formattedHours(minutes: number): string {
+        return Utils.formattedHoursForMinutes(minutes);
+    }
 
     cancel() {
         this.onCancel.emit();

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { LoginService } from './login.service';
 import { AuthGuard } from './authguard.service';
 
@@ -18,18 +19,22 @@ export class AuthHttp {
         return { headers: headers };
     }
 
-    get(url) {
-        return this.http.get(url, this.requestOptions())
-                .toPromise()
-                .then(res => res.json())
-                .catch(err => this.handleError(err, this));
+    handleResponse(request: Observable<Response>): Promise<any> {
+        return request.toPromise()
+               .then(res => res.json())
+               .catch(err => this.handleError(err, this));
     }
 
-    post(url, data) {
-        return this.http.post(url, data, this.requestOptions())
-                .toPromise()
-                .then(res => res.json())
-                .catch(err => this.handleError(err, this));
+    get(url): Promise<any>  {
+        return this.handleResponse(this.http.get(url, this.requestOptions()));
+    }
+
+    post(url, data): Promise<any>  {
+        return this.handleResponse(this.http.post(url, data, this.requestOptions()));
+    }
+
+    delete(url): Promise<any>  {
+        return this.handleResponse(this.http.delete(url, this.requestOptions()));
     }
 
     relogin() {

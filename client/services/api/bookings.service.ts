@@ -19,8 +19,11 @@ export class BookingsService {
         return this.http.post(this.url, booking);
     }
 
-    getBookingSumsForMonth(year:number, month:number, chartType:number) {
+    getBookingSumsForMonth(year:number, month:number, chartType:number): Promise<any> {
         return this.http.post(this.url+"sumsForMonth", {year:year,month:month,chartType:chartType});
-            
+    }
+
+    deleteBooking(bookingId: any): Promise<any> {
+        return this.http.delete(this.url+bookingId);
     }
 }

@@ -24,4 +24,11 @@ bookingsRouter.post("/sumsForMonth", function (request: any, response: Response,
     Bookings.getBookingSumsForMonth(request.user, request.body.year, request.body.month, request.body.chartType).then(res => response.json(res));
 });
 
+/**
+ * deleteBooking(bookingId)
+ */
+bookingsRouter.delete("/:id", function (request: any, response: Response, next: NextFunction) {
+    Bookings.deleteBooking(request.user, request.params.id).then(() => response.json('ok'));
+});
+
 export { bookingsRouter }

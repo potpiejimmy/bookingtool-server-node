@@ -1,8 +1,8 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import 'rxjs/Rx';
 import { BookingsService } from '../../services/api/bookings.service';
 import { TemplatesService } from '../../services/api/templates.service';
 import { ConfirmationService } from 'primeng/primeng';
+import * as Utils from '../../util/utils';
 
 const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];    
 const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -33,14 +33,25 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        //this.searchTemplateField.nativeElement.focus(); // XXX does not work with p-autocomplete
+        this.focusSearchField();
+    }
+
+    focusSearchField() {
+        // focus autocomplete input field:
+        this.searchTemplateField.nativeElement.firstElementChild.firstElementChild.firstElementChild.focus();
     }
 
     loadBookings() {
         this.bookingsService.getBookings(this.current.day.getTime()).then(res => {
             this.bookings = res;
+            this.focusSearchField();
         });
         this.checkUpdateCharts();
+    }
+
+    refresh() {
+        this.currentYearMonth = -1; // force updating of charts
+        this.loadBookings();
     }
 
     checkUpdateCharts() {
@@ -98,13 +109,19 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     edit(row) {
-        console.info(JSON.stringify(row));
+        this.current = JSON.parse(JSON.stringify(row));
+        this.current.day = new Date(row.day);
+        this.currentTemplate = row.booking_template; // starts editing
     }
 
     delete(row) {
         this.confirmationService.confirm({
             message: "Really delete?",
-            accept: () => { /* TODO */ }
+            accept: () => { 
+                this.bookingsService.deleteBooking(row.id).then(() => {
+                    this.refresh();
+                })
+            }
         });
     }
 
@@ -150,9 +167,12 @@ export class MainInputComponent implements AfterViewInit {
         this.currentTemplate = null;
         this.bookingsService.saveBooking(this.current).then(()=>{
             this.cancel();
-            this.currentYearMonth = -1; // force updating of charts
-            this.loadBookings();
+            this.refresh();
         });
+    }
+
+    formattedHours(minutes: number): string {
+        return Utils.formattedHoursForMinutes(minutes);
     }
 
     // ----------- CHART PROPERTIES

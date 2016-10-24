@@ -14,7 +14,10 @@
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Minutes:</div>
-            <div class="ui-grid-col-10"><input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5"></div>
+            <div class="ui-grid-col-10">
+                <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5">
+                <span *ngIf="booking.minutes">= {{formattedHours(booking.minutes)}}</span>
+            </div>
         </div>
         <div class="ui-grid-row">
             <div>
