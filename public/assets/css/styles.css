@@ -83,6 +83,10 @@ a.subLineLink {
     text-align: left;
 }
 
+.ui-datatable tfoot th {
+    border-color: #cacaca;
+}
+
 body .ui-widget-header {
     background-color: #0277bd; 
 }
