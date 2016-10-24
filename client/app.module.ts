@@ -14,7 +14,10 @@ import { AuthHttp }  from './services/authhttp.service';
 import { BookingsService }  from './services/api/bookings.service';
 import { TemplatesService }  from './services/api/templates.service';
 
-import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule } from 'primeng/primeng';
+import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
+         CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
+         ConfirmDialogModule } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 
 import { AppComponent }       from './app.component';
 import { LoginComponent }     from './pages/login/login.component';
@@ -26,7 +29,9 @@ import { ExportComponent }    from './pages/export/export.component';
   imports:      [
     routing,
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
-    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule, CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule
+    /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
+                    CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
+                    ConfirmDialogModule
   ],
   declarations: [
      AppComponent,
@@ -38,7 +43,8 @@ import { ExportComponent }    from './pages/export/export.component';
      AuthGuard,
      LoginService,
      AuthHttp,
-     BookingsService,TemplatesService,
+     BookingsService, TemplatesService,
+     /* PrimeNG */ ConfirmationService,
      LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }
   ],
   bootstrap:    [ AppComponent ]

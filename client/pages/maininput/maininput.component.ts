@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import 'rxjs/Rx';
 import { BookingsService } from '../../services/api/bookings.service';
 import { TemplatesService } from '../../services/api/templates.service';
+import { ConfirmationService } from 'primeng/primeng';
 
 const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];    
 const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -23,7 +24,9 @@ export class MainInputComponent implements AfterViewInit {
     autoCompleteResultsTemplates;
     testDay: Date;
 
-    constructor(private bookingsService: BookingsService, private templatesService: TemplatesService) { }
+    constructor(private bookingsService: BookingsService,
+                private templatesService: TemplatesService,
+                private confirmationService: ConfirmationService) { }
 
     ngOnInit() {
         this.loadBookings();
@@ -98,6 +101,13 @@ export class MainInputComponent implements AfterViewInit {
         console.info(JSON.stringify(row));
     }
 
+    delete(row) {
+        this.confirmationService.confirm({
+            message: "Really delete?",
+            accept: () => { /* TODO */ }
+        });
+    }
+
     formatDate(date):string {
         let d = new Date(date);
         return WEEKDAYS[d.getDay()] + ", " + ("0"+d.getDate()).substr(-2) + " " + MONTHS[d.getMonth()].substr(0,3) + " " + d.getFullYear(); 
@@ -159,6 +169,6 @@ export class MainInputComponent implements AfterViewInit {
         options: { title: { display: true, text: 'By Work Time', fontSize: 14 }, legend: { position: 'right' }}
     }
 
-    footerRows = [{columns:[{footer:'Total:',colspan:6},{footer:'0 h'},{footer:''}]}];
+    footerRows = [{columns:[{footer:'',colspan:6},{footer:'0 h'},{footer:''}]}];
 
 }
