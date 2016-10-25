@@ -1,6 +1,5 @@
 import * as db from "../util/db";
-
-var asyncLoop = require('node-async-loop');
+import * as utils from "../util/utils";
 
 /**
  * Returns the list of domains. For a superuser role, a complete list
@@ -19,13 +18,12 @@ export function getDomains(user: any) : Promise<any> {
             } else {
                 connection.query("SELECT * FROM domain_user f WHERE f.user_name=?", [user.name], (err, res) => {
                     let domains = [];
-                    asyncLoop(res, (i,next) => {
-                        if (!i) {next(); return;} // stupid asyncLoop loops over empty array
+                    utils.asyncLoop(res, (i,next) => {
                         connection.query("SELECT * FROM domain WHERE id=?", [i.domain_id], (err,res) => {
                             domains.push(res[0]);
                             next();
                         })
-                    }, err => { // completed loop
+                    }, () => { // completed loop
                         connection.release();
                         resolve(domains);
                     });

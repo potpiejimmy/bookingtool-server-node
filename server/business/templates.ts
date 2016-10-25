@@ -1,8 +1,6 @@
 import * as db from "../util/db";
 import * as Domains from "./domains";
 
-var asyncLoop = require('node-async-loop');
-
 /**
  * findBookingTemplates(String searchString)
  * 

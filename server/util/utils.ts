@@ -17,3 +17,10 @@ export function removeTimeFromDate(d: Date): Date {
     d.setMilliseconds(0);
     return d;
 }
+
+export function asyncLoop(array: any[], iter: (element: any, next: () => void) => void, complete: () => void, index: number = 0) {
+    if (index >= array.length) complete();
+    else iter(array[index], () => {
+        asyncLoop(array, iter, complete, ++index);
+    });
+}

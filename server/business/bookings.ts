@@ -1,8 +1,6 @@
 import * as db from "../util/db";
 import * as utils from "../util/utils";
 
-var asyncLoop = require('node-async-loop');
-
 /**
  * Returns the list of all booking for the given person and day
  * @param user the current user (jwt)
@@ -13,13 +11,12 @@ export function getBookings(user: any, day: number): Promise<any> {
     return new Promise((resolve,reject) => {
         db.perform(connection => {
             connection.query("select * from booking where person=? and day=?", [user.name, utils.removeTimeFromDate(new Date(day))], (err,res) => {
-                asyncLoop(res, (i,next) => {
-                    if (!i) {next(); return;} // stupid asyncLoop loops over empty array
+                utils.asyncLoop(res, (i,next) => {
                     connection.query("select * from booking_template where id=?", [i.booking_template_id], (err,res) => {
                         i.booking_template = res[0];
                         next();
                     })
-                }, err => { // completed loop
+                }, () => { // completed loop
                     connection.release();
                     resolve(res);
                 });
