@@ -10,7 +10,6 @@
             <td><i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i></td>
             <td><p-calendar [(ngModel)]="current.day" (ngModelChange)="dateChanged($event)" dateFormat="DD, dd M yy" [readonlyInput]="true"></p-calendar></td>
             <td><i class="fa fa-arrow-circle-right linkcursor" (click)="nextDay()"></i></td>
-            <td>{{formatDate(current.day)}}</td>
           </tr>
         </table>
       </div>
@@ -29,7 +28,7 @@
 </div>
 
 <div class="card">
-<p-dataTable [value]="bookings" [footerRows]="tableFooter">
+<p-dataTable [value]="bookings">
     <header>Bookings</header>
     <p-column field="id" header="ID" [style]="{'width':'60'}"></p-column>
     <p-column field="booking_template.psp" header="PSP" [style]="{'width':'140'}"></p-column>
@@ -50,6 +49,13 @@
             <i class="fa ui-icon-delete linkcursor" (click)="delete(row)"></i>
         </template>
     </p-column>
+    <p-footerColumnGroup>
+        <p-row>
+            <p-column colspan="6"></p-column>
+            <p-column [footer]="formattedTableSum"></p-column>
+            <p-column></p-column>
+        </p-row>
+    </p-footerColumnGroup>
 </p-dataTable>
 <p-confirmDialog header="Confirmation" icon="fa ui-icon-question-answer" width="425"></p-confirmDialog>
 </div>

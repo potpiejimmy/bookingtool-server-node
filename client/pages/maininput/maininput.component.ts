@@ -5,7 +5,6 @@ import { ConfirmationService } from 'primeng/primeng';
 import * as Utils from '../../util/utils';
 
 const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];    
-const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 @Component({
   selector: 'maininput',
@@ -23,7 +22,6 @@ export class MainInputComponent implements AfterViewInit {
     autoCompleteResults;
     autoCompleteResultsTemplates;
     sumMinutes: number;
-    tableFooter;
 
     constructor(private bookingsService: BookingsService,
                 private templatesService: TemplatesService,
@@ -47,7 +45,6 @@ export class MainInputComponent implements AfterViewInit {
             this.bookings = res;
             this.sumMinutes = 0;
             res.forEach(e => this.sumMinutes += e.minutes);
-            this.updateTableFooter();
             this.focusSearchField();
         });
         this.checkUpdateCharts();
@@ -129,11 +126,6 @@ export class MainInputComponent implements AfterViewInit {
         });
     }
 
-    formatDate(date):string {
-        let d = new Date(date);
-        return WEEKDAYS[d.getDay()] + ", " + ("0"+d.getDate()).substr(-2) + " " + MONTHS[d.getMonth()].substr(0,3) + " " + d.getFullYear(); 
-    }
-
     search(event) {
         this.templatesService.findBookingTemplates(event.query).then(data => {
             this.autoCompleteResultsTemplates = data;
@@ -179,8 +171,8 @@ export class MainInputComponent implements AfterViewInit {
         return Utils.formattedHoursForMinutes(minutes);
     }
 
-    updateTableFooter() {
-        this.tableFooter = [{columns:[{footer:'',colspan:6},{footer:Utils.formattedHoursForMinutes(this.sumMinutes)},{footer:''}]}];
+    get formattedTableSum(): string {
+        return Utils.formattedHoursForMinutes(this.sumMinutes);
     }
 
     // ----------- CHART PROPERTIES
