@@ -1,16 +1,32 @@
 <form id="editform" (ngSubmit)="save()">
     <div class="ui-grid ui-grid-responsive ui-grid-pad">
         <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">Budget:</div>
+            <div class="ui-grid-col-10">
+                <div>Release 13.1 > Change Requests > SR #1235456 PIN Change</div>
+                <div style="display: table-cell;">
+                    <p-chart type="doughnut" [data]="pieChart.data" [options]="pieChart.options" width="50" height="50"></p-chart>
+                </div>
+                <div style="display: table-cell; vertical-align: middle;">
+                    13%
+                </div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">PSP:</div>
             <div class="ui-grid-col-10">{{template.psp}}</div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Description:</div>
-            <div class="ui-grid-col-10"><input pInputText type="text" name="description" [(ngModel)]="booking.description" size="100"/></div>
+            <div class="ui-grid-col-10"><input pInputText type="text" name="description" [(ngModel)]="booking.description" style="width:100%;"/></div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-2 maxWidth150">Sales Representative:</div>
-            <div class="ui-grid-col-10"><input type="text" name="sale_rep" pInputText [(ngModel)]="booking.sales_representative" size="10" [disabled]="template.sales_representative"></div>
+            <div class="ui-grid-col-2 maxWidth150">Sales Info:</div>
+            <div class="ui-grid-col-10"><input type="text" name="sale_rep" pInputText [(ngModel)]="booking.sales_representative" size="10" [disabled]="salesRepDisabled"></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 maxWidth150">Subproject:</div>
+            <div class="ui-grid-col-10">{{template.subproject}}</div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Minutes:</div>

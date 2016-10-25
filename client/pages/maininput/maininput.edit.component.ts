@@ -27,11 +27,24 @@ export class MainInputEditComponent {
         return Utils.formattedHoursForMinutes(minutes);
     }
 
+    get salesRepDisabled(): boolean {
+        return this._template.sales_representative && this._template.sales_representative.length > 0;
+    }
+
     cancel() {
         this.onCancel.emit();
     }
 
     save() {
         this.onSave.emit();
+    }
+
+    // ----------- CHART PROPERTIES
+
+    pieChartColors = ["#FF6384","#CACACA"];
+
+    pieChart = {
+        data: { labels: [], datasets: [ { data: [13, 87], backgroundColor: this.pieChartColors } ] },
+        options: { title: { display: false, text: '13%', fontSize: 14, position: 'right' }, legend: { display: false }, tooltips: {enabled: false}}
     }
 }

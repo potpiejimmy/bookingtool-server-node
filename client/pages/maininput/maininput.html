@@ -1,7 +1,7 @@
 <p></p>
 
 <div class="card">
-  <div class="ui-grid ui-grid-responsive ui-grid-pad">
+  <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad">
     <div class="ui-grid-row">
       <div class="ui-grid-col-2 maxWidth150">Date:</div>
       <div class="ui-grid-col-10">
@@ -17,7 +17,7 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-2 maxWidth150">Template Search:</div>
       <div class="ui-grid-col-10" #searchTemplateField>
-        <p-autoComplete [(ngModel)]="currentTemplateString" [suggestions]="autoCompleteResults" (completeMethod)="search($event)" size="100" placeholder="Search with any keyword or click to select from recently used templates"></p-autoComplete>
+        <p-autoComplete [(ngModel)]="currentTemplateString" [suggestions]="autoCompleteResults" (completeMethod)="search($event)" placeholder="Search with any keyword or click to select from recently used templates"></p-autoComplete>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
 </div>
 
 <div class="card">
-<p-dataTable [value]="bookings">
+<p-dataTable [value]="bookings" [responsive]="true">
     <header>Bookings</header>
     <p-column field="id" header="ID" [style]="{'width':'60'}"></p-column>
     <p-column field="booking_template.psp" header="PSP" [style]="{'width':'140'}"></p-column>
