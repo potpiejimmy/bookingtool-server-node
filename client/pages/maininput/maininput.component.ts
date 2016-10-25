@@ -22,7 +22,8 @@ export class MainInputComponent implements AfterViewInit {
     chartsTitle:string;
     autoCompleteResults;
     autoCompleteResultsTemplates;
-    testDay: Date;
+    sumMinutes: number;
+    tableFooter;
 
     constructor(private bookingsService: BookingsService,
                 private templatesService: TemplatesService,
@@ -44,6 +45,9 @@ export class MainInputComponent implements AfterViewInit {
     loadBookings() {
         this.bookingsService.getBookings(this.current.day.getTime()).then(res => {
             this.bookings = res;
+            this.sumMinutes = 0;
+            res.forEach(e => this.sumMinutes += e.minutes);
+            this.updateTableFooter();
             this.focusSearchField();
         });
         this.checkUpdateCharts();
@@ -175,6 +179,10 @@ export class MainInputComponent implements AfterViewInit {
         return Utils.formattedHoursForMinutes(minutes);
     }
 
+    updateTableFooter() {
+        this.tableFooter = [{columns:[{footer:'',colspan:6},{footer:Utils.formattedHoursForMinutes(this.sumMinutes)},{footer:''}]}];
+    }
+
     // ----------- CHART PROPERTIES
 
     chartBackgroundColors = ["#FF6384","#36A2EB","#FFCE56","#886384","#36A288","#66CE56"];
@@ -188,7 +196,5 @@ export class MainInputComponent implements AfterViewInit {
         data: { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] },
         options: { title: { display: true, text: 'By Work Time', fontSize: 14 }, legend: { position: 'right' }}
     }
-
-    footerRows = [{columns:[{footer:'',colspan:6},{footer:'0 h'},{footer:''}]}];
-
 }
+

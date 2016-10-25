@@ -29,11 +29,11 @@
 </div>
 
 <div class="card">
-<p-dataTable [value]="bookings" [footerRows]="footerRows">
+<p-dataTable [value]="bookings" [footerRows]="tableFooter">
     <header>Bookings</header>
     <p-column field="id" header="ID" [style]="{'width':'60'}"></p-column>
     <p-column field="booking_template.psp" header="PSP" [style]="{'width':'140'}"></p-column>
-    <p-column field="booking_template.name" header="Name" [style]="{'width':'200'}"></p-column>
+    <p-column field="booking_template.name" header="Name" [style]="{'width':'250'}"></p-column>
     <p-column field="description" header="Description"></p-column>
     <p-column field="sales_representative" header="Sales Contact" [style]="{'width':'100'}"></p-column>
     <p-column field="booking_template.subproject" header="Subproject" [style]="{'width':'100'}"></p-column>
