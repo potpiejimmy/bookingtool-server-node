@@ -3,7 +3,7 @@
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Budget:</div>
             <div class="ui-grid-col-10">
-                Release 13.1 > Change Requests > SR #1235456 PIN Change
+                {{budget.name}}
             </div>
         </div>
         <div class="ui-grid-row">
@@ -28,21 +28,21 @@
                     <p-chart type="doughnut" [data]="pieChart.data" [options]="pieChart.options" width="50" height="50"></p-chart>
                 </div>
                 <div style="display: table-cell; vertical-align: middle;">
-                    13%
+                    {{budgetPercentageString()}}
                 </div>
                 <div>
-                    3.25 h left
+                    {{budgetHoursLeftString()}}
                 </div>
             </div>
             <div class="ui-grid-col-10">
                 <div style="display: table-cell;">
                     <span class="md-inputfield" style="margin-top: 24px;">
-                        <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5" style="font-size:24px;">
+                        <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="minutes" style="font-size:24px;" size="5" onkeypress='return event.charCode == 13 || (event.charCode >= 48 && event.charCode <= 57)'>
                         <label>Enter Minutes</label>
                     </span>
                 </div>
                 <div style="display: table-cell;">
-                    <span *ngIf="booking.minutes" style="font-size: 24px;">= {{formattedHours(booking.minutes)}}</span>
+                    <span *ngIf="minutes" style="font-size: 24px;">= {{formattedHours()}}</span>
                 </div>
             </div>
         </div>

@@ -10,7 +10,6 @@ export class MainInputEditComponent {
 
     @ViewChild('minutesInputField') minutesInputField;
 
-    _template: any;
     @Input() set template(template:any) {
         this._template = template;
         // set focus whenever the template is set
@@ -18,13 +17,49 @@ export class MainInputEditComponent {
     };
     get template() { return this._template; }
 
-    @Input() booking: any;
+    @Input() set booking(booking: any) {
+        this._booking = booking;
+        this._minutes = booking.minutes ? "" + booking.minutes : null; 
+        this.updateChart();
+    }
+    get booking() { return this._booking; }
 
     @Output() onCancel = new EventEmitter<any>();
     @Output() onSave = new EventEmitter<any>();
 
-    formattedHours(minutes: number): string {
-        return Utils.formattedHoursForMinutes(minutes);
+    _template: any;
+    _booking: any;
+    _minutes: string;
+
+    budget: any = {minutes: 1440, used: 120, name: 'Release 13.1 > Change Requests > SR #1235456 PIN Change'};
+
+    updateChart() {
+        let chart = {data: [], backgroundColor: this.pieChartColors};
+        let used: number = this.budget.used + this.minutesAsInt();
+        chart.data.push(used);
+        if (used > this.budget.minutes) chart.data.push(0);
+        else chart.data.push(this.budget.minutes - used);
+        this.pieChart.data.datasets[0] = chart;
+    }
+
+    budgetPercentageString(): string {
+        return Utils.roundToPrecision((this.budget.used + this.minutesAsInt()) * 100 / this.budget.minutes, 0) + "%";
+    }
+
+    budgetHoursLeftString(): string {
+        let left: number = this.budget.minutes - (this.budget.used + this.minutesAsInt());
+        if (left < 0) 
+            return Utils.formattedHoursForMinutes(-left) + " overrun";
+        else
+            return Utils.formattedHoursForMinutes(left) + " left";
+    }
+
+    minutesAsInt(): number {
+        return this._minutes && this._minutes.length > 0 ? parseInt(this._minutes) : 0;
+    }
+
+    formattedHours(): string {
+        return Utils.formattedHoursForMinutes(this.minutesAsInt());
     }
 
     get salesRepDisabled(): boolean {
@@ -36,7 +71,17 @@ export class MainInputEditComponent {
     }
 
     save() {
+        this._booking.minutes = this.minutesAsInt();
         this.onSave.emit();
+    }
+
+    get minutes(): string {
+        return this._minutes;
+    }
+
+    set minutes(minutes: string) {
+        this._minutes = minutes;
+        this.updateChart();
     }
 
     // ----------- CHART PROPERTIES
@@ -44,7 +89,7 @@ export class MainInputEditComponent {
     pieChartColors = ["#FF6384","#CACACA"];
 
     pieChart = {
-        data: { labels: [], datasets: [ { data: [13, 87], backgroundColor: this.pieChartColors } ] },
-        options: { title: { display: false, text: '13%', fontSize: 14, position: 'right' }, legend: { display: false }, tooltips: {enabled: false}}
+        data: { labels: [], datasets: [ { data: [], backgroundColor: this.pieChartColors } ] },
+        options: { title: { display: false }, legend: { display: false }, tooltips: {enabled: false}}
     }
 }
