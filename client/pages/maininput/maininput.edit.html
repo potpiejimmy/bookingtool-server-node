@@ -3,13 +3,7 @@
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Budget:</div>
             <div class="ui-grid-col-10">
-                <div>Release 13.1 > Change Requests > SR #1235456 PIN Change</div>
-                <div style="display: table-cell;">
-                    <p-chart type="doughnut" [data]="pieChart.data" [options]="pieChart.options" width="50" height="50"></p-chart>
-                </div>
-                <div style="display: table-cell; vertical-align: middle;">
-                    13%
-                </div>
+                Release 13.1 > Change Requests > SR #1235456 PIN Change
             </div>
         </div>
         <div class="ui-grid-row">
@@ -29,10 +23,27 @@
             <div class="ui-grid-col-10">{{template.subproject}}</div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-2 maxWidth150">Minutes:</div>
+            <div class="ui-grid-col-2 maxWidth150">
+                <div style="display: table-cell;">
+                    <p-chart type="doughnut" [data]="pieChart.data" [options]="pieChart.options" width="50" height="50"></p-chart>
+                </div>
+                <div style="display: table-cell; vertical-align: middle;">
+                    13%
+                </div>
+                <div>
+                    3.25 h left
+                </div>
+            </div>
             <div class="ui-grid-col-10">
-                <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5">
-                <span *ngIf="booking.minutes">= {{formattedHours(booking.minutes)}}</span>
+                <div style="display: table-cell;">
+                    <span class="md-inputfield" style="margin-top: 24px;">
+                        <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="booking.minutes" size="5" style="font-size:24px;">
+                        <label>Enter Minutes</label>
+                    </span>
+                </div>
+                <div style="display: table-cell;">
+                    <span *ngIf="booking.minutes" style="font-size: 24px;">= {{formattedHours(booking.minutes)}}</span>
+                </div>
             </div>
         </div>
         <div class="ui-grid-row">
