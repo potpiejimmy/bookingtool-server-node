@@ -7,6 +7,7 @@ import { exec } from "child_process"
 import { loginRouter } from "./routes/login";
 import { bookingsRouter } from "./routes/bookings";
 import { templatesRouter } from "./routes/templates";
+import { budgetsRouter } from "./routes/budgets";
 
 import * as auth from "./util/auth";
 
@@ -36,6 +37,7 @@ let verifyTokenMiddleware = auth.verifyToken();
 app.use("/pt/api/login", loginRouter);
 app.use("/pt/api/bookings", verifyTokenMiddleware, bookingsRouter);
 app.use("/pt/api/templates", verifyTokenMiddleware, templatesRouter);
+app.use("/pt/api/budgets", /*verifyTokenMiddleware,*/ budgetsRouter);
 
 // error handlers
 // development error handler

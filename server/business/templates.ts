@@ -24,3 +24,20 @@ export function findBookingTemplates(user: any, searchString: string): Promise<a
         });
     });
 }
+
+/**
+ * Returns the booking templates associated with the given budget ID
+ * @param budgetId a budget ID
+ * @return a list of booking templates
+ */
+export function getBookingTemplatesByBudgetId(budgetId: number): Promise<any> {
+    return new Promise((resolve,reject) => {
+        db.perform(connection => {
+            connection.query("SELECT * FROM booking_template bt WHERE bt.budget_id = ? ORDER BY bt.sales_representative,bt.psp", [budgetId], (err,res) => {
+                connection.release();
+                resolve(res);
+            });
+        });
+    });
+}
+
