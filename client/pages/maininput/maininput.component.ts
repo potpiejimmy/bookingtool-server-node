@@ -118,7 +118,8 @@ export class MainInputComponent implements AfterViewInit {
     delete(row) {
         this.confirmationService.confirm({
             message: "Really delete?",
-            accept: () => { 
+            accept: () => {
+                this.cancel(); // cancel editing on delete
                 this.bookingsService.deleteBooking(row.id).then(() => {
                     this.refresh();
                 })

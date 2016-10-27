@@ -1,6 +1,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
 import * as Utils from '../../util/utils';
+import { BudgetsService }  from '../../services/api/budgets.service';
 
 @Component({
   selector: 'maininput-edit',
@@ -9,18 +10,23 @@ import * as Utils from '../../util/utils';
 export class MainInputEditComponent {
 
     @ViewChild('minutesInputField') minutesInputField;
+    @ViewChild('salesInfoInputField') salesInfoInputField;
 
     @Input() set template(template:any) {
         this._template = template;
-        // set focus whenever the template is set
-        this.minutesInputField.nativeElement.focus();
+        this.budgetInfo = { budget: {} };
+        this.fetchBudgetInfo();
     };
     get template() { return this._template; }
 
     @Input() set booking(booking: any) {
         this._booking = booking;
-        this._minutes = booking.minutes ? "" + booking.minutes : null; 
-        this.updateChart();
+        this._minutes = booking.minutes ? "" + booking.minutes : null;
+        // if editing, take into account that booking.minutes is already contained in the budget info
+        if (booking.id) this._minutesAlreadyOnBudget = booking.minutes;
+        else this._minutesAlreadyOnBudget = 0;
+        // set input focus whenever a new booking is set
+        this.setInputFocus();
     }
     get booking() { return this._booking; }
 
@@ -30,24 +36,45 @@ export class MainInputEditComponent {
     _template: any;
     _booking: any;
     _minutes: string;
+    _minutesAlreadyOnBudget: number;
 
-    budget: any = {minutes: 1440, used: 120, name: 'Release 13.1 > Change Requests > SR #1235456 PIN Change'};
+    budgetInfo: any = { budget: {} };
+
+    constructor(private budgetsService: BudgetsService) {}
+
+    setInputFocus() {
+        if (this._booking.sales_representative && this._booking.sales_representative.length > 0)
+            this.minutesInputField.nativeElement.focus();
+        else
+            this.salesInfoInputField.nativeElement.focus();
+    }
+
+    fetchBudgetInfo() {
+        this.budgetsService.getBudgetInfo(this._template.budget_id).then(b => {
+            this.budgetInfo = b
+            this.updateChart();
+        });
+    }
+
+    usedMinutesOnBudget(): number {
+        return this.budgetInfo.booked_minutes_recursive - this._minutesAlreadyOnBudget + this.minutesAsInt();
+    }
 
     updateChart() {
         let chart = {data: [], backgroundColor: this.pieChartColors};
-        let used: number = this.budget.used + this.minutesAsInt();
+        let used: number = this.usedMinutesOnBudget();
         chart.data.push(used);
-        if (used > this.budget.minutes) chart.data.push(0);
-        else chart.data.push(this.budget.minutes - used);
+        if (used > Math.abs(this.budgetInfo.budget.minutes)) chart.data.push(0);
+        else chart.data.push(Math.abs(this.budgetInfo.budget.minutes) - used);
         this.pieChart.data.datasets[0] = chart;
     }
 
     budgetPercentageString(): string {
-        return Utils.roundToPrecision((this.budget.used + this.minutesAsInt()) * 100 / this.budget.minutes, 0) + "%";
+        return Utils.roundToPrecision(this.usedMinutesOnBudget() * 100 / Math.abs(this.budgetInfo.budget.minutes), 0) + "%";
     }
 
     budgetHoursLeftString(): string {
-        let left: number = this.budget.minutes - (this.budget.used + this.minutesAsInt());
+        let left: number = Math.abs(this.budgetInfo.budget.minutes) - this.usedMinutesOnBudget();
         if (left < 0) 
             return Utils.formattedHoursForMinutes(-left) + " overrun";
         else

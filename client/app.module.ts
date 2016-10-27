@@ -13,6 +13,7 @@ import { LoginService }  from './services/login.service';
 import { AuthHttp }  from './services/authhttp.service';
 import { BookingsService }  from './services/api/bookings.service';
 import { TemplatesService }  from './services/api/templates.service';
+import { BudgetsService }  from './services/api/budgets.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
          CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
@@ -43,7 +44,7 @@ import { ExportComponent }    from './pages/export/export.component';
      AuthGuard,
      LoginService,
      AuthHttp,
-     BookingsService, TemplatesService,
+     /* API     */ BookingsService, TemplatesService, BudgetsService,
      /* PrimeNG */ ConfirmationService,
      LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }
   ],
