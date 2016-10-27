@@ -9,7 +9,7 @@ import * as utils from "../util/utils";
  */
 export function getDomains(user: any) : Promise<any> {
     if (user.roles.indexOf('superuser')>=0) {
-        return db.querySingle("SELECT * FROM domain", null);
+        return db.querySingle("SELECT * FROM domain");
     } else {
         return db.connection().then(connection => 
             db.query(connection, "SELECT * FROM domain_user f WHERE f.user_name=?", [user.name]).then(res => {
