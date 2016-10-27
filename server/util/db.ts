@@ -24,14 +24,18 @@ export function connection(): Promise<IConnection> {
     });
 }
 
-export function querySingle(query: string, params: any[]) : Promise<any> {
-    return connection().then(connection => {
-        return new Promise((resolve, reject) => {
-            connection.query(query, params, (err,res) => {
-                connection.release();
-                if (err) { console.info(err); reject(err); }
-                else resolve(res);
-            })
-        });
+export function query(connection: IConnection, stmt: string, params: any[]) : Promise<any> {
+    return new Promise((resolve, reject) => {
+        connection.query(stmt, params, (err,res) => {
+            if (err) { console.info(err); reject(err); }
+            else resolve(res);
+        })
     });
+}
+
+export function querySingle(stmt: string, params: any[]) : Promise<any> {
+    return connection().then(connection => query(connection, stmt, params).then(res => {
+        connection.release();
+        return res;
+    }));
 }

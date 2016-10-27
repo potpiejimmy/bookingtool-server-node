@@ -24,8 +24,8 @@ export function getBudget(budgetId: number): Promise<any> {
 }
 
 function toInfoVo(budget: any, period: any = null): Promise<any> {
-    return getBookedMinutes(budget.id, period).then(minutes => {
-        return Templates.getBookingTemplatesByBudgetId(budget.id).then(templates => {
+    return getBookedMinutes(budget.id, period).then(minutes => 
+        Templates.getBookingTemplatesByBudgetId(budget.id).then(templates => {
             return {
                 budget: budget,
                 booked_minutes: minutes,
@@ -33,7 +33,7 @@ function toInfoVo(budget: any, period: any = null): Promise<any> {
                 number_of_templates: templates.length
             };
         })
-    });
+    );
 }
 
 export function getBookedMinutes(budgetId: number, period: any = null): Promise<any> {
@@ -55,20 +55,18 @@ function calculateBudget(budget: any, period: any): Promise<any> {
             return budget;
         }
         
-        return new Promise((resolve,reject) => {
-            let sum: number = 0;
-            let sumBookedRecursive: number = budget.booked_minutes;
-            utils.asyncLoop(childBudgets, (b, next) => {
-                toInfoVo(b, period).then(binfo => calculateBudget(binfo, period).then(child => {
-                    sum += Math.abs(child.budget.minutes);
-                    sumBookedRecursive += child.booked_minutes_recursive;
-                    next();
-                }));
-            }, () => {
-                budget.budget.minutes = -sum; // negative means 'calculated'
-                budget.booked_minutes_recursive = sumBookedRecursive;
-                resolve(budget);
-            });
+        let sum: number = 0;
+        let sumBookedRecursive: number = budget.booked_minutes;
+        return utils.asyncLoopP(childBudgets, (b, next) => {
+            toInfoVo(b, period).then(binfo => calculateBudget(binfo, period).then(child => {
+                sum += Math.abs(child.budget.minutes);
+                sumBookedRecursive += child.booked_minutes_recursive;
+                next();
+            }));
+        }).then(() => {
+            budget.budget.minutes = -sum; // negative means 'calculated'
+            budget.booked_minutes_recursive = sumBookedRecursive;
+            return budget;
         });
     });
 }

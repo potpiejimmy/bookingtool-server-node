@@ -8,21 +8,19 @@ import * as utils from "../util/utils";
  * @return list of bookings
  */
 export function getBookings(user: any, day: number): Promise<any> {
-    return db.connection().then(connection => {
-        return new Promise((resolve, reject) => {
-            connection.query("select * from booking where person=? and day=?", [user.name, utils.removeTimeFromDate(new Date(day))], (err,res) => {
-                utils.asyncLoop(res, (i,next) => {
-                    connection.query("select * from booking_template where id=?", [i.booking_template_id], (err,res) => {
-                        i.booking_template = res[0];
-                        next();
-                    })
-                }, () => { // completed loop
-                    connection.release();
-                    resolve(res);
+    return db.connection().then(connection => 
+        db.query(connection, "select * from booking where person=? and day=?", [user.name, utils.removeTimeFromDate(new Date(day))]).then(res =>
+            utils.asyncLoopP(res, (i,next) => {
+                db.query(connection, "select * from booking_template where id=?", [i.booking_template_id]).then(res => {
+                    i.booking_template = res[0];
+                    next();
                 });
-            });
-        });
-    })
+            }).then(() => { // completed loop
+                connection.release();
+                return res;
+            })
+        )
+    );
 }
 
 /**

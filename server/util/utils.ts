@@ -24,3 +24,7 @@ export function asyncLoop(array: any[], iter: (element: any, next: () => void) =
         asyncLoop(array, iter, complete, ++index);
     });
 }
+
+export function asyncLoopP(array: any[], iter: (element: any, next: () => void) => void): Promise<any> {
+    return new Promise((resolve, reject) => asyncLoop(array, iter, () => resolve()));
+}
