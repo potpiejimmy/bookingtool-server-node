@@ -20,15 +20,7 @@ export function getBudgetInfo(budgetId: number, period: any = null): Promise<any
  * @return the budget
  */
 export function getBudget(budgetId: number): Promise<any> {
-    return new Promise((resolve, reject) => {
-        db.perform(connection => {
-            connection.query("SELECT * FROM budget WHERE id=?", [budgetId], (err,res) => {
-                connection.release();
-                if (err || res.length < 1) resolve();
-                else resolve(res[0]);
-            })
-        });
-    });
+    return db.querySingle("SELECT * FROM budget WHERE id=?", [budgetId]).then(res => res[0]);
 }
 
 function toInfoVo(budget: any, period: any = null): Promise<any> {
@@ -45,18 +37,11 @@ function toInfoVo(budget: any, period: any = null): Promise<any> {
 }
 
 export function getBookedMinutes(budgetId: number, period: any = null): Promise<any> {
-    return new Promise((resolve, reject) => {
-        db.perform(connection => {
-            let stmt: string = "SELECT SUM(b.minutes) AS sum FROM booking b, booking_template t WHERE b.booking_template_id=t.id AND t.budget_id=?";
-            if (period) stmt += " AND b.day>=:from AND b.day<:to";
-            let stmtParams: any[] = [budgetId];
-            if (period) stmtParams.push(period.from, period.to);
-            connection.query(stmt, stmtParams, (err,res) => {
-                connection.release();
-                resolve(res[0].sum ? res[0].sum : 0);
-            });
-        });
-    });
+    let stmt: string = "SELECT SUM(b.minutes) AS sum FROM booking b, booking_template t WHERE b.booking_template_id=t.id AND t.budget_id=?";
+    if (period) stmt += " AND b.day>=:from AND b.day<:to";
+    let stmtParams: any[] = [budgetId];
+    if (period) stmtParams.push(period.from, period.to);
+    return db.querySingle(stmt, stmtParams).then(res => res[0].sum ? res[0].sum : 0);
 }
 
 function calculateBudget(budget: any, period: any): Promise<any> {
@@ -95,12 +80,5 @@ function calculateBudget(budget: any, period: any): Promise<any> {
  * @return list of budgets
  */
 export function getBudgetsForParent(parentId: number): Promise<any> {
-    return new Promise((resolve, reject) => {
-        db.perform(connection => {
-            connection.query("SELECT * FROM budget b WHERE b.parent_id = ? ORDER BY b.name", [parentId], (err,res) => {
-                connection.release();
-                resolve(res);
-            })
-        });
-    });
+    return db.querySingle("SELECT * FROM budget b WHERE b.parent_id = ? ORDER BY b.name", [parentId]);
 }

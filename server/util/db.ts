@@ -15,9 +15,23 @@ function getPool():IPool {
     return pool;
 }
 
-export function perform(action:(connection: IConnection)=>void) {
-    getPool().getConnection((err: IError, connection: IConnection) => {
-        if (err) { console.info(err); return; }
-        action(connection);
+export function connection(): Promise<IConnection> {
+    return new Promise((resolve, reject) => {
+        getPool().getConnection((err: IError, connection: IConnection) => {
+            if (err) { console.info(err); reject(err); }
+            else resolve(connection);
+        });
+    });
+}
+
+export function querySingle(query: string, params: any[]) : Promise<any> {
+    return connection().then(connection => {
+        return new Promise((resolve, reject) => {
+            connection.query(query, params, (err,res) => {
+                connection.release();
+                if (err) { console.info(err); reject(err); }
+                else resolve(res);
+            })
+        });
     });
 }

@@ -8,14 +8,11 @@ import * as utils from "../util/utils";
  * @return list of domains
  */
 export function getDomains(user: any) : Promise<any> {
-    return new Promise((resolve, reject) => {
-        db.perform(connection => {
-            if (user.roles.indexOf('superuser')>=0) {
-                connection.query("SELECT * FROM domain", (err, res) => {
-                    connection.release();
-                    resolve(res);
-                });
-            } else {
+    if (user.roles.indexOf('superuser')>=0) {
+        return db.querySingle("SELECT * FROM domain", null);
+    } else {
+        return db.connection().then(connection => {
+            return new Promise((resolve, reject) => {
                 connection.query("SELECT * FROM domain_user f WHERE f.user_name=?", [user.name], (err, res) => {
                     let domains = [];
                     utils.asyncLoop(res, (i,next) => {
@@ -28,7 +25,7 @@ export function getDomains(user: any) : Promise<any> {
                         resolve(domains);
                     });
                 });
-            }
-        })
-    });
+            });
+        });
+    }
 }
