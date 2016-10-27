@@ -27,3 +27,12 @@ export function getBookingTemplatesByBudgetId(budgetId: number): Promise<any> {
     return db.querySingle("SELECT * FROM booking_template bt WHERE bt.budget_id = ? ORDER BY bt.sales_representative,bt.psp", [budgetId]);
 }
 
+/**
+ * Returns the template for the given ID.
+ * @export
+ * @param {number} bookingTemplateId
+ * @returns {Promise<any>}
+ */
+export function getBookingTemplate(bookingTemplateId: number): Promise<any> {
+    return db.querySingle("SELECT * FROM booking_template WHERE id=?", [bookingTemplateId]).then(res => res[0]);
+}

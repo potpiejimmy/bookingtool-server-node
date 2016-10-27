@@ -1,5 +1,7 @@
 import * as db from "../util/db";
 import * as utils from "../util/utils";
+import * as Budgets from "./budgets";
+import * as Templates from "./templates";
 
 /**
  * Returns the list of all booking for the given person and day
@@ -21,6 +23,10 @@ export function getBookings(user: any, day: number): Promise<any> {
             })
         )
     );
+}
+
+export function getBooking(id: number): Promise<any> {
+    return db.querySingle("SELECT * FROM booking WHERE id=?", [id]).then(res => res[0]);
 }
 
 /**
@@ -49,17 +55,18 @@ export function getBookingSumsForMonth(user: any, year: number, month: number, c
  * @param booking a booking
  */
 export function saveBooking(user: any, booking: any): Promise<any> {
-    //assertNoOverrun(booking);
-    booking.person = user.name;
-    booking.modified_date = new Date();
-    booking.day = new Date(booking.day);
-    delete booking.booking_template;
-    if (booking.id) {
-        if (booking.export_state == 1) booking.export_state == 2;
-        return db.querySingle("UPDATE booking SET ? WHERE id=?",[booking, booking.id]);
-    } else {
-        return db.querySingle("INSERT INTO booking SET ?", [booking]);
-    }
+    return assertNoOverrun(booking).then(() => {
+        booking.person = user.name;
+        booking.modified_date = new Date();
+        booking.day = new Date(booking.day);
+        delete booking.booking_template;
+        if (booking.id) {
+            if (booking.export_state == 1) booking.export_state == 2;
+            return db.querySingle("UPDATE booking SET ? WHERE id=?",[booking, booking.id]);
+        } else {
+            return db.querySingle("INSERT INTO booking SET ?", [booking]);
+        }
+    });
 }
 
 /**
@@ -69,4 +76,27 @@ export function saveBooking(user: any, booking: any): Promise<any> {
  */
 export function deleteBooking(user: any, bookingId: number): Promise<any> {
     return db.querySingle("DELETE FROM booking WHERE id=? AND person=?",[bookingId, user.name]);
+}
+
+function assertNoOverrun(booking: any): Promise<any> {
+    // get associated budget:
+    return Templates.getBookingTemplate(booking.booking_template_id)
+        .then(t => Budgets.getBudget(t.budget_id))
+        .then(budget => {
+            if (budget.allow_overrun == 1) return; // overrun allowed, everything is fine
+            
+            // check whether budget is about to overrun:
+            return Budgets.getBudgetInfo(budget.id).then(budgetInfo => 
+                getBooking(booking.id ? booking.id : 0).then(bookingInDb => {
+                    let usedMinutes: number = budgetInfo.booked_minutes_recursive;
+
+                    // subtract old value in DB if editing:
+                    if (bookingInDb) usedMinutes -= bookingInDb.minutes;
+                    
+                    // now check whether inserted or edited value will fit into the remaining budget:
+                    if (usedMinutes + booking.minutes > Math.abs(budgetInfo.budget.minutes))
+                        throw "Sorry, the remaining budget is insufficient and budget overrun is not allowed. Please contact your project manager to resolve this issue.";
+                })
+            );
+        });
 }
