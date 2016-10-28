@@ -3,11 +3,13 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoginService } from './login.service';
 import { AuthGuard } from './authguard.service';
+import { AppService } from './app.service';
 
 @Injectable()
 export class AuthHttp {
     constructor (
         private http: Http,
+        private app: AppService,
         private loginService: LoginService,
         private authGuard : AuthGuard) {
     }
@@ -20,6 +22,7 @@ export class AuthHttp {
     }
 
     handleResponse(request: Observable<Response>): Promise<any> {
+        this.app.clearMessages();
         return request.toPromise()
                .then(res => res.json())
                .catch(err => this.handleError(err, this));
@@ -44,11 +47,9 @@ export class AuthHttp {
     }
 
     private handleError(error: any, me: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        if (error.status == 401) {
-            console.info("HTTP STATUS", error.status);
-            me.relogin();
-        }
+        console.error('An error occurred', error); // XXX for debugging purposes
+        me.app.setMessage("Error", error.json().error || error.message || error);
+        if (error.status == 401) me.relogin(); // not authorized, go to login
         return Promise.reject(error.message || error);
     }
 }

@@ -27,6 +27,8 @@
   <maininput-edit [template]="currentTemplate" [booking]="current" (onCancel)="cancel()" (onSave)="save()"></maininput-edit>
 </div>
 
+<p-messages [value]="app.messages"></p-messages>
+
 <div class="card">
 <p-dataTable [value]="bookings" [responsive]="true">
     <header>Bookings</header>

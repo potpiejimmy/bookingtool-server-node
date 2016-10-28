@@ -9,6 +9,7 @@ import { HttpModule }    from '@angular/http';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 
 import { AuthGuard } from './services/authguard.service';
+import { AppService } from './services/app.service';
 import { LoginService }  from './services/login.service';
 import { AuthHttp }  from './services/authhttp.service';
 import { BookingsService }  from './services/api/bookings.service';
@@ -41,9 +42,7 @@ import { ExportComponent }    from './pages/export/export.component';
      ExportComponent
   ],
   providers: [
-     AuthGuard,
-     LoginService,
-     AuthHttp,
+     AuthGuard, AppService, LoginService, AuthHttp,
      /* API     */ BookingsService, TemplatesService, BudgetsService,
      /* PrimeNG */ ConfirmationService,
      LocalStorageService, { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: { prefix: 'bookingtool', storageType: 'sessionStorage' } }

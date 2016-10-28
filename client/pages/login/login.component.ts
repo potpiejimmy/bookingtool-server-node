@@ -1,7 +1,7 @@
 import { ViewChild, Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
-import { Message }  from 'primeng/primeng';
+import { AppService } from '../../services/app.service';
 
 @Component({
     selector: 'login',
@@ -11,20 +11,17 @@ export class LoginComponent implements AfterViewInit {
 
     @ViewChild('nameInputField') nameInputField;
 
-    messages: Message[];
     user: string;
     password: string;
 
-    constructor(private loginService: LoginService, private router: Router) {
+    constructor(
+        private app: AppService,
+        private loginService: LoginService,
+        private router: Router) {
     }
 
     ngAfterViewInit() {
         this.nameInputField.nativeElement.focus();
-    }
-
-    setMessage() {
-        this.messages = [];
-        this.messages.push({severity:'error', summary:'Login failed', detail:'Unknown user or wrong password.'});
     }
 
     login() {
@@ -36,7 +33,7 @@ export class LoginComponent implements AfterViewInit {
                 // Redirect the user
                 this.router.navigate([redirect]);
             } else {
-                this.setMessage();
+                this.app.setMessage('Login failed', 'Unknown user or wrong password.');
             }
         });
     }

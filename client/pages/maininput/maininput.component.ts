@@ -1,4 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { AppService } from '../../services/app.service';
 import { BookingsService } from '../../services/api/bookings.service';
 import { TemplatesService } from '../../services/api/templates.service';
 import { ConfirmationService } from 'primeng/primeng';
@@ -23,7 +24,8 @@ export class MainInputComponent implements AfterViewInit {
     autoCompleteResultsTemplates;
     sumMinutes: number;
 
-    constructor(private bookingsService: BookingsService,
+    constructor(private app: AppService,
+                private bookingsService: BookingsService,
                 private templatesService: TemplatesService,
                 private confirmationService: ConfirmationService) { }
 
@@ -161,7 +163,6 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     save() {
-        this.currentTemplate = null;
         this.bookingsService.saveBooking(this.current).then(()=>{
             this.cancel();
             this.refresh();
