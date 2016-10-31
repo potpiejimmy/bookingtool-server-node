@@ -64,15 +64,18 @@
 
 <div class="card">
     <p-panel [header]="chartsTitle">
-      <table>
-        <tr>
-          <td>
-        <div class="card"><p-chart type="doughnut" [data]="pieChartDataProjects.data" [options]="pieChartDataProjects.options" width="400" height="200"></p-chart></div>
-          </td>
-          <td>
-        <div class="card"><p-chart type="pie" [data]="pieChartDataWorkTime.data" [options]="pieChartDataWorkTime.options" width="400" height="200"></p-chart></div>
-          </td>
-        </tr>
-      </table>
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          <div class="card"><p-chart type="doughnut" [data]="pieChartDataProjects.data" [options]="pieChartDataProjects.options" width="400" height="200"></p-chart></div>
+        </div>
+        <div class="ui-grid-col-4">
+          <div class="card"><p-chart type="pie" [data]="pieChartDataWorkTime.data" [options]="pieChartDataWorkTime.options" width="400" height="200"></p-chart></div>
+        </div>
+        <div class="ui-grid-col-4">
+          <div class="card"><p-chart type="bar" [data]="barChartWorkTime.data" [options]="barChartWorkTime.options" width="400" height="200"></p-chart></div>
+        </div>
+      </div>
+    </div>
     </p-panel>
 </div>

@@ -10,8 +10,12 @@ import * as Templates from "./templates";
  */
 export function getBudgetInfo(budgetId: number, period: any = null): Promise<any> {
     return getBudget(budgetId)
-        .then(budget => budget ? toInfoVo(budget, period) : budget)
-        .then(budget => budget ? calculateBudget(budget, period) : budget);
+        .then(budget => toInfoVo(budget, period))
+        .then(budget => calculateBudget(budget, period))
+        .then(budget => getFullBudgetName(budget.budget.id).then(n => {
+            budget.full_name = n;
+            return budget;
+        }));
 }
 
 /**
@@ -23,7 +27,27 @@ export function getBudget(budgetId: number): Promise<any> {
     return db.querySingle("SELECT * FROM budget WHERE id=?", [budgetId]).then(res => res[0]);
 }
 
+/**
+ * Returns the full path name for the given budget ID
+ * @param budgetId a budget ID
+ * @return full budget path name
+ */
+export function getFullBudgetName(budgetId: number): Promise<any> {
+    return getBudget(budgetId).then(b => {
+        let condition = { parent_id: b.parent_id };
+        let stb: string = b.name;
+        return utils.asyncWhileP(() => condition.parent_id, next => {
+            getBudget(condition.parent_id).then(b => {
+                stb = b.name + " \u25B6 " + stb;
+                condition.parent_id = b.parent_id;
+                next();
+            });
+        }).then(() => stb);
+    });
+}
+
 function toInfoVo(budget: any, period: any = null): Promise<any> {
+    if (!budget) return Promise.reject("budget is null");
     return getBookedMinutes(budget.id, period).then(minutes => 
         Templates.getBookingTemplatesByBudgetId(budget.id).then(templates => {
             return {
@@ -58,11 +82,11 @@ function calculateBudget(budget: any, period: any): Promise<any> {
         let sum: number = 0;
         let sumBookedRecursive: number = budget.booked_minutes;
         return utils.asyncLoopP(childBudgets, (b, next) => {
-            toInfoVo(b, period).then(binfo => calculateBudget(binfo, period).then(child => {
+            toInfoVo(b, period).then(binfo => calculateBudget(binfo, period)).then(child => {
                 sum += Math.abs(child.budget.minutes);
                 sumBookedRecursive += child.booked_minutes_recursive;
                 next();
-            }));
+            });
         }).then(() => {
             budget.budget.minutes = -sum; // negative means 'calculated'
             budget.booked_minutes_recursive = sumBookedRecursive;

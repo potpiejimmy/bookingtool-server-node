@@ -26,6 +26,8 @@ let publicRoute = express.static(join(__dirname, '../public'));
 app.use("/pt", publicRoute);
 app.use("/pt/main", publicRoute);
 app.use("/pt/export", publicRoute);
+// redirect direct call to /login
+app.get("/pt/login", (req,res) => {res.redirect("/pt")});
 
 // main app files route
 app.use("/pt/client", express.static(join(__dirname, "../client")));

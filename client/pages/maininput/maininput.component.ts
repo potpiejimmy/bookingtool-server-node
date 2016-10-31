@@ -72,6 +72,7 @@ export class MainInputComponent implements AfterViewInit {
         this.chartsTitle = "Your bookings in " + MONTHS[month] + " " + year;
         this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
         this.updateChart(year, month, 1, this.pieChartDataProjects.data);
+        this.updateChart(year, month, 2, this.barChartWorkTime.data);
     }
 
     updateChart(year:number, month:number, chartType:number, pieChartData) {
@@ -83,10 +84,17 @@ export class MainInputComponent implements AfterViewInit {
                 pieChartData.datasets[0].data.push(1);
                 pieChartData.datasets[0].backgroundColor = ["#D3D3D3"];
             } else {
-                res.forEach(e => {
-                    pieChartData.labels.push(e.label);
-                    pieChartData.datasets[0].data.push(e.minutes);
-                });
+                if (chartType == 2) {
+                    let diff: number = res[0].minutes - res[0].days * 8 * 60;
+                    pieChartData.labels.push(res[0].days + " day(s)", (diff >= 0 ? "+" : "") + Utils.formattedHoursForMinutes(diff));
+                    pieChartData.datasets[0].data.push(diff >= 0 ? -res[0].days * 8 : res[0].days * 8, diff/60);
+                    pieChartData.datasets[0].backgroundColor = diff >= 0 ?  ["#D3D3D3", "#66CE56"] : ["#D3D3D3", "#FF6384"];
+                } else {
+                    res.forEach(e => {
+                        pieChartData.labels.push(e.label);
+                        pieChartData.datasets[0].data.push(e.minutes);
+                    });
+                }
             }
         });
     }
@@ -160,6 +168,8 @@ export class MainInputComponent implements AfterViewInit {
     cancel() {
         this.currentTemplate = null;
         this.current = {day: this.current.day};
+        this.app.clearMessages();
+        this.focusSearchField();
     }
 
     save() {
@@ -189,6 +199,11 @@ export class MainInputComponent implements AfterViewInit {
     pieChartDataWorkTime = {
         data: { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] },
         options: { title: { display: true, text: 'By Work Time', fontSize: 14 }, legend: { position: 'right' }}
+    }
+
+    barChartWorkTime = {
+        data: { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] },
+        options: { title: { display: true, text: 'Your hours vs. 8h/day', fontSize: 14 }, legend: { display: false }}
     }
 }
 
