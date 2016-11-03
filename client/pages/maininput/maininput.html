@@ -17,7 +17,18 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-2 maxWidth150">Template Search:</div>
       <div class="ui-grid-col-10" #searchTemplateField>
-        <p-autoComplete [(ngModel)]="currentTemplateString" [suggestions]="autoCompleteResults" (completeMethod)="search($event)" placeholder="Search with any keyword or click to select from recently used templates"></p-autoComplete>
+        <p-autoComplete [(ngModel)]="currentTemplateString" [suggestions]="autoCompleteResults" (completeMethod)="search($event)" placeholder="Search with any keyword or click to select from recently used templates" (click)="quickSelectPanel.toggle($event,quickSelectPanelAnchor)"></p-autoComplete>
+        <div #quickSelectPanelAnchor style="display: table-cell;"></div>
+        <p-overlayPanel #quickSelectPanel>
+          <div style="width: 960px;">
+            <p-dataTable [value]="quickSelectionList" selectionMode="single" (onRowSelect)="quickSelectPanel.hide(); onQuickSelectRow($event);">
+              <p-column field="psp"></p-column>
+              <p-column field="name"></p-column>
+              <p-column field="description"></p-column>
+              <p-column field="sales_representative"></p-column>
+            </p-dataTable>
+          </div>
+        </p-overlayPanel>
       </div>
     </div>
   </div>

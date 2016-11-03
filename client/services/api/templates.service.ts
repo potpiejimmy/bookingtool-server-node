@@ -11,6 +11,10 @@ export class TemplatesService {
     }    
     
     findBookingTemplates(searchString:string): Promise<any> {
-        return this.http.get(this.url+"?search="+searchString); // XXX
+        return this.http.get(this.url+"?search="+searchString); // XXX escape
+    }
+
+    getLastUsedByPerson(num: number): Promise<any> {
+        return this.http.get(this.url+"?limit="+num);
     }
 }

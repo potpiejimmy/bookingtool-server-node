@@ -36,3 +36,13 @@ export function getBookingTemplatesByBudgetId(budgetId: number): Promise<any> {
 export function getBookingTemplate(bookingTemplateId: number): Promise<any> {
     return db.querySingle("SELECT * FROM booking_template WHERE id=?", [bookingTemplateId]).then(res => res[0]);
 }
+
+/**
+ * Returns the list of last used booking templates for the given person.
+ * @param user user jwt token
+ * @param num number of templates to return
+ * @return list of last used templates
+ */
+export function getLastUsedByPerson(user: any, num: number = 10): Promise<any> {
+    return db.querySingle("SELECT bt.* FROM booking_template bt,booking b WHERE b.booking_template_id = bt.id AND b.person = ? GROUP BY bt.id ORDER BY MAX(b.modified_date) DESC, bt.id LIMIT ?", [user.name, num]);
+}

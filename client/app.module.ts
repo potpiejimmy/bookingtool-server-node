@@ -18,7 +18,7 @@ import { BudgetsService }  from './services/api/budgets.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
          CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
-         ConfirmDialogModule } from 'primeng/primeng';
+         ConfirmDialogModule, OverlayPanelModule } from 'primeng/primeng';
 import { ConfirmationService } from 'primeng/primeng';
 
 import { AppComponent }       from './app.component';
@@ -33,7 +33,7 @@ import { ExportComponent }    from './pages/export/export.component';
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
     /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
                     CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
-                    ConfirmDialogModule
+                    ConfirmDialogModule, OverlayPanelModule
   ],
   declarations: [
      AppComponent,

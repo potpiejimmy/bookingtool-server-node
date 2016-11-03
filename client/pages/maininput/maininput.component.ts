@@ -23,6 +23,7 @@ export class MainInputComponent implements AfterViewInit {
     autoCompleteResults;
     autoCompleteResultsTemplates;
     sumMinutes: number;
+    quickSelectionList: any[];
 
     constructor(private app: AppService,
                 private bookingsService: BookingsService,
@@ -30,7 +31,7 @@ export class MainInputComponent implements AfterViewInit {
                 private confirmationService: ConfirmationService) { }
 
     ngOnInit() {
-        this.loadBookings();
+        this.refresh();
     }
 
     ngAfterViewInit() {
@@ -52,9 +53,17 @@ export class MainInputComponent implements AfterViewInit {
         this.checkUpdateCharts();
     }
 
+    loadQuickSelectionList() {
+        this.templatesService.getLastUsedByPerson(10).then(res => {
+            console.info(res);
+            this.quickSelectionList = res
+        });
+    }
+
     refresh() {
         this.currentYearMonth = -1; // force updating of charts
         this.loadBookings();
+        this.loadQuickSelectionList();
     }
 
     checkUpdateCharts() {
@@ -119,6 +128,10 @@ export class MainInputComponent implements AfterViewInit {
         this.loadBookings();
     }
 
+    onQuickSelectRow(event) {
+        this.setCurrentTemplate(event.data);
+    }
+
     edit(row) {
         this.current = JSON.parse(JSON.stringify(row));
         this.current.day = new Date(row.day);
@@ -127,7 +140,8 @@ export class MainInputComponent implements AfterViewInit {
 
     delete(row) {
         this.confirmationService.confirm({
-            message: "Really delete?",
+            header: "Delete entry",
+            message: "Really delete this entry?",
             accept: () => {
                 this.cancel(); // cancel editing on delete
                 this.bookingsService.deleteBooking(row.id).then(() => {
