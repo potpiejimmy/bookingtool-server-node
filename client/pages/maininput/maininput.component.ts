@@ -24,6 +24,8 @@ export class MainInputComponent implements AfterViewInit {
     autoCompleteResultsTemplates;
     sumMinutes: number;
     quickSelectionList: any[];
+    quickSelectionListSize: number = 10;
+    quickSelection: any;
 
     constructor(private app: AppService,
                 private bookingsService: BookingsService,
@@ -54,9 +56,10 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     loadQuickSelectionList() {
-        this.templatesService.getLastUsedByPerson(10).then(res => {
+        this.templatesService.getLastUsedByPerson(this.quickSelectionListSize).then(res => {
             console.info(res);
             this.quickSelectionList = res
+            this.quickSelectionListSize = Math.max(1, res.length);
         });
     }
 
@@ -130,6 +133,7 @@ export class MainInputComponent implements AfterViewInit {
 
     onQuickSelectRow(event) {
         this.setCurrentTemplate(event.data);
+        this.quickSelection = null; // deselect
     }
 
     edit(row) {
@@ -199,6 +203,16 @@ export class MainInputComponent implements AfterViewInit {
 
     get formattedTableSum(): string {
         return Utils.formattedHoursForMinutes(this.sumMinutes);
+    }
+
+    quickSelectionListSizeInc() {
+        this.quickSelectionListSize++;
+        this.loadQuickSelectionList();
+    }
+
+    quickSelectionListSizeDec() {
+        this.quickSelectionListSize = Math.max(1, this.quickSelectionListSize-1);
+        this.loadQuickSelectionList();
     }
 
     // ----------- CHART PROPERTIES

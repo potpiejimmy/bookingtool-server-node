@@ -90,3 +90,7 @@ a.subLineLink {
 body .ui-widget-header {
     background-color: #0277bd; 
 }
+
+.no-table-header thead {
+    display: none;
+}
