@@ -29,6 +29,9 @@
         <p-overlayPanel #quickSelectPanel>
           <div style="width: 960px; display: table-cell;">
             <p-dataTable styleClass="no-table-header" [value]="quickSelectionList" selectionMode="single" (onRowSelect)="onQuickSelectRow($event); quickSelectPanel.hide();" [(selection)]="quickSelection">
+              <p-column [style]="{'width':'32'}">
+                <template let-i="rowIndex" pTemplate type="body">{{i+1}}</template>
+              </p-column>
               <p-column field="psp" [style]="{'width':'150'}"></p-column>
               <p-column field="name" [style]="{'width':'250'}"></p-column>
               <p-column field="description"></p-column>

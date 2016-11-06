@@ -99,7 +99,7 @@ export class MainInputComponent implements AfterViewInit {
                 if (chartType == 2) {
                     let diff: number = res[0].minutes - res[0].days * 8 * 60;
                     pieChartData.labels.push(res[0].days + " day(s)", (diff >= 0 ? "+" : "") + Utils.formattedHoursForMinutes(diff));
-                    pieChartData.datasets[0].data.push(diff >= 0 ? -res[0].days * 8 : res[0].days * 8, diff/60);
+                    pieChartData.datasets[0].data.push(diff > 0 ? -res[0].days * 8 : res[0].days * 8, diff/60);
                     pieChartData.datasets[0].backgroundColor = diff >= 0 ?  ["#D3D3D3", "#66CE56"] : ["#D3D3D3", "#FF6384"];
                 } else {
                     res.forEach(e => {
