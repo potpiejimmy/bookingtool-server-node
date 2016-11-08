@@ -9,7 +9,7 @@ const MONTHS   = ['January','February','March','April','May','June','July','Augu
 
 @Component({
   selector: 'maininput',
-  templateUrl: 'pt/client/pages/maininput/maininput.html'
+  templateUrl: 'pt2/client/pages/maininput/maininput.html'
 })
 export class MainInputComponent implements AfterViewInit {
 

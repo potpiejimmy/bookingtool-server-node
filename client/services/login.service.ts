@@ -16,7 +16,7 @@ export class LoginService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  private loginServiceUrl = '/pt/api/login';  // URL to web api
+  private loginServiceUrl = '/pt2/api/login';  // URL to web api
 
   private jwtHelper: JwtHelper = new JwtHelper();
 

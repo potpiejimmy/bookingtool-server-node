@@ -29,6 +29,14 @@ import { PasswordChangeComponent }   from './pages/pwchange/pwchange.component';
 import { MainInputComponent } from './pages/maininput/maininput.component';
 import { MainInputEditComponent } from './pages/maininput/maininput.edit.component';
 import { ExportComponent }    from './pages/export/export.component';
+import { DomainsComponent }    from './pages/domains/domains.component';
+import { ProjectsComponent }    from './pages/projects/projects.component';
+import { BudgetsComponent }    from './pages/budgets/budgets.component';
+import { TemplatesComponent }    from './pages/templates/templates.component';
+import { AdminFIComponent }    from './pages/adminfi/adminfi.component';
+import { BudgetControlComponent }    from './pages/budgetcontrol/budgetcontrol.component';
+import { BudgetPlansComponent }    from './pages/budgetplans/budgetplans.component';
+import { ForecastsComponent }    from './pages/forecasts/forecasts.component';
 
 @NgModule({
   imports:      [
@@ -44,7 +52,15 @@ import { ExportComponent }    from './pages/export/export.component';
      LoginComponent,
      PasswordChangeComponent,
      MainInputComponent, MainInputEditComponent,
-     ExportComponent
+     ExportComponent,
+     DomainsComponent,
+     ProjectsComponent,
+     BudgetsComponent,
+     TemplatesComponent,
+     AdminFIComponent,
+     BudgetControlComponent,
+     BudgetPlansComponent,
+     ForecastsComponent
   ],
   providers: [
      AuthGuard, AppService, LoginService, AuthHttp,

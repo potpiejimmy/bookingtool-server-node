@@ -5,7 +5,7 @@ import { BudgetsService }  from '../../services/api/budgets.service';
 
 @Component({
   selector: 'maininput-edit',
-  templateUrl: 'pt/client/pages/maininput/maininput.edit.html'
+  templateUrl: 'pt2/client/pages/maininput/maininput.edit.html'
 })
 export class MainInputEditComponent {
 

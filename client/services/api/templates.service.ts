@@ -5,7 +5,7 @@ import { LoginService } from '../login.service';
 @Injectable()
 export class TemplatesService {
 
-    private url: string = '/pt/api/templates/';  // URL to web api
+    private url: string = '/pt2/api/templates/';  // URL to web api
 
     constructor(private http: AuthHttp, private loginService : LoginService) {
     }    

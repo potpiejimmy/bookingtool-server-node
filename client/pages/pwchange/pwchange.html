@@ -1,8 +1,6 @@
-<div style="width:100%; height:50%;display:flex;justify-content:top;align-items:left;padding-left:1em;">
-
 <form id="pwchangeform" (ngSubmit)="save()">
 
-    <div class="card" *ngIf="loginService.isLoggedIn">
+    <div class="card" *ngIf="app.loginService.isLoggedIn">
         <table style="border-spacing:0.5em 1.5em;">
             <tr>
                 <span class="md-inputfield">
@@ -30,8 +28,6 @@
         </div>
     </div>
 
-    <p-messages [value]="app.messages"></p-messages>
-
 </form>
 
-</div>
+<p-messages [value]="app.messages"></p-messages>

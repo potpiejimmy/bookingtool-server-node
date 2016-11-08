@@ -5,7 +5,7 @@ import { AppService } from '../../services/app.service';
 
 @Component({
     selector: 'login',
-    templateUrl: 'pt/client/pages/login/login.html'
+    templateUrl: 'pt2/client/pages/login/login.html'
 })
 export class LoginComponent implements AfterViewInit {
 
@@ -29,7 +29,7 @@ export class LoginComponent implements AfterViewInit {
             if (result) {
                 // Get the redirect URL from our auth service
                 // If no redirect has been set, use the default
-                let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/pt';
+                let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/pt2';
                 // Redirect the user
                 this.router.navigate([redirect]);
             } else {

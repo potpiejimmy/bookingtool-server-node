@@ -3,20 +3,20 @@ import { AuthGuard } from './services/authguard.service';
 
 import { MenuItem }  from 'primeng/primeng';
 
-import { LoginService } from './services/login.service';
+import { AppService } from './services/app.service';
 import { TypeWriter } from './util/typewriter';
 
 declare var Ultima: any;
 
 @Component({
   selector: 'app',
-  templateUrl: 'pt/client/app.html'
+  templateUrl: 'pt2/client/app.html'
 })
 export class AppComponent implements AfterViewInit {
 
     private typeWriterMessage: string = '\u007C';
 
-    constructor(private el: ElementRef, public loginService: LoginService, private authGuard: AuthGuard) {}
+    constructor(private el: ElementRef, public app: AppService, private authGuard: AuthGuard) {}
 
     ngOnInit() {
         this.startTypeWriter();
@@ -34,12 +34,12 @@ export class AppComponent implements AfterViewInit {
         ]);
         tw.start().subscribe(msg => {
             this.typeWriterMessage = msg;
-            if (this.loginService.isLoggedIn) tw.stopAt(0);
+            if (this.app.loginService.isLoggedIn) tw.stopAt(0);
         });
     }
 
     logout() {
-        this.loginService.logout();
+        this.app.logout();
         this.authGuard.checkLogin("/main");
     }
 }

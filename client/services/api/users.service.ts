@@ -5,7 +5,7 @@ import { LoginService } from '../login.service';
 @Injectable()
 export class UsersService {
 
-    private url: string = '/pt/api/users/';  // URL to web api
+    private url: string = '/pt2/api/users/';  // URL to web api
 
     constructor(private http: AuthHttp, private loginService : LoginService) {
     }    

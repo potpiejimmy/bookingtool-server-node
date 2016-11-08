@@ -1,5 +1,3 @@
-<div style="width:100%; height:50%;display:flex;justify-content:top;align-items:left;padding-left:1em;">
-
 <form id="loginform" (ngSubmit)="login()">
 
     <div class="card" *ngIf="!loginService.isLoggedIn">
@@ -23,8 +21,6 @@
         </div>
     </div>
 
-    <p-messages [value]="app.messages"></p-messages>
-
 </form>
 
-</div>
+<p-messages [value]="app.messages"></p-messages>
