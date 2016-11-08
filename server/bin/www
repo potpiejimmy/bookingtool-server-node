@@ -7,47 +7,30 @@
 var app = require('../app').app;
 var debug = require('debug')('server:server');
 var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3003');
-app.set('port', port);
+var https = require('https');
+var fs = require('fs');
 
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+var server_ssl = https.createServer({
+      key: fs.readFileSync('server/ssl/key.pem'),
+      cert: fs.readFileSync('server/ssl/cert.pem')
+}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(3003);
 server.on('error', onError);
 server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
+server_ssl.listen(3043);
+server_ssl.on('error', onError);
+server_ssl.on('listening', onListening);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -87,5 +70,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.info("Running on localhost:3003")
+  console.info("Running on http://localhost:3003 and https://localhost:3043")
 }
