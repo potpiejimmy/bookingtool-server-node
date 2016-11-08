@@ -8,6 +8,7 @@ import { loginRouter } from "./routes/login";
 import { bookingsRouter } from "./routes/bookings";
 import { templatesRouter } from "./routes/templates";
 import { budgetsRouter } from "./routes/budgets";
+import { usersRouter } from "./routes/users";
 
 import * as auth from "./util/auth";
 
@@ -24,6 +25,7 @@ app.use("/", favicon(join(__dirname, "../public", "favicon.ico")));
 // all public user app routes:
 let publicRoute = express.static(join(__dirname, '../public'));
 app.use("/pt", publicRoute);
+app.use("/pt/about", publicRoute);
 app.use("/pt/main", publicRoute);
 app.use("/pt/export", publicRoute);
 // redirect direct call to /login
@@ -39,7 +41,8 @@ let verifyTokenMiddleware = auth.verifyToken();
 app.use("/pt/api/login", loginRouter);
 app.use("/pt/api/bookings", verifyTokenMiddleware, bookingsRouter);
 app.use("/pt/api/templates", verifyTokenMiddleware, templatesRouter);
-app.use("/pt/api/budgets", /*verifyTokenMiddleware,*/ budgetsRouter);
+app.use("/pt/api/budgets", verifyTokenMiddleware, budgetsRouter);
+app.use("/pt/api/users", verifyTokenMiddleware, usersRouter);
 
 // error handlers
 // development error handler

@@ -36,6 +36,10 @@ export class AuthHttp {
         return this.handleResponse(this.http.post(url, data, this.requestOptions()));
     }
 
+    put(url, data): Promise<any>  {
+        return this.handleResponse(this.http.put(url, data, this.requestOptions()));
+    }
+
     delete(url): Promise<any>  {
         return this.handleResponse(this.http.delete(url, this.requestOptions()));
     }

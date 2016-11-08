@@ -57,7 +57,6 @@ export class MainInputComponent implements AfterViewInit {
 
     loadQuickSelectionList() {
         this.templatesService.getLastUsedByPerson(this.quickSelectionListSize).then(res => {
-            console.info(res);
             this.quickSelectionList = res
             this.quickSelectionListSize = Math.max(1, res.length);
         });
@@ -81,7 +80,7 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     updateCharts(year: number, month: number) {
-        this.chartsTitle = "Your bookings in " + MONTHS[month] + " " + year;
+        this.chartsTitle = "Your hours in " + MONTHS[month] + " " + year;
         this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
         this.updateChart(year, month, 1, this.pieChartDataProjects.data);
         this.updateChart(year, month, 2, this.barChartWorkTime.data);
@@ -103,7 +102,7 @@ export class MainInputComponent implements AfterViewInit {
                     pieChartData.datasets[0].backgroundColor = diff >= 0 ?  ["#D3D3D3", "#66CE56"] : ["#D3D3D3", "#FF6384"];
                 } else {
                     res.forEach(e => {
-                        pieChartData.labels.push(e.label);
+                        pieChartData.labels.push(chartType == 0 ? e.label + " " + Utils.labelForBookingType(e.label) : e.label);
                         pieChartData.datasets[0].data.push(e.minutes);
                     });
                 }

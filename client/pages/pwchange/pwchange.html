@@ -1,0 +1,37 @@
+<div style="width:100%; height:50%;display:flex;justify-content:top;align-items:left;padding-left:1em;">
+
+<form id="pwchangeform" (ngSubmit)="save()">
+
+    <div class="card" *ngIf="loginService.isLoggedIn">
+        <table style="border-spacing:0.5em 1.5em;">
+            <tr>
+                <span class="md-inputfield">
+                    <input #oldPasswordInputField type="password" name="oldPassword" pInputText [(ngModel)]="oldPassword" size="48" required/>
+                    <label>Old password</label>
+                </span>
+            </tr>
+            <tr>
+                <span class="md-inputfield">
+                    <input type="password" name="newPassword1" pPassword pInputText [(ngModel)]="newPassword1" size="48" required/>
+                    <label>New password</label>
+                </span>
+            </tr>
+            <tr>
+                <span class="md-inputfield">
+                    <input type="password" name="newPassword2" pPassword pInputText [(ngModel)]="newPassword2" size="48" required/>
+                    <label>New password (repeat)</label>
+                </span>
+            </tr>
+        </table>
+    
+        <div style="margin: 0.5em;">
+            <button pButton type="submit" label="Change password" icon="ui-icon-save"></button>
+            <button pButton type="button" label="Cancel" *ngIf="!changePasswordNeeded" [routerLink]="['/main']"></button>
+        </div>
+    </div>
+
+    <p-messages [value]="app.messages"></p-messages>
+
+</form>
+
+</div>

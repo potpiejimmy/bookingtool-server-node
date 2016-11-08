@@ -40,12 +40,12 @@ a.subLineLink {
 #root_body {
     background-color: #fff;
     padding: 1em;
-    padding-top: 80px;
+    padding-top: 98px;
 }
 
 @media (min-width: 1025px) {
     #root_body.layout-menu-padding {
-        padding-top: 110px;
+        padding-top: 128px;
     } 
 }
 
