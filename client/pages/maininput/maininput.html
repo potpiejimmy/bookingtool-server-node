@@ -27,6 +27,7 @@
         <p-overlayPanel #quickSelectPanel>
           <div style="width: 960px; display: table-cell;">
             <p-dataTable styleClass="no-table-header" [value]="quickSelectionList" selectionMode="single" (onRowSelect)="onQuickSelectRow($event); quickSelectPanel.hide();" [(selection)]="quickSelection">
+              <header>Quick select (last used):</header>
               <p-column [style]="{'width':'32'}">
                 <template let-i="rowIndex" pTemplate type="body">{{i+1}}</template>
               </p-column>
@@ -54,7 +55,7 @@
 
 <div class="card">
 <p-dataTable [value]="bookings" [responsive]="true">
-    <header>Today's entries</header>
+    <header>Current day's entries</header>
     <p-column field="id" header="ID" [style]="{'width':'60'}"></p-column>
     <p-column field="booking_template.psp" header="PSP" [style]="{'width':'150'}"></p-column>
     <p-column field="booking_template.name" header="Name" [style]="{'width':'250'}"></p-column>
