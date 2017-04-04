@@ -32,7 +32,22 @@ app.use("/pt2/api/users", verifyTokenMiddleware, usersRouter);
 if (app.get('env') === 'production') {
 
   // in production mode run application from dist folder
-  app.use("/pt2", express.static(path.join(__dirname, '/../client')));
+  let distRoute = express.static(path.join(__dirname, '/../client'));
+  app.use("/pt2", distRoute);
+  app.use("/pt2/about", distRoute);
+  app.use("/pt2/pwchange", distRoute);
+  app.use("/pt2/main", distRoute);
+  app.use("/pt2/export", distRoute);
+  app.use("/pt2/domains", distRoute);
+  app.use("/pt2/projects", distRoute);
+  app.use("/pt2/budgets", distRoute);
+  app.use("/pt2/templates", distRoute);
+  app.use("/pt2/adminfi", distRoute);
+  app.use("/pt2/budgetcontrol", distRoute);
+  app.use("/pt2/budgetplans", distRoute);
+  app.use("/pt2/forecasts", distRoute);
+  // redirect direct call to /login
+  app.get("/pt2/login", (req,res) => {res.redirect("/pt2")});
 }
 
 // catch 404 and forward to error handler

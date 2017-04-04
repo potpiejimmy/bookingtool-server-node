@@ -5,6 +5,7 @@ import { routing } from './app.routing';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LocalStorageModule } from 'angular-2-local-storage';
 
@@ -42,7 +43,7 @@ import { ForecastsComponent }    from './pages/forecasts/forecasts.component';
   imports:      [
     routing,
     LocalStorageModule.withConfig({ prefix: 'bookingtool', storageType: 'sessionStorage' }),
-    /* Angular 2 */ BrowserModule, FormsModule, HttpModule,
+    /* Angular 2 */ BrowserModule, FormsModule, HttpModule, BrowserAnimationsModule,
     /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
                     CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
                     ConfirmDialogModule, OverlayPanelModule
