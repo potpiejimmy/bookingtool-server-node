@@ -25,8 +25,6 @@ export class MainInputEditComponent {
         // if editing, take into account that booking.minutes is already contained in the budget info
         if (booking.id) this._minutesAlreadyOnBudget = booking.minutes;
         else this._minutesAlreadyOnBudget = 0;
-        // set input focus whenever a new booking is set
-        this.setInputFocus();
     }
     get booking() { return this._booking; }
 
@@ -43,7 +41,7 @@ export class MainInputEditComponent {
     constructor(private budgetsService: BudgetsService) {}
 
     setInputFocus() {
-        if (this._booking.sales_representative && this._booking.sales_representative.length > 0)
+        if (this.salesRepDisabled)
             this.minutesInputField.nativeElement.focus();
         else
             this.salesInfoInputField.nativeElement.focus();
@@ -53,6 +51,8 @@ export class MainInputEditComponent {
         this.budgetsService.getBudgetInfo(this._template.budget_id).then(b => {
             this.budgetInfo = b
             this.updateChart();
+            // set input focus
+            this.setInputFocus();
         });
     }
 
@@ -66,7 +66,7 @@ export class MainInputEditComponent {
         chart.data.push(used);
         if (used > Math.abs(this.budgetInfo.budget.minutes)) chart.data.push(0);
         else chart.data.push(Math.abs(this.budgetInfo.budget.minutes) - used);
-        this.pieChart.data.datasets[0] = chart;
+        this.pieChart.data = { labels: [], datasets: [ chart ] };
     }
 
     budgetPercentageString(): string {
@@ -90,7 +90,7 @@ export class MainInputEditComponent {
     }
 
     get salesRepDisabled(): boolean {
-        return this._template.sales_representative && this._template.sales_representative.length > 0;
+        return this._template.sales_representative ? (this._template.sales_representative.length > 0) : false;
     }
 
     cancel() {

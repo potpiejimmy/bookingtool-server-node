@@ -1,25 +1,23 @@
 <div class="layout-wrapper layout-compact">
     <div class="layout-container menu-layout-static menu-layout-horizontal">
 
- <div class="topbar clearfix" style="background-color: #0288d1;">
+<div class="topbar clearfix">
+    <div class="topbar-left">            
+        <a href="/pt2/"><div class="logo"></div></a>
+    </div>
 
- <div id="root_header">
-  <div class="topbar-right" style="float:left;padding:4 0;" *ngIf="app.loginService.isLoggedIn">
-    <a id="menu-button" href="#"><i></i></a>
-  </div>
-  <div class="floatleft"><a href="/pt2/">
-    <img src="assets/icon.png" style="border-style: solid; border-width: 1px; padding: 4px; background-color: white;"></a>
-  </div>
-  <div id="root_title" class="hidden-xs">{{typeWriterMessage}}</div>
-  <div style="text-align:right;float:right;margin:0.5em 1.5em;">
-    <a *ngIf="app.loginService.isLoggedIn" class="linkcursor" (click)="logout()">
-      <i class="fa ui-icon-exit-to-app"></i>
-    </a>
-    <br/>
-    <span *ngIf="app.loginService.isLoggedIn">{{app.loginService.loginToken.name}}</span>    
-  </div>
-</div>
+    <div class="topbar-right">
+        <!--a id="menu-button" href="#" (click)="app.onMenuButtonClick($event)" *ngIf="app.loginService.isLoggedIn"><i></i></a-->
+    </div>
+    <div id="root_title" class="hidden-xs">{{typeWriterMessage}}</div>
 
+    <div id="root_header_right">
+      <a *ngIf="app.loginService.isLoggedIn" class="linkcursor" title="Log off" (click)="logout()">
+        <i class="fa ui-icon-exit-to-app"></i>
+      </a>
+      <br/>
+      <span *ngIf="app.loginService.isLoggedIn">{{app.loginService.loginToken.name}}</span>    
+    </div>
 </div>
 
 <!-- white line -->
@@ -45,7 +43,7 @@
     </div>
 </div>
 
-<div id="root_body" class="layout-menu-padding">
+<div class="layout-main">
   <router-outlet></router-outlet>
 
   <div *ngIf="app.loginService.isLoggedIn">
@@ -54,6 +52,8 @@
     <a class="subLineLink" routerLink="/pwchange">Change Password</a>
   </div>
 </div>
+
+<div class="layout-mask"></div>
 
     </div>
 </div>

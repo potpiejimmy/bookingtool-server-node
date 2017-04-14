@@ -81,29 +81,28 @@ export class MainInputComponent implements AfterViewInit {
 
     updateCharts(year: number, month: number) {
         this.chartsTitle = "Your hours in " + MONTHS[month] + " " + year;
-        this.updateChart(year, month, 0, this.pieChartDataWorkTime.data);
-        this.updateChart(year, month, 1, this.pieChartDataProjects.data);
-        this.updateChart(year, month, 2, this.barChartWorkTime.data);
+        this.updateChart(year, month, 0, this.pieChartDataWorkTime);
+        this.updateChart(year, month, 1, this.pieChartDataProjects);
+        this.updateChart(year, month, 2, this.barChartWorkTime);
     }
 
-    updateChart(year:number, month:number, chartType:number, pieChartData) {
+    updateChart(year:number, month:number, chartType:number, pieChart) {
         this.bookingsService.getBookingSumsForMonth(year, month, chartType).then(res=> {
-            pieChartData.labels = [];
-            pieChartData.datasets[0] = {data:[],backgroundColor:this.chartBackgroundColors};
+            pieChart.data = { labels: [], datasets: [ { data: [], backgroundColor: this.chartBackgroundColors } ] };
             if (res.length==0) {
-                pieChartData.labels.push('No bookings');
-                pieChartData.datasets[0].data.push(1);
-                pieChartData.datasets[0].backgroundColor = ["#D3D3D3"];
+                pieChart.data.labels.push('No bookings');
+                pieChart.data.datasets[0].data.push(1);
+                pieChart.data.datasets[0].backgroundColor = ["#D3D3D3"];
             } else {
                 if (chartType == 2) {
                     let diff: number = res[0].minutes - res[0].days * 8 * 60;
-                    pieChartData.labels.push(res[0].days + " day(s)", (diff >= 0 ? "+" : "") + Utils.formattedHoursForMinutes(diff));
-                    pieChartData.datasets[0].data.push(diff > 0 ? -res[0].days * 8 : res[0].days * 8, diff/60);
-                    pieChartData.datasets[0].backgroundColor = diff >= 0 ?  ["#D3D3D3", "#66CE56"] : ["#D3D3D3", "#FF6384"];
+                    pieChart.data.labels.push(res[0].days + " day(s)", (diff >= 0 ? "+" : "") + Utils.formattedHoursForMinutes(diff));
+                    pieChart.data.datasets[0].data.push(diff > 0 ? -res[0].days * 8 : res[0].days * 8, diff/60);
+                    pieChart.data.datasets[0].backgroundColor = diff >= 0 ?  ["#D3D3D3", "#66CE56"] : ["#D3D3D3", "#FF6384"];
                 } else {
                     res.forEach(e => {
-                        pieChartData.labels.push(chartType == 0 ? e.label + " " + Utils.labelForBookingType(e.label) : e.label);
-                        pieChartData.datasets[0].data.push(e.minutes);
+                        pieChart.data.labels.push(chartType == 0 ? e.label + " " + Utils.labelForBookingType(e.label) : e.label);
+                        pieChart.data.datasets[0].data.push(e.minutes);
                     });
                 }
             }

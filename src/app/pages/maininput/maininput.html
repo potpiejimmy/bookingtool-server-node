@@ -1,8 +1,7 @@
 <div class="card">
   <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad">
     <div class="ui-grid-row">
-      <div class="ui-grid-col-2 maxWidth150">Date:</div>
-      <div class="ui-grid-col-10">
+      <div class="ui-grid-col-12">
         <table>
           <tr>
             <td><i class="fa fa-arrow-circle-left linkcursor" (click)="previousDay()"></i></td>
@@ -13,8 +12,7 @@
       </div>
     </div>
     <div class="ui-grid-row">
-      <div class="ui-grid-col-2 maxWidth150">Template Search:</div>
-      <div class="ui-grid-col-10" #searchTemplateField>
+      <div class="ui-grid-col-12" #searchTemplateField>
         <p-autoComplete 
             [(ngModel)]="currentTemplateString"
             [suggestions]="autoCompleteResults"

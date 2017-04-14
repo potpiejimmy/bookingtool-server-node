@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "forever dist/server/bin/www.js",
-    "develop": "concurrently --kill-others \"ng serve --aot=true --progress=false --proxy-config proxy.conf.json\" \"npm run _server:run\"",
+    "develop": "concurrently --kill-others \"ng serve --progress=false --proxy-config proxy.conf.json\" \"npm run _server:run\"",
     "build": "ng build --prod --base-href=/pt2/ --sm=false --aot=true --output-path=dist/client && npm run _server:build",
     "test": "ng test --watch=false",
     "lint": "ng lint \"src/**/*.ts\"",
