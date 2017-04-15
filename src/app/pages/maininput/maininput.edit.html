@@ -37,7 +37,7 @@
             <div class="ui-grid-col-10">
                 <div style="display: table-cell;">
                     <span class="md-inputfield" style="margin-top: 24px;">
-                        <input #minutesInputField type="text" name="minutes" pInputText [(ngModel)]="minutes" style="font-size:24px;" size="7" required onkeypress='return event.charCode == 13 || (event.charCode >= 48 && event.charCode <= 57)'>
+                        <input #minutesInputField type="number" name="minutes" pInputText [(ngModel)]="minutes" style="font-size:24px; width:100px;" required>
                         <label>Enter Minutes</label>
                     </span>
                 </div>

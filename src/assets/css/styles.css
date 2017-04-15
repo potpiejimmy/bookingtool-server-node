@@ -79,7 +79,7 @@ a.subLineLink {
 }
 
 /* fix primeng table footer border */
-.ui-datatable tfoot {
+.ui-datatable .ui-datatable-tfoot tr {
     border-color: #cacaca;
 }
 

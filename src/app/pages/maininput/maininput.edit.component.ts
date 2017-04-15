@@ -21,7 +21,7 @@ export class MainInputEditComponent {
 
     @Input() set booking(booking: any) {
         this._booking = booking;
-        this._minutes = booking.minutes ? "" + booking.minutes : null;
+        this._minutes = booking.minutes;
         // if editing, take into account that booking.minutes is already contained in the budget info
         if (booking.id) this._minutesAlreadyOnBudget = booking.minutes;
         else this._minutesAlreadyOnBudget = 0;
@@ -33,7 +33,7 @@ export class MainInputEditComponent {
 
     _template: any;
     _booking: any;
-    _minutes: string;
+    _minutes: number;
     _minutesAlreadyOnBudget: number;
 
     budgetInfo: any = { budget: {} };
@@ -57,7 +57,7 @@ export class MainInputEditComponent {
     }
 
     usedMinutesOnBudget(): number {
-        return this.budgetInfo.booked_minutes_recursive - this._minutesAlreadyOnBudget + this.minutesAsInt();
+        return this.budgetInfo.booked_minutes_recursive - this._minutesAlreadyOnBudget + this._minutes;
     }
 
     updateChart() {
@@ -81,12 +81,8 @@ export class MainInputEditComponent {
             return Utils.formattedHoursForMinutes(left) + " left";
     }
 
-    minutesAsInt(): number {
-        return this._minutes && this._minutes.length > 0 ? parseInt(this._minutes) : 0;
-    }
-
     formattedHours(): string {
-        return Utils.formattedHoursForMinutes(this.minutesAsInt());
+        return Utils.formattedHoursForMinutes(this._minutes);
     }
 
     get salesRepDisabled(): boolean {
@@ -98,15 +94,15 @@ export class MainInputEditComponent {
     }
 
     save() {
-        this._booking.minutes = this.minutesAsInt();
+        this._booking.minutes = this._minutes ? this._minutes : 0; // XXX check > 0
         this.onSave.emit();
     }
 
-    get minutes(): string {
+    get minutes(): number {
         return this._minutes;
     }
 
-    set minutes(minutes: string) {
+    set minutes(minutes: number) {
         this._minutes = minutes;
         this.updateChart();
     }

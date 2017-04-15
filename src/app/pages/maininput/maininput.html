@@ -26,13 +26,13 @@
           <div style="width: 960px; display: table-cell;">
             <p-dataTable styleClass="no-table-header" [value]="quickSelectionList" selectionMode="single" (onRowSelect)="onQuickSelectRow($event); quickSelectPanel.hide();" [(selection)]="quickSelection">
               <header>Quick select (last used):</header>
-              <p-column [style]="{'width':'32'}">
-                <ng-template let-i="rowIndex" pTemplate type="body">{{i+1}}</ng-template>
+              <p-column [style]="{'width':'32px'}">
+                <ng-template let-i="rowIndex" pTemplate="body">{{i+1}}</ng-template>
               </p-column>
-              <p-column field="psp" [style]="{'width':'150'}"></p-column>
-              <p-column field="name" [style]="{'width':'250'}"></p-column>
+              <p-column field="psp" [style]="{'width':'150px'}"></p-column>
+              <p-column field="name" [style]="{'width':'250px'}"></p-column>
               <p-column field="description"></p-column>
-              <p-column field="sales_representative" [style]="{'width':'100'}"></p-column>
+              <p-column field="sales_representative" [style]="{'width':'100px'}"></p-column>
             </p-dataTable>
           </div>
           <div style="display: table-cell;">
@@ -54,21 +54,21 @@
 <div class="card">
 <p-dataTable [value]="bookings" [responsive]="true">
     <header>Current day's entries</header>
-    <p-column field="id" header="ID" [style]="{'width':'60'}"></p-column>
-    <p-column field="booking_template.psp" header="PSP" [style]="{'width':'150'}"></p-column>
-    <p-column field="booking_template.name" header="Name" [style]="{'width':'250'}"></p-column>
+    <p-column field="id" header="ID" [style]="{'width':'60px'}"></p-column>
+    <p-column field="booking_template.psp" header="PSP" [style]="{'width':'150px'}"></p-column>
+    <p-column field="booking_template.name" header="Name" [style]="{'width':'250px'}"></p-column>
     <p-column field="description" header="Description"></p-column>
-    <p-column field="sales_representative" header="Sales Contact" [style]="{'width':'100'}"></p-column>
-    <p-column field="booking_template.subproject" header="Subproject" [style]="{'width':'100'}"></p-column>
-    <p-column [style]="{'width':'80'}">
-        <ng-template pTemplate type="header">Hours</ng-template>
-        <ng-template let-row="rowData" pTemplate type="body">
+    <p-column field="sales_representative" header="Sales Contact" [style]="{'width':'120px'}"></p-column>
+    <p-column field="booking_template.subproject" header="Subproject" [style]="{'width':'100px'}"></p-column>
+    <p-column [style]="{'width':'80px'}">
+        <ng-template pTemplate="header">Hours</ng-template>
+        <ng-template let-row="rowData" pTemplate="body">
           {{formattedHours(row.minutes)}}
         </ng-template>
     </p-column>
-    <p-column [style]="{'width':'150'}">
-        <ng-template pTemplate type="header">Actions</ng-template>
-        <ng-template let-row="rowData" pTemplate type="body">
+    <p-column [style]="{'width':'150px'}">
+        <ng-template pTemplate="header">Actions</ng-template>
+        <ng-template let-row="rowData" pTemplate="body">
             <i class="fa ui-icon-edit linkcursor" (click)="edit(row)"></i>
             <i class="fa ui-icon-delete linkcursor" (click)="delete(row)"></i>
         </ng-template>
