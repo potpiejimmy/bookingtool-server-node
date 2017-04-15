@@ -57,7 +57,7 @@ export class MainInputEditComponent {
     }
 
     usedMinutesOnBudget(): number {
-        return this.budgetInfo.booked_minutes_recursive - this._minutesAlreadyOnBudget + this._minutes;
+        return this.budgetInfo.booked_minutes_recursive - this._minutesAlreadyOnBudget + (this._minutes ? this._minutes : 0);
     }
 
     updateChart() {
