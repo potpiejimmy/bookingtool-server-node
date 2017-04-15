@@ -29,6 +29,7 @@
     "chart.js": "^2.5.0",
     "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
+    "exceljs": "^0.4.3",
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.3.0",
     "mysql": "^2.13.0",

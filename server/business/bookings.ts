@@ -78,6 +78,16 @@ export function deleteBooking(user: any, bookingId: number): Promise<any> {
     return db.querySingle("DELETE FROM booking WHERE id=? AND person=?",[bookingId, user.name]);
 }
 
+/**
+ * Returns the list of all bookings for the given person name and last day
+ * @param person a person name
+ * @param day - the last export day
+ * @return list of bookings
+ */
+export function getBookingsByLastExportDay(user: any, day: number): Promise<any> {
+    return db.querySingle("SELECT * FROM booking WHERE person=? AND day>=? ORDER BY day DESC, person", [user.name, utils.removeTimeFromDate(new Date(day))]);
+}
+
 function assertNoOverrun(booking: any): Promise<any> {
     // get associated budget:
     return Templates.getBookingTemplate(booking.booking_template_id)
