@@ -18,7 +18,7 @@
             [suggestions]="autoCompleteResults"
             (completeMethod)="search($event)"
             placeholder="Search with any keyword or click to select from recently used templates"
-            (click)="quickSelectPanel.toggle($event, quickSelectPanelAnchor)"
+            (click)="!currentTemplate && quickSelectPanel.toggle($event, quickSelectPanelAnchor)"
             (keydown)="quickSelectPanel.hide();">
         </p-autoComplete>
         <div #quickSelectPanelAnchor style="display: table-cell;"></div>
