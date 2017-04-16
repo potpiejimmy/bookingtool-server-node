@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoginService } from './login.service';
 import { AuthGuard } from './authguard.service';
@@ -24,24 +24,33 @@ export class AuthHttp {
     handleResponse(request: Observable<Response>): Promise<any> {
         this.app.clearMessages();
         return request.toPromise()
-               .then(res => res.json())
                .catch(err => this.handleError(err, this));
     }
 
+    handleResponseJson(request: Observable<Response>): Promise<any> {
+        return this.handleResponse(request).then(res => res.json());
+    }
+
+    getRaw(url): Promise<any>  {
+        let options = this.requestOptions();
+        options["responseType"] = ResponseContentType.Blob;
+        return this.handleResponse(this.http.get(url, options));
+    }
+
     get(url): Promise<any>  {
-        return this.handleResponse(this.http.get(url, this.requestOptions()));
+        return this.handleResponseJson(this.http.get(url, this.requestOptions()));
     }
 
     post(url, data): Promise<any>  {
-        return this.handleResponse(this.http.post(url, data, this.requestOptions()));
+        return this.handleResponseJson(this.http.post(url, data, this.requestOptions()));
     }
 
     put(url, data): Promise<any>  {
-        return this.handleResponse(this.http.put(url, data, this.requestOptions()));
+        return this.handleResponseJson(this.http.put(url, data, this.requestOptions()));
     }
 
     delete(url): Promise<any>  {
-        return this.handleResponse(this.http.delete(url, this.requestOptions()));
+        return this.handleResponseJson(this.http.delete(url, this.requestOptions()));
     }
 
     relogin() {
