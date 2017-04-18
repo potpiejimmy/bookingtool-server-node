@@ -60,8 +60,8 @@ export class AuthHttp {
     }
 
     private handleError(error: any, me: any): Promise<any> {
-        console.error('An error occurred', error); // XXX for debugging purposes
-        me.app.setMessage("Error", error.json().error || error.message || error);
+        console.error('An error occurred', JSON.stringify(error.json())); // XXX for debugging purposes
+        me.app.setMessage("Error", error.json().message || error.message || error);
         if (error.status == 401) me.relogin(); // not authorized, go to login
         return Promise.reject(error.message || error);
     }

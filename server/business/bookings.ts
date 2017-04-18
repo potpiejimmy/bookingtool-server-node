@@ -105,7 +105,7 @@ function assertNoOverrun(booking: any): Promise<any> {
                     
                     // now check whether inserted or edited value will fit into the remaining budget:
                     if (usedMinutes + booking.minutes > Math.abs(budgetInfo.budget.minutes))
-                        throw "Sorry, the remaining budget is insufficient and budget overrun is not allowed. Please contact your project manager to resolve this issue.";
+                        throw {message:"Sorry, the remaining budget is insufficient and budget overrun is not allowed. Please contact your project manager to resolve this issue."};
                 })
             );
         });
