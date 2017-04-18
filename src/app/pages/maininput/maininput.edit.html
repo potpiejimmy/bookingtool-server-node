@@ -1,4 +1,4 @@
-<form id="editform" (ngSubmit)="save()">
+<form #editform="ngForm" (ngSubmit)="save()">
     <div class="ui-grid ui-grid-responsive ui-grid-pad">
         <div class="ui-grid-row">
             <div class="ui-grid-col-2 maxWidth150">Budget:</div>
@@ -48,7 +48,7 @@
         </div>
         <div class="ui-grid-row">
             <div>
-                <button pButton type="submit" label="Save"></button>
+                <button pButton type="submit" label="Save" [disabled]="!editform.form.valid"></button>
                 <button pButton type="button" label="Cancel" (click)="cancel()"></button>
             </div>
         </div>

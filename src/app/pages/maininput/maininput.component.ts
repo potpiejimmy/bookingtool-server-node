@@ -154,9 +154,11 @@ export class MainInputComponent implements AfterViewInit {
     }
 
     search(event) {
+        this.autoCompleteResultsTemplates = [];
+        this.autoCompleteResults = [];
+        if (event.query.trim().length < 3) return;
         this.templatesService.findBookingTemplates(event.query).then(data => {
             this.autoCompleteResultsTemplates = data;
-            this.autoCompleteResults = [];
             data.forEach(i => this.autoCompleteResults.push(i.search_string));
         });
     }

@@ -55,6 +55,7 @@ export function getBookingSumsForMonth(user: any, year: number, month: number, c
  * @param booking a booking
  */
 export function saveBooking(user: any, booking: any): Promise<any> {
+    if (booking.minutes < 1) throw "Sorry, entered time must be >= 1";
     return assertNoOverrun(booking).then(() => {
         booking.person = user.name;
         booking.modified_date = new Date();
@@ -105,7 +106,7 @@ function assertNoOverrun(booking: any): Promise<any> {
                     
                     // now check whether inserted or edited value will fit into the remaining budget:
                     if (usedMinutes + booking.minutes > Math.abs(budgetInfo.budget.minutes))
-                        throw {message:"Sorry, the remaining budget is insufficient and budget overrun is not allowed. Please contact your project manager to resolve this issue."};
+                        throw "Sorry, the remaining budget is insufficient and budget overrun is not allowed. Please contact your project manager to resolve this issue.";
                 })
             );
         });

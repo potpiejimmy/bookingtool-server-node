@@ -65,7 +65,7 @@ app.use(function(err: any, req: express.Request, res: express.Response, next: ex
   res.status(err.status || 500);
   res.json({
     error: {},
-    message: err.message
+    message: err.message || err
   });
 });
 
