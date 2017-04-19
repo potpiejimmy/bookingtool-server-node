@@ -35,3 +35,14 @@ export function asyncWhile(condition: () => boolean, iter: (next: () => void) =>
 export function asyncWhileP(condition: () => boolean, iter: (next: () => void) => void): Promise<any> {
     return new Promise((resolve, reject) => asyncWhile(condition, iter, () => resolve()));
 }
+
+// --- specifics
+
+export function labelForBookingType(type: string): string {
+    switch(type) {
+        case "0W": return "Working";
+        case "1T": return "Travel";
+        case "NP": return "Non Prod."
+        default: return "";
+    }
+}

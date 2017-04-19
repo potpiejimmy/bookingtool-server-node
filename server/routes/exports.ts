@@ -7,7 +7,7 @@ const exportsRouter: Router = Router();
  * getExcelForName(String person, Integer weeksToExport)
  */
 exportsRouter.get("/", function (request: any, response: Response, next: NextFunction) {
-    Exports.getExcelForName(request.user, 2)
+    Exports.getExcelForName(request.user, request.query.weeks ? parseInt(request.query.weeks) : 1)
     .then(workbook => {
         response.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=" + "bookingstest.xlsx");

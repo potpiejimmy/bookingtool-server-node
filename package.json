@@ -32,6 +32,7 @@
     "exceljs": "^0.4.3",
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.3.0",
+    "moment": "^2.18.1",
     "mysql": "^2.13.0",
     "primeng": "^4.0.0-rc.2",
     "rxjs": "^5.1.0",

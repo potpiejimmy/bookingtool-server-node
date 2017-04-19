@@ -7,11 +7,12 @@ export function getExcelForName(user: any, weeksToExport: number): Promise<any> 
     lastExportDay.setDate(lastExportDay.getDate() - weeksToExport*7);
 
     return Bookings.getBookingsByLastExportDay(user, lastExportDay.getTime()).then(bookingList => {
-        let result = Excel.createWorkbookForBookings(bookingList, false);
+        return Excel.createWorkbookForBookings(bookingList, false).then(result => {
         
-        //     for (Booking booking : bookingList)
-        //         booking.setExportState((byte)1);  
+            //     for (Booking booking : bookingList)
+            //         booking.setExportState((byte)1);  
 
-        return result;
+            return result;
+        });
     });
 }

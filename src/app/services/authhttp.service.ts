@@ -31,10 +31,14 @@ export class AuthHttp {
         return this.handleResponse(request).then(res => res.json());
     }
 
-    getRaw(url): Promise<any>  {
+    handleResponseBlob(request: Observable<Response>): Promise<any> {
+        return this.handleResponse(request).then(res => res.blob());
+    }
+
+    getBlob(url): Promise<any>  {
         let options = this.requestOptions();
         options["responseType"] = ResponseContentType.Blob;
-        return this.handleResponse(this.http.get(url, options));
+        return this.handleResponseBlob(this.http.get(url, options));
     }
 
     get(url): Promise<any>  {
