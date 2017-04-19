@@ -1,4 +1,25 @@
-<div class="card card-w-title">
-<h1>Export</h1>
-<button pButton type="button" label="Export" (click)="export()"></button>
-</div>
+<p-fieldset legend="Export">
+    <div class="ui-g">
+        <div class="ui-g-12 ui-lg-6">
+            <p-fieldset legend="Personal entries ({{app.loginService.loginToken.name}})">
+                Export last
+                <p-spinner size="30" [(ngModel)]="weeksToExport" [min]="1" [max]="99" size="2"></p-spinner>
+                week(s)
+                <p>
+                <button pButton type="button" label="Download XLSX" (click)="export()" icon="ui-icon-file-download"></button>
+                </p>
+            </p-fieldset>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+            <p-fieldset legend="Project entries (Project Admins Only)">
+                Export last
+                <p-spinner size="30" [(ngModel)]="monthsToExport" [min]="0" [max]="99" size="2"></p-spinner>
+                month(s) of
+                <p-dropdown [options]="managedProjectItems" [(ngModel)]="projectToExport"></p-dropdown>
+                <p>
+                <button pButton type="button" label="Download XLSX" (click)="export()" icon="ui-icon-file-download"></button>
+                </p>
+            </p-fieldset>
+        </div>
+    </div>
+</p-fieldset>

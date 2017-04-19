@@ -21,7 +21,7 @@ import { ExportsService }  from './services/api/exports.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
          CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
-         ConfirmDialogModule, OverlayPanelModule } from 'primeng/primeng';
+         ConfirmDialogModule, OverlayPanelModule, FieldsetModule, SpinnerModule, DropdownModule } from 'primeng/primeng';
 import { ConfirmationService } from 'primeng/primeng';
 
 import { AppComponent }       from './app.component';
@@ -47,7 +47,7 @@ import { ForecastsComponent }    from './pages/forecasts/forecasts.component';
     /* Angular 2 */ BrowserModule, FormsModule, HttpModule, BrowserAnimationsModule,
     /* PrimeNG   */ DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
                     CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
-                    ConfirmDialogModule, OverlayPanelModule
+                    ConfirmDialogModule, OverlayPanelModule, FieldsetModule, SpinnerModule, DropdownModule
   ],
   declarations: [
      AppComponent,
