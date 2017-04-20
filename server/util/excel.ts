@@ -23,10 +23,9 @@ export function createWorkbookForBookings(bookingList: any, withNameColumn: bool
                 if (!withNameColumn && lastDate != null && lastDate.getTime() != booking.day.getTime())
                     sheet.addRow([]); // add empty row for each new day if person-based export
 
-                if (withNameColumn)
-                    sheet.addRow([sapBooking.day,sapBooking.person,sapBooking.psp,sapBooking.pspLabel,sapBooking.type,sapBooking.typeLabel,sapBooking.description,sapBooking.salesRepresentative,sapBooking.subproject,sapBooking.hundredthHours/100]);
-                else
-                    sheet.addRow([sapBooking.day,sapBooking.psp,sapBooking.pspLabel,sapBooking.type,sapBooking.typeLabel,sapBooking.description,sapBooking.salesRepresentative,sapBooking.subproject,sapBooking.hundredthHours/100]);
+                let row = [sapBooking.day,sapBooking.person,sapBooking.psp,sapBooking.pspLabel,sapBooking.type,sapBooking.typeLabel,sapBooking.description,sapBooking.salesRepresentative,sapBooking.subproject,sapBooking.hundredthHours/100];
+                if (!withNameColumn) row = row.splice(1,1); // remove sapBooking.person
+                sheet.addRow(row);
                     
                 lastDate = booking.day;
             });
@@ -39,8 +38,12 @@ export function createWorkbookForBookings(bookingList: any, withNameColumn: bool
 }
 
 function createHeaderSheetForBookings(sheet: any, withNameColumn: boolean) {
-    if (withNameColumn)
-        sheet.addRow(["Datum","Person","PSP-Element","Bezeichnung","Tätigkeitsart","Bezeichnung","Tätigkeit","VB-Beauftragter","Teilprojekt","Stunden"]);
-    else
-        sheet.addRow(["Datum","PSP-Element","Bezeichnung","Tätigkeitsart","Bezeichnung","Tätigkeit","VB-Beauftragter","Teilprojekt","Stunden"]);
+    let cols = [{width:20},{width:15},{width:50},{width:70},{width:5},{width:15},{width:150},{width:20},{width:20},{width:10}];
+    let row = ["Datum","Person","PSP-Element","Bezeichnung","Tätigkeitsart","Bezeichnung","Tätigkeit","VB-Beauftragter","Teilprojekt","Stunden"];
+    if (!withNameColumn) {
+        cols = cols.splice(1,1);
+        row = row.splice(1,1); // remove "Person"
+    }
+    sheet.columns = cols;
+    sheet.addRow(row);
 }
