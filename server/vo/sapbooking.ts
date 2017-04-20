@@ -35,7 +35,7 @@ export class SAPBooking {
      * @param bt connected booking template
      */
     constructor(booking: any, bt: any) {
-        this.day = moment(booking.day).format("dd., DD.MM.YYYY");
+        this.day = moment(booking.day).format("ddd., DD.MM.YYYY");
         this.person = booking.person;
         this.psp = bt.psp;
         this.pspLabel = bt.name;

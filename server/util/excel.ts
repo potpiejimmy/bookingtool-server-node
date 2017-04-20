@@ -20,7 +20,7 @@ export function createWorkbookForBookings(bookingList: any, withNameColumn: bool
 //                    style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                 }
 
-                if (!withNameColumn && lastDate != null && lastDate != booking.day)
+                if (!withNameColumn && lastDate != null && lastDate.getTime() != booking.day.getTime())
                     sheet.addRow([]); // add empty row for each new day if person-based export
 
                 if (withNameColumn)
