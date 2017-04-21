@@ -62,7 +62,7 @@ export function saveBooking(user: any, booking: any): Promise<any> {
         booking.day = new Date(booking.day);
         delete booking.booking_template;
         if (booking.id) {
-            if (booking.export_state == 1) booking.export_state == 2;
+            if (booking.export_state == 1) booking.export_state = 2;
             return db.querySingle("UPDATE booking SET ? WHERE id=?",[booking, booking.id]);
         } else {
             return db.querySingle("INSERT INTO booking SET ?", [booking]);
