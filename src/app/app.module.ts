@@ -18,6 +18,7 @@ import { TemplatesService }  from './services/api/templates.service';
 import { BudgetsService }  from './services/api/budgets.service';
 import { UsersService }  from './services/api/users.service';
 import { ExportsService }  from './services/api/exports.service';
+import { ProjectsService }  from './services/api/projects.service';
 
 import { DataTableModule, TabMenuModule, InputTextModule, ButtonModule, PanelModule,
          CalendarModule, PasswordModule, MessagesModule, ChartModule, AutoCompleteModule,
@@ -67,7 +68,7 @@ import { ForecastsComponent }    from './pages/forecasts/forecasts.component';
   ],
   providers: [
      AuthGuard, AppService, LoginService, AuthHttp,
-     /* API     */ BookingsService, TemplatesService, BudgetsService, UsersService, ExportsService,
+     /* API     */ BookingsService, TemplatesService, BudgetsService, UsersService, ExportsService, ProjectsService,
      /* PrimeNG */ ConfirmationService
   ],
   bootstrap:    [ AppComponent ]

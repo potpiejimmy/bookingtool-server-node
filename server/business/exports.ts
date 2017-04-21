@@ -12,7 +12,8 @@ export function getExcelForName(user: any, weeksToExport: number): Promise<any> 
         return Excel.createWorkbookForBookings(bookingList, false).then(result => {
             return db.connection().then(connection => {
                 return utils.asyncLoopP(bookingList, (booking, next) => {
-                    db.query(connection, "update booking set export_state=1").then(()=>next());
+                    db.query(connection, "update booking set export_state=1 where id=?", [booking.id])
+                    .then(()=>next()).catch(err=>next());
                 }).then(() => {
                     connection.release();
                     return result;

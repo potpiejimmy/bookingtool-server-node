@@ -36,9 +36,6 @@ export function createWorkbookForBookings(bookingList: any, withNameColumn: bool
             next();
         });
     }).then(() => workbook);
-
-    //autosize every column!
-    // XXX TODO
 }
 
 function createHeaderSheetForBookings(sheet: any, withNameColumn: boolean) {

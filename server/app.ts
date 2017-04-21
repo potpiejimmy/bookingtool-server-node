@@ -9,6 +9,7 @@ import { templatesRouter } from "./routes/templates";
 import { budgetsRouter } from "./routes/budgets";
 import { usersRouter } from "./routes/users";
 import { exportsRouter } from "./routes/exports";
+import { projectsRouter } from "./routes/projects";
 
 import * as auth from "./util/auth";
 
@@ -30,6 +31,7 @@ app.use("/pt2/api/templates", verifyTokenMiddleware, templatesRouter);
 app.use("/pt2/api/budgets", verifyTokenMiddleware, budgetsRouter);
 app.use("/pt2/api/users", verifyTokenMiddleware, usersRouter);
 app.use("/pt2/api/exports", verifyTokenMiddleware, exportsRouter);
+app.use("/pt2/api/projects", verifyTokenMiddleware, projectsRouter);
 
 if (app.get('env') === 'production') {
 
