@@ -17,7 +17,7 @@
                 month(s) of
                 <p-dropdown [options]="managedProjectItems" [(ngModel)]="projectToExport"></p-dropdown>
                 <p>
-                <button pButton type="button" label="Download XLSX" (click)="export()" icon="ui-icon-file-download" [disabled]="projectToExport<0"></button>
+                <button pButton type="button" label="Download XLSX" (click)="exportProject()" icon="ui-icon-file-download" [disabled]="projectToExport<0"></button>
                 </p>
             </p-fieldset>
         </div>

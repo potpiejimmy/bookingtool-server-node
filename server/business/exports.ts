@@ -33,7 +33,7 @@ function startDayForMonthsToExport(monthsToExport: number): Date {
 }
 
 export function getExcelForProject(user: any, projectToExport: number, monthsToExport: number): Promise<any> {
-    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport)).then(bookingList => {
+    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport).getTime()).then(bookingList => {
         return Excel.createWorkbookForBookings(bookingList, true);
     });
 }
