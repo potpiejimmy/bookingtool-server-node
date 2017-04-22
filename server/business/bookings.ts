@@ -85,8 +85,8 @@ export function deleteBooking(user: any, bookingId: number): Promise<any> {
  * @param day - the last export day
  * @return list of bookings
  */
-export function getBookingsByLastExportDay(user: any, day: number): Promise<any> {
-    return db.querySingle("SELECT * FROM booking WHERE person=? AND day>=? ORDER BY day DESC, person", [user.name, utils.removeTimeFromDate(new Date(day))]);
+export function getBookingsByLastExportDay(user: any, day: Date): Promise<any> {
+    return db.querySingle("SELECT * FROM booking WHERE person=? AND day>=? ORDER BY day DESC, person", [user.name, utils.removeTimeFromDate(day)]);
 }
 
 /**
@@ -96,7 +96,7 @@ export function getBookingsByLastExportDay(user: any, day: number): Promise<any>
  * @return list of bookings
  */
 //@RolesAllowed({"admin"})
-export function getBookingsForProject(user: any, projectId: number, fromDay: number) {
+export function getBookingsForProject(user: any, projectId: number, fromDay: Date) {
     return db.querySingle("SELECT b.* FROM booking b,booking_template t,budget bu WHERE b.booking_template_id=t.id AND t.budget_id=bu.id AND bu.project_id=? AND b.day>=? ORDER BY b.day DESC, b.person", [projectId, fromDay]);
 }
     

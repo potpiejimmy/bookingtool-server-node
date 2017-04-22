@@ -15,9 +15,15 @@ export class ExportsService {
     
     startDownload(blob: any, filename: string) {
         var link=document.createElement('a');
+        link.style.display="none";
         link.href=window.URL.createObjectURL(blob);
         link.download=filename+".xlsx";
+        document.body.appendChild(link);
         link.click();
+        setTimeout(()=>{
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(link.href);
+        }, 500);
     }
 
     getExcelForName(weeksToExport: number): Promise<any> {

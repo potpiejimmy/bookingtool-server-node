@@ -8,7 +8,7 @@ export function getExcelForName(user: any, weeksToExport: number): Promise<any> 
     let lastExportDay = new Date();
     lastExportDay.setDate(lastExportDay.getDate() - weeksToExport*7);
 
-    return Bookings.getBookingsByLastExportDay(user, lastExportDay.getTime()).then(bookingList => {
+    return Bookings.getBookingsByLastExportDay(user, lastExportDay).then(bookingList => {
         return Excel.createWorkbookForBookings(bookingList, false).then(result => {
             return db.connection().then(connection => {
                 return utils.asyncLoopP(bookingList, (booking, next) => {
@@ -33,7 +33,7 @@ function startDayForMonthsToExport(monthsToExport: number): Date {
 }
 
 export function getExcelForProject(user: any, projectToExport: number, monthsToExport: number): Promise<any> {
-    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport).getTime()).then(bookingList => {
+    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport)).then(bookingList => {
         return Excel.createWorkbookForBookings(bookingList, true);
     });
 }
