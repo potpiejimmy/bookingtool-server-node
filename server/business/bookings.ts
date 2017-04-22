@@ -89,6 +89,17 @@ export function getBookingsByLastExportDay(user: any, day: number): Promise<any>
     return db.querySingle("SELECT * FROM booking WHERE person=? AND day>=? ORDER BY day DESC, person", [user.name, utils.removeTimeFromDate(new Date(day))]);
 }
 
+/**
+ * Returns all bookings for the given project
+ * @param projectId a project id
+     * @param fromDay starting from this day
+ * @return list of bookings
+ */
+//@RolesAllowed({"admin"})
+export function getBookingsForProject(user: any, projectId: number, fromDay: number) {
+    return db.querySingle("SELECT b FROM Booking b,BookingTemplate t,Budget bu WHERE b.bookingTemplateId=t.id AND t.budgetId=bu.id AND bu.projectId=? AND b.day>=? ORDER BY b.day DESC, b.person", [projectId, fromDay]);
+}
+    
 function assertNoOverrun(booking: any): Promise<any> {
     // get associated budget:
     return Templates.getBookingTemplate(booking.booking_template_id)

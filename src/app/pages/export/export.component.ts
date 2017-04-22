@@ -28,6 +28,10 @@ export class ExportComponent {
   }
 
   export() {
-    this.exportsService.getExcelForName(2);
+    this.exportsService.getExcelForName(this.weeksToExport);
+  }
+
+  exportProject() {
+    this.exportsService.getExcelForProject(this.projectToExport, this.monthsToExport);
   }
 }

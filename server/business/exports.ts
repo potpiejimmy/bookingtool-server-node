@@ -24,3 +24,16 @@ export function getExcelForName(user: any, weeksToExport: number): Promise<any> 
         });
     });
 }
+
+function startDayForMonthsToExport(monthsToExport: number): Date {
+    let startDay = new Date();
+    startDay.setMonth(startDay.getMonth() - monthsToExport);
+    startDay.setDate(1);
+    return utils.removeTimeFromDate(startDay);
+}
+
+export function getExcelForProject(user: any, projectToExport: number, monthsToExport: number): Promise<any> {
+    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport)).then(bookingList => {
+        return Excel.createWorkbookForBookings(bookingList, true);
+    });
+}

@@ -13,12 +13,22 @@ export class ExportsService {
                 private loginService : LoginService) {
     }    
     
+    startDownload(blob: any, filename: string) {
+        var link=document.createElement('a');
+        link.href=window.URL.createObjectURL(blob);
+        link.download=filename+".xlsx";
+        link.click();
+    }
+
     getExcelForName(weeksToExport: number): Promise<any> {
         return this.http.getBlob(this.url+"?weeks="+weeksToExport).then(blob => {
-            var link=document.createElement('a');
-            link.href=window.URL.createObjectURL(blob);
-            link.download="bookings_"+this.app.loginService.loginToken.name+".xlsx";
-            link.click();
+            this.startDownload(blob, "bookings_"+this.app.loginService.loginToken.name);
+        });
+    }
+
+    getExcelForProject(projectId: number, monthsToExport: number): Promise<any> {
+        return this.http.getBlob(this.url+"project?id="+projectId+"&months="+monthsToExport).then(blob => {
+            this.startDownload(blob, "project_"+projectId);
         });
     }
 }
