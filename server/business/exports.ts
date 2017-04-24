@@ -1,3 +1,4 @@
+import * as Projects from './projects';
 import * as Bookings from './bookings';
 import * as Excel from '../util/excel';
 import * as utils from "../util/utils";
@@ -33,7 +34,10 @@ function startDayForMonthsToExport(monthsToExport: number): Date {
 }
 
 export function getExcelForProject(user: any, projectToExport: number, monthsToExport: number): Promise<any> {
-    return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport)).then(bookingList => {
-        return Excel.createWorkbookForBookings(bookingList, true);
+    return Projects.isManagedProjectOf(user, projectToExport).then(isManagedProject => {
+        if (!isManagedProject) throw "Sorry, this operation is only available to project administrators.";
+        return Bookings.getBookingsForProject(user, projectToExport, startDayForMonthsToExport(monthsToExport)).then(bookingList => {
+            return Excel.createWorkbookForBookings(bookingList, true);
+        });
     });
 }
